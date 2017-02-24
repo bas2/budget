@@ -6,7 +6,8 @@
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="js/jquery/css/sunny/jquery-ui-1.8.22.custom.css">
   <link rel="stylesheet" href="css/autocomplete.css">
-  <script src="js/jquery-1.7.2.min.js"></script>
+  
+  <script src="js/jquery-1.8.3.min.js"></script>
   <script src="js/jquery-ui-1.8.22.custom.min.js"></script>
   <script src="js/cufon-yui.js"></script>
   <script src="js/aurulent-sans-mono.cufonfonts.js"></script>
@@ -14,43 +15,46 @@
 </head>
 <body>
 
-    <fieldset class="l">
-      <legend>Edit row <span id="rowidsel">2536</span></legend>
-      <div id="editrow">@include('ajax.getrow')</div>
-    </fieldset>
+<fieldset class="l">
+  <legend>Edit row <span id="rowidsel">{{ \App\Budget::oldest('date')->take(1)->get(['id'])[0]->id }}</span></legend>
+  <div id="editrow">@include('ajax.getrow')</div>
+</fieldset>
     
 
-    <fieldset id="r">
-      <legend>Account Balances</legend>
-            <div style="float:left;width:100%;background:transparent;padding: 0;border: 0;">
-      <div class="accsumm">
-        
-<button class="btn2" id="currbutt">Current 04018001</button>        <div id="currdescr">Thu 6th Oct 
+<fieldset id="r">
+  <legend>Account Balances</legend>
+  <div style="float:left;width:100%;background:transparent;padding: 0;border: 0;">
+
+  <div class="accsumm">      
+  <button class="btn2" id="currbutt">Current 04018001</button>        
+  <div id="currdescr">Thu 6th Oct 
       &pound;<span class="negcol">50.00</span><br />CASH</div>
-        <input class="ambox" type="text" name="txt_currrunbal" id="currrunbal" value="22.13">              </div>
+        <input class="ambox" type="text" name="txt_currrunbal" id="currrunbal" value="22.13">
+  </div>
       
-      <div class="accsumm">
-        
-<button class="btn2" id="savbutt">Savings 24362957</button>        <div style="">Tue 26th Jul &pound;0.00<br />Current account</div>
-        <input class="ambox" type="text" name="txt_savrunbal" id="savrunbal" value="391.59">              </div>
+  <div class="accsumm">
+  <button class="btn2" id="savbutt">Savings 24362957</button>        
+  <div style="">Tue 26th Jul &pound;0.00<br />Current account</div>
+  <input class="ambox" type="text" name="txt_savrunbal" id="savrunbal" value="391.59">              </div>
       
-      <div class="accsumm">
-        
-<button class="btn2" id="savbutt2">Total</button>        <div>&nbsp;</div>
-        <input class="ambox" type="text" name="txt_savrunbal2" id="savrunbal2" value="413.72">      </div>
-      </div>
-    </fieldset>
+  <div class="accsumm">      
+  <button class="btn2" id="savbutt2">Total</button>        <div>&nbsp;</div>
+  <input class="ambox" type="text" name="txt_savrunbal2" id="savrunbal2" value="413.72">
+  </div>
+
+  </div>
+</fieldset>
       
-    <div id="buttons">
+<div id="buttons">
+{!! Form::button('Up', ['id'=>'btnUp']) !!}
+{!! Form::button('Add row &gt;', ['id'=>'btnAddrow']) !!}
+{!! Form::button('Duplicate &gt;', ['id'=>'btnDuplicate']) !!}
+{!! Form::button('Delete &gt;', ['id'=>'btnDelete']) !!}
+{!! Form::button('Transfer &gt;', ['id'=>'btnTransfer']) !!}
+{!! Form::button('Down', ['id'=>'btnDown']) !!}   
+</div>
       
-<button id="btnUp">Up</button>
-<button id="btnAddrow">Add row &gt;</button>
-<button id="btnDuplicate">Duplicate &gt;</button>
-<button id="btnDelete">Delete &gt;</button>
-<button id="btnTransfer">Transfer &gt;</button>
-<button id="btnDown">Down</button>    </div>
-      
-    <div id="listview"><div id="cellhead">
+<div id="listview"><div id="cellhead">
 <div id="datehead">Date</div>
 <div id="morderhead"><span style="visibility: hidden;">-</span></div>
 <div id="descrhead">Description</div>
@@ -60,236 +64,23 @@
 <div id="savhead">Total</div>
 <div id="noteshead">Notes</div>
 </div>
+
 <div id="listviewbody">
 
-    <div title2="1" id="rw2536" class="cellrow prevdayscol">
-    <div style="clear:both"></div>
-    <div class="celldate">Thu 13th Oct&nbsp;</div>
-    <div class="cellmorder">-134</div>
-    <div class="celldescr">EE & T-MOBILE</div>
-    <div class="cellin r">0.00</div>
-    <div class="cellout r">11.42</div>
-    <div class="cellbal r">10.71</div>
-    <div class="cellsav r">402.30</div>
-    <div class="cellnotes">Need to move over to payg -Cancelled DD on 11/09! 11.42&nbsp;</div>
-    </div>
-  
-    <div title2="2" id="rw2547" class="cellrow prevdayscol">
-    <div style="clear:both"></div>
-    <div class="celldate">Tue 18th Oct&nbsp;</div>
-    <div class="cellmorder">-129</div>
-    <div class="celldescr">Amazon Digital Dwn</div>
-    <div class="cellin r">0.00</div>
-    <div class="cellout r">8.64</div>
-    <div class="cellbal r">2.07</div>
-    <div class="cellsav r">393.66</div>
-    <div class="cellnotes">Job you will love2&nbsp;</div>
-    </div>
-  
-    <div title2="3" id="rw2543" class="cellrow negcol">
-    <div style="clear:both"></div>
-    <div class="celldate">Tue 18th Oct&nbsp;</div>
-    <div class="cellmorder">-129</div>
-    <div class="celldescr">BYTEMARK HOSTING</div>
-    <div class="cellin r">0.00</div>
-    <div class="cellout r">12.00</div>
-    <div class="cellbal r">-9.93</div>
-    <div class="cellsav r">381.66</div>
-    <div class="cellnotes">Web hosting # 33&nbsp;</div>
-    </div>
-  
-    <div title2="4" id="rw2546" class="cellrow prevdayscol">
-    <div style="clear:both"></div>
-    <div class="celldate">Wed 19th Oct&nbsp;</div>
-    <div class="cellmorder">-128</div>
-    <div class="celldescr">ISA Account</div>
-    <div class="cellin r">200.00</div>
-    <div class="cellout r">0.00</div>
-    <div class="cellbal r">190.07</div>
-    <div class="cellsav r">381.66</div>
-    <div class="cellnotes">&nbsp;</div>
-    </div>
-  
-    <div title2="5" id="rw2544" class="cellrow prevdayscol">
-    <div style="clear:both"></div>
-    <div class="celldate">Mon 31st Oct&nbsp;</div>
-    <div class="cellmorder">-115</div>
-    <div class="celldescr">CASH</div>
-    <div class="cellin r">0.00</div>
-    <div class="cellout r">60.00</div>
-    <div class="cellbal r">130.07</div>
-    <div class="cellsav r">321.66</div>
-    <div class="cellnotes">LINK 18:20OCT30&nbsp;</div>
-    </div>
-  
-    <div title2="6" id="rw2545" class="cellrow prevdayscol">
-    <div style="clear:both"></div>
-    <div class="celldate">Tue 1st Nov&nbsp;</div>
-    <div class="cellmorder">-114</div>
-    <div class="celldescr">TRAVELODGE WEBSITE</div>
-    <div class="cellin r">0.00</div>
-    <div class="cellout r">29.00</div>
-    <div class="cellbal r">101.07</div>
-    <div class="cellsav r">292.66</div>
-    <div class="cellnotes">Twickenham on 30 Oct&nbsp;</div>
-    </div>
-  
-    <div title2="7" id="rw2548" class="cellrow todcol">
-    <div style="clear:both"></div>
-    <div class="celldate">Mon 7th Nov&nbsp;</div>
-    <div class="cellmorder">-108</div>
-    <div class="celldescr">HOL CHA DRI LTD HCD</div>
-    <div class="cellin r">100.00</div>
-    <div class="cellout r">0.00</div>
-    <div class="cellbal r">201.07</div>
-    <div class="cellsav r">392.66</div>
-    <div class="cellnotes">&nbsp;</div>
-    </div>
-  
-    <div title2="8" id="rw2557" class="cellrow prevdayscol">
-    <div style="clear:both"></div>
-    <div class="celldate">Fri 11th Nov&nbsp;</div>
-    <div class="cellmorder">-104</div>
-    <div class="celldescr">National Lottery</div>
-    <div class="cellin r">0.00</div>
-    <div class="cellout r">10.00</div>
-    <div class="cellbal r">191.07</div>
-    <div class="cellsav r">382.66</div>
-    <div class="cellnotes">&nbsp;</div>
-    </div>
-  
-    <div title2="9" id="rw2558" class="cellrow prevdayscol">
-    <div style="clear:both"></div>
-    <div class="celldate">Wed 16th Nov&nbsp;</div>
-    <div class="cellmorder">-99</div>
-    <div class="celldescr">BYTEMARK HOSTING</div>
-    <div class="cellin r">0.00</div>
-    <div class="cellout r">12.00</div>
-    <div class="cellbal r">179.07</div>
-    <div class="cellsav r">370.66</div>
-    <div class="cellnotes">Web hosting # 34&nbsp;</div>
-    </div>
-  
-    <div title2="10" id="rw2562" class="cellrow prevdayscol">
-    <div style="clear:both"></div>
-    <div class="celldate">Mon 28th Nov&nbsp;</div>
-    <div class="cellmorder">-87</div>
-    <div class="celldescr">TESCO DIRECT</div>
-    <div class="cellin r">0.00</div>
-    <div class="cellout r">14.99</div>
-    <div class="cellbal r">164.08</div>
-    <div class="cellsav r">355.67</div>
-    <div class="cellnotes">Nokia 130 PAYG phone&nbsp;</div>
-    </div>
-  
-    <div title2="11" id="rw2563" class="cellrow prevdayscol">
-    <div style="clear:both"></div>
-    <div class="celldate">Fri 2nd Dec&nbsp;</div>
-    <div class="cellmorder">-83</div>
-    <div class="celldescr">MIPAY Tesco Mobile</div>
-    <div class="cellin r">0.00</div>
-    <div class="cellout r">10.00</div>
-    <div class="cellbal r">154.08</div>
-    <div class="cellsav r">345.67</div>
-    <div class="cellnotes">Mobile phone topup&nbsp;</div>
-    </div>
-  
-    <div title2="12" id="rw2561" class="cellrow prevdayscol">
-    <div style="clear:both"></div>
-    <div class="celldate">Fri 16th Dec&nbsp;</div>
-    <div class="cellmorder">-69</div>
-    <div class="celldescr">BYTEMARK HOSTING</div>
-    <div class="cellin r">0.00</div>
-    <div class="cellout r">12.00</div>
-    <div class="cellbal r">142.08</div>
-    <div class="cellsav r">333.67</div>
-    <div class="cellnotes">Web hosting # 35&nbsp;</div>
-    </div>
-  
-    <div title2="13" id="rw2564" class="cellrow prevdayscol">
-    <div style="clear:both"></div>
-    <div class="celldate">Wed 28th Dec&nbsp;</div>
-    <div class="cellmorder">-57</div>
-    <div class="celldescr">CASH</div>
-    <div class="cellin r">0.00</div>
-    <div class="cellout r">100.00</div>
-    <div class="cellbal r">42.08</div>
-    <div class="cellsav r">233.67</div>
-    <div class="cellnotes">LINK    19:29DEC23&nbsp;</div>
-    </div>
-  
-    <div title2="14" id="rw1913" class="cellrow prevdayscol">
-    <div style="clear:both"></div>
-    <div class="celldate">Sat 31st Dec&nbsp;</div>
-    <div class="cellmorder">-54</div>
-    <div class="celldescr">INTEREST TAX PAID</div>
-    <div class="cellin r">0.00</div>
-    <div class="cellout r">0.00</div>
-    <div class="cellbal r">42.08</div>
-    <div class="cellsav r">233.67</div>
-    <div class="cellnotes">2014&nbsp;</div>
-    </div>
-  
-    <div title2="15" id="rw2206" class="cellrow prevdayscol">
-    <div style="clear:both"></div>
-    <div class="celldate">Sat 31st Dec&nbsp;</div>
-    <div class="cellmorder">-54</div>
-    <div class="celldescr">Tmobile</div>
-    <div class="cellin r">0.00</div>
-    <div class="cellout r">0.00</div>
-    <div class="cellbal r">42.08</div>
-    <div class="cellsav r">233.67</div>
-    <div class="cellnotes">£10 top-up #4 (smart pack - 1GB data, 400mins)&nbsp;</div>
-    </div>
-  
-    <div title2="16" id="rw2566" class="cellrow prevdayscol">
-    <div style="clear:both"></div>
-    <div class="celldate">Tue 10th Jan&nbsp;</div>
-    <div class="cellmorder">-44</div>
-    <div class="celldescr">ISA Account</div>
-    <div class="cellin r">200.00</div>
-    <div class="cellout r">0.00</div>
-    <div class="cellbal r">242.08</div>
-    <div class="cellsav r">233.67</div>
-    <div class="cellnotes">&nbsp;</div>
-    </div>
-  
-    <div title2="17" id="rw2567" class="cellrow prevdayscol">
-    <div style="clear:both"></div>
-    <div class="celldate">Wed 11th Jan&nbsp;</div>
-    <div class="cellmorder">-43</div>
-    <div class="celldescr">PAYPAL *FRONTLINE</div>
-    <div class="cellin r">0.00</div>
-    <div class="cellout r">12.16</div>
-    <div class="cellbal r">229.92</div>
-    <div class="cellsav r">221.51</div>
-    <div class="cellnotes">Anusol&nbsp;</div>
-    </div>
-  
-    <div title2="18" id="rw2568" class="cellrow prevdayscol">
-    <div style="clear:both"></div>
-    <div class="celldate">Wed 18th Jan&nbsp;</div>
-    <div class="cellmorder">-36</div>
-    <div class="celldescr">BYTEMARK HOSTING</div>
-    <div class="cellin r">0.00</div>
-    <div class="cellout r">12.00</div>
-    <div class="cellbal r">217.92</div>
-    <div class="cellsav r">209.51</div>
-    <div class="cellnotes">Web hosting # 35&nbsp;</div>
-    </div>
-  
-    <div title2="19" id="rw2569" class="cellrow prevdayscol">
-    <div style="clear:both"></div>
-    <div class="celldate">Thu 26th Jan&nbsp;</div>
-    <div class="cellmorder">-28</div>
-    <div class="celldescr">CASH</div>
-    <div class="cellin r">0.00</div>
-    <div class="cellout r">100.00</div>
-    <div class="cellbal r">117.92</div>
-    <div class="cellsav r">109.51</div>
-    <div class="cellnotes">LINK    19:29DEC23&nbsp;</div>
-    </div>
+  <div title2="1" id="rw2536" class="cellrow prevdayscol">
+  <div style="clear:both"></div>
+  <div class="celldate">Thu 13th Oct&nbsp;</div>
+  <div class="cellmorder">-134</div>
+  <div class="celldescr">EE & T-MOBILE</div>
+  <div class="cellin r">0.00</div>
+  <div class="cellout r">11.42</div>
+  <div class="cellbal r">10.71</div>
+  <div class="cellsav r">402.30</div>
+  <div class="cellnotes">Need to move over to payg -Cancelled DD on 11/09! 11.42&nbsp;</div>
   </div>
+  
+
+</div>
 
 <script>
 // Highlight first row:
