@@ -1,0 +1,318 @@
+body {
+  background-color: #fff;
+}
+        
+#listview {
+  font: bold italic 80% verdana;
+  
+}
+  
+#cellhead {
+  background: linear-gradient(red, black);
+  font-style: normal;
+  padding: .5em 0;
+  color: #fff;
+  float: left;
+  width: 100%;
+  border-bottom: 1px dotted #ccc;
+  border-radius: .5em;
+}
+
+#datehead, #morderhead, #descrhead, #inhead, #outhead, #balhead, #savhead, #noteshead {
+  float: left;
+  width: 19em;
+  border-left: 0px solid #ccc;
+}
+
+
+        
+
+#datehead, .celldate, #morderhead, .cellmorder, #descrhead, .celldescr, #noteshead, .cellnotes {
+  padding-left: .6em;
+}
+    
+.celldate, .cellmorder, .celldescr, .cellin, .cellout, .cellbal, .cellsav, .cellnotes {
+  float: left;
+  width: 19em;
+  border-left: 0px solid #ccc;
+                                
+}
+        
+#datehead, .celldate {
+  border-left: 0;
+}
+        
+      
+#datehead, .celldate, #morderhead, .cellmorder, #inhead, .cellin, #outhead, .cellout, #balhead, .cellbal, #savhead, .cellsav, #noteshead {
+  width: 9em;
+}
+
+#morderhead, .cellmorder {
+  width: 2em;
+}
+      
+.r, #inhead, #outhead, #balhead, #savhead {
+  text-align: right;
+  padding-right: .5em;
+}
+        
+.cellnotesx {
+  padding-left: .6em;
+}
+        
+.cellrow {
+  float: left;
+  width:100%;
+  cursor: pointer;
+            
+}
+        
+#listviewbody {
+  height: 30em;
+  float: left;
+  background: #c86868;
+  color: #fff;
+  overflow: auto;
+}
+        
+.hl {
+  background-color: orange;
+  font-weight: bold;
+  border-top: 2px solid yellow;
+  border-bottom: 2px solid yellow;
+  padding: .4em 0;
+}
+ 
+.hl2 {
+  background-color: orange;
+}
+ 
+fieldset {
+  border: 0px solid #f99;
+  
+  font: 100% arial;
+  border-radius: 0.5em;
+  
+  background: linear-gradient(green, black);
+}
+ 
+fieldset legend {
+  border-radius: 0.5em;
+  background: linear-gradient(red, black);
+  padding: 0;
+  text-align: center;
+  color: #fff;
+  width: 20em;
+  text-transform: uppercase;
+}
+        
+fieldset.l {
+  float:left; width:50%;
+}
+        
+fieldset div {
+  border-bottom: 1px solid #ccc; padding-bottom: .5em; margin-bottom: .5em; 
+}
+        
+fieldset input.btn2 {
+  width:8em;
+  color: red;
+}
+ 
+fieldset button {
+  width: 7em;
+  font: 90% arial;
+}
+ 
+fieldset textarea {
+  height:4em;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+ 
+#buttons {
+  margin: .5em 0;
+}
+ 
+#btnUp {
+  border-top-left-radius:.5em;
+  border-top-right-radius:.5em;
+  width: 10em;
+}
+ 
+#btnDown {
+  border-bottom-left-radius:.5em;
+  border-bottom-right-radius:.5em;
+  margin-top: .5em;
+  width: 10em;
+}
+        
+#btnAddrow, #btnDuplicate, #btnDelete, #btnTransfer {
+  border-radius:.3em;
+}
+  
+#rowidsel {
+  font-weight: bold;
+  background-color: yellow;
+  padding: .2em;
+  border-radius: 0.5em;
+  color: #000;
+}
+ 
+form * {
+  text-align: center;
+}
+ 
+input {
+  border: 1px solid #ccc;
+
+}
+ 
+select, input[type=text] {
+  border-radius: 0.5em;
+}
+ 
+.ambox {
+  text-align: right;
+  width: 5em;
+  padding: .3em;
+}
+
+/* Editrow fieldset */
+#editrow {
+  position: relative;
+
+  padding:.5em;
+  line-height: 1.8em;
+  border: 0;
+  height:100%;
+  form {
+    display: inline;
+  }
+}
+/* Update button */
+#editdata {
+  position: absolute;
+  right:0;
+  bottom:.5em;
+  font: 120% arial;
+  width: 10em;
+  border-radius: .3em;
+  background: yellow;
+}
+
+#editdata:hover {
+  background: rgba(255, 200, 100, .3);
+}
+ 
+#editrow label {
+  color: white;
+}
+
+#editrow #btnZero {
+  width: 3em;
+}
+ 
+#accsdiv {
+  position: absolute;
+  top:0;
+  left:0;
+  background: rgba(255,255,255,200);
+  width: 950px;
+  height: 500px;
+  overflow: auto;
+  border: 0px solid #000;
+  border-radius: .4em;
+  padding: 0 1em 1em 1em;
+  box-shadow: 2px, 2px, 2px, 2px;
+}
+
+#accsdiv h2 {
+  text-align: center;
+  color: #000;
+  font-weight: bold;
+}
+
+#accsdiv table {
+  border-collapse: collapse;
+  border: 1px solid black;
+  border-radius: .4em;
+}
+
+#accsdiv tr {
+  vertical-align: top;
+}
+
+#accsdiv th, #accsdiv td {
+  padding: .3em;
+  border-bottom: 1px dotted black;
+}
+
+#accsdiv a {
+  display: block;
+  position: fixed;
+  background: red;
+  width: 20px;
+  left: 50%;
+  top: 0;
+  margin-left: 435px;
+}
+
+#accsdiv #accsdivinnertop {
+  background: yellow;
+  position: fixed;
+  width: 950px;
+  overflow: hidden;
+}
+
+#accsdiv tr:hover {
+  background: yellow;
+}
+
+.negcol {
+  color: #c00;
+}
+
+.accsumm {
+  color: white;
+  float:left;
+  width:600%;
+  border:0; margin:0; width:32%;
+  border:0px solid purple;
+  text-align: center;
+  padding: .2em;
+}
+
+.accsumm button {
+  float:left;width:100%;margin:0 auto;padding:0;border:1;
+}
+
+.accsumm div {
+  float: left;width:90%;margin:auto 0;border:0;padding:0;font-size:.8em;height: 4em;text-align: center;font-weight: bold;
+  border:1px solid white; border-radius: .3em;width:100%; vertical-align: middle;
+}
+
+.accsumm input {
+  clear:both;float:left;padding:0;text-align: center; border-radius: .3em;width:100%;
+}
+
+/* Today col */
+.todcol {
+  background:lime;
+}
+/* prev days col */
+.prevdayscol {
+  background:orange;
+}
+
+/* prev days col */
+.negcol {
+  background:red;
+  color: #fff;
+}
+
+#rdoBtnGroupinout {
+  border: none;
+  div {float: left;}
+}
