@@ -24,9 +24,6 @@ body {
   border-left: 0px solid #ccc;
 }
 
-
-        
-
 #datehead, .celldate, #morderhead, .cellmorder, #descrhead, .celldescr, #noteshead, .cellnotes {
   padding-left: .6em;
 }
@@ -94,41 +91,35 @@ fieldset {
   border-radius: 0.5em;
   
   background: linear-gradient(green, black);
-}
- 
-fieldset legend {
-  border-radius: 0.5em;
-  background: linear-gradient(red, black);
-  padding: 0;
-  text-align: center;
-  color: #fff;
-  width: 20em;
-  text-transform: uppercase;
-}
-        
-fieldset.l {
-  float:left; width:50%;
-}
-        
-fieldset div {
-  border-bottom: 1px solid #ccc; padding-bottom: .5em; margin-bottom: .5em; 
-}
-        
-fieldset input.btn2 {
-  width:8em;
-  color: red;
-}
- 
-fieldset button {
-  width: 7em;
-  font: 90% arial;
-}
- 
-fieldset textarea {
-  height:4em;
-  border: 0;
-  padding: 0;
-  margin: 0;
+  legend {
+    border-radius: 0.5em;
+    background: linear-gradient(red, black);
+    padding: 0;
+    text-align: center;
+    color: #fff;
+    width: 20em;
+    text-transform: uppercase;
+  }
+  &.l {float:left; width:50%;}
+  div {
+    border-bottom: 1px solid #ccc; padding-bottom: .5em; margin-bottom: .5em; 
+  }
+  input.btn2 {
+    width:8em;
+    color: red;
+  }
+  button {
+    width: 7em;
+    font: 90% arial;
+  }
+
+  textarea {
+    height:4em;
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+
 }
  
 #buttons {
@@ -182,7 +173,6 @@ select, input[type=text] {
 /* Editrow fieldset */
 #editrow {
   position: relative;
-
   padding:.5em;
   line-height: 1.8em;
   border: 0;
@@ -190,6 +180,7 @@ select, input[type=text] {
   form {
     display: inline;
   }
+  label {color: white;}
 }
 /* Update button */
 #editdata {
@@ -200,18 +191,16 @@ select, input[type=text] {
   width: 10em;
   border-radius: .3em;
   background: yellow;
-}
+  &:hover {
+    background: rgba(255, 200, 100, .3);
+  }
+  label {
+    color: white;
+  }
+  #btnZero {
+    width: 3em;
+  }
 
-#editdata:hover {
-  background: rgba(255, 200, 100, .3);
-}
- 
-#editrow label {
-  color: white;
-}
-
-#editrow #btnZero {
-  width: 3em;
 }
  
 #accsdiv {
@@ -226,49 +215,43 @@ select, input[type=text] {
   border-radius: .4em;
   padding: 0 1em 1em 1em;
   box-shadow: 2px, 2px, 2px, 2px;
+  h2 {
+    text-align: center;
+    color: #000;
+    font-weight: bold;
+  }
+  table {
+      border-collapse: collapse;
+      border: 1px solid black;
+      border-radius: .4em;
+  }
+  tr {
+    vertical-align: top;
+    &:hover {background: yellow;}
+  }
+  th, td {
+    padding: .3em;
+    border-bottom: 1px dotted black;
+  }
+  a {
+    display: block;
+    position: fixed;
+    background: red;
+    width: 20px;
+    left: 50%;
+    top: 0;
+    margin-left: 435px;
+  }
+  #accsdivinnertop {
+    background: yellow;
+    position: fixed;
+    width: 950px;
+    overflow: hidden;
+  }
+
 }
 
-#accsdiv h2 {
-  text-align: center;
-  color: #000;
-  font-weight: bold;
-}
 
-#accsdiv table {
-  border-collapse: collapse;
-  border: 1px solid black;
-  border-radius: .4em;
-}
-
-#accsdiv tr {
-  vertical-align: top;
-}
-
-#accsdiv th, #accsdiv td {
-  padding: .3em;
-  border-bottom: 1px dotted black;
-}
-
-#accsdiv a {
-  display: block;
-  position: fixed;
-  background: red;
-  width: 20px;
-  left: 50%;
-  top: 0;
-  margin-left: 435px;
-}
-
-#accsdiv #accsdivinnertop {
-  background: yellow;
-  position: fixed;
-  width: 950px;
-  overflow: hidden;
-}
-
-#accsdiv tr:hover {
-  background: yellow;
-}
 
 .negcol {
   color: #c00;
@@ -282,20 +265,17 @@ select, input[type=text] {
   border:0px solid purple;
   text-align: center;
   padding: .2em;
+  button {float:left;width:100%;margin:0 auto;padding:0;border:1;}
+  div {
+    float: left;width:90%;margin:auto 0;border:0;padding:0;font-size:.8em;height: 4em;text-align: center;font-weight: bold;
+    border:1px solid white; border-radius: .3em;width:100%; vertical-align: middle;
+  }
+  input {
+    clear:both;float:left;padding:0;text-align: center; border-radius: .3em;width:100%;
+  }
+
 }
 
-.accsumm button {
-  float:left;width:100%;margin:0 auto;padding:0;border:1;
-}
-
-.accsumm div {
-  float: left;width:90%;margin:auto 0;border:0;padding:0;font-size:.8em;height: 4em;text-align: center;font-weight: bold;
-  border:1px solid white; border-radius: .3em;width:100%; vertical-align: middle;
-}
-
-.accsumm input {
-  clear:both;float:left;padding:0;text-align: center; border-radius: .3em;width:100%;
-}
 
 /* Today col */
 .todcol {
