@@ -3,13 +3,13 @@
 
 {!! Form::select('code', $codes, $editrows['code']) !!}
 
-{!! Form::text('date', $editrows['date'], ['style'=>'width:6em;', 'title'=>'date']) !!}
+{!! Form::text('date', $editrows['date'], ['id'=>'date','style'=>'width:6em;', 'title'=>'date']) !!}
 
-{!! Form::text('descr', $editrows['code'], ['style'=>'width:17em;', 'title'=>'description']) !!}
+{!! Form::text('descr', $editrows['descr'], ['style'=>'width:17em;', 'title'=>'description']) !!}
 
-{!! Form::text('amount', $editrows['code'], ['style'=>'width:4em;', 'title'=>'amount']) !!}
+{!! Form::text('amount', $editrows['amount'], ['style'=>'width:4em;', 'title'=>'amount']) !!}
 
-{!! Form::text('descr', $editrows['code'], ['style'=>'width:17em;', 'title'=>'notes']) !!}
+{!! Form::text('notes', $editrows['notes'], ['style'=>'width:17em;', 'title'=>'notes']) !!}
 
 <div id="rdoBtnGroupinout">
 <div>
