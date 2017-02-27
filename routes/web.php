@@ -16,17 +16,29 @@ Route::get('/', function () {
 });
 
 Route::get('home', function () {
-    // Get codes:
+  // Get codes:
   $codesall=App\Code::orderBy('code')->get(['code','info']);
   foreach($codesall as $code) {$codes[$code->code]="{$code->code}";}
 
-    $rows=\App\Budget::oldest('date')->get(['morder', 'code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
+  // 
+  $rows=\App\Budget::oldest('date')->get(['id','code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
 
-
+  $incoming  = ($rows[0]->incoming=='0.00' && $rows[0]->incoming!='0.00') ? 1 : 0;
+  $outgoing  = ($rows[0]->outgoing!='0.00' && $rows[0]->incoming=='0.00') ? 1 : 0;
+  if (!$incoming && !$outgoing) {
+    $incoming = 0;
+    $outgoing = 1;
+  } // End if.
+  $amount = ($incoming) ? $rows[0]->incoming : $rows[0]->outgoing ;
+  
+  // Get budget rows.
+  $rows2=\App\Budget::oldest('date')->get(['id','code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
 
   return view('welcome')
-  ->with('editrows',['code'=>$rows[0]->code,'date'=>\Carbon\Carbon::parse($rows[0]->date)->format('d/m/Y')])
+  ->with('editrows',['code'=>$rows[0]->code,'date'=>\Carbon\Carbon::parse($rows[0]->date)->format('d/m/Y'),'descr'=>$rows[0]->description,'amount'=>$amount,'notes'=>$rows[0]->notes])
   ->with('codes', $codes)
+  ->with('rows', $rows2)
+  ->with('runbal',\App\Current::getLastEntry('runbal'));
   ;
 });
 
@@ -34,7 +46,7 @@ Route::get('getrow/{id?}', function ($rowid=0) {
   if($rowid==0) {
     $rows=\App\Budget::oldest('date')->get(['morder', 'code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
   } else {
-    $rows=\App\Budget::find($rowid)->get(['morder', 'code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
+    $rows=\App\Budget::where('id',$rowid)->get(['morder', 'code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
   }
 
   $incoming  = ($rows[0]->incoming=='0.00' && $rows[0]->incoming!='0.00') ? 1 : 0;
@@ -67,6 +79,54 @@ Route::get('getrow/{id?}', function ($rowid=0) {
   foreach($codesall as $code) {$codes[$code->code]="{$code->code}";}
 
   return view('ajax.getrow')
-  ->with('editrows',['code'=>$rows[0]->code,'date'=>\Carbon\Carbon::parse($rows[0]->date)->format('d/m/Y')])
-  ->with('codes', $codes);
+  ->with('codes', $codes)
+  ->with('editrows',['code'=>$rows[0]->code,'date'=>\Carbon\Carbon::parse($rows[0]->date)->format('d/m/Y'),'descr'=>$rows[0]->description,'amount'=>$amount,'notes'=>$rows[0]->notes])
+  ;
+});
+
+Route::post('addrow', function () {
+  $create=new \App\Budget;
+  $create->date = \Carbon\Carbon::now();
+  $create->notes = '';
+  $create->save();
+  return ($create->save()) ? $create->id : 0 ;
+
+  // Get budget rows.
+  //$rows2=\App\Budget::oldest('date')->get(['id','code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
+
+  //return view('ajax.listview')->with('rows',$rows2);
+});
+
+Route::post('deleterow/{id}', function ($id) {
+  $delete=\App\Budget::where('id',$id)->delete();
+  $rows2=\App\Budget::oldest('date')->take(1)->get(['id']);
+  return $rows2[0]->id; # ID for first entry so it can be focussed.
+});
+
+Route::get('listview', function() {
+  // Get budget rows.
+  $rows2=\App\Budget::oldest('date')->get(['id','code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
+
+  return view('ajax.listview')->with('rows',$rows2);
+});
+
+// Complete update and/or get updated matrix html.
+Route::post('listview/{id}', function ($id) {
+  $input=Request::all();
+  $update=\App\Budget::where('id',$id);
+  $descr=(empty($input['descr'])) ? '' : $input['descr'];
+  $strsql = ( ($input['in']!=='false') ) ? [$input['amount'],0] : [0,$input['amount']];
+  $update->update(['date'=>\Carbon\Carbon::createFromFormat('d/m/Y',$input['date']),'description'=>$descr,'incoming'=>$strsql[0],'outgoing'=>$strsql[1],'notes'=>$input['notes']]);
+
+  // Get budget rows.
+  $rows2=\App\Budget::oldest('date')->get(['id','code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
+
+  return view('ajax.listview')->with('rows',$rows2)
+  ->with('runbal',\App\Current::getLastEntry('runbal'));
+  ;
+});
+
+
+Route::post('getlist', function () {
+
 });
