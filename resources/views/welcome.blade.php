@@ -27,20 +27,20 @@
 
   <div class="accsumm">      
     <button class="btn2" id="currbutt">Current {{ \App\Current::$account_number }}</button>        
-    <div id="currdescr">{{ \Carbon\Carbon::parse(\App\Current::getLastEntry('date'))->format('d/m/Y') }} &pound;<span class="negcol">{{ \App\Current::getLastEntry('runbal') }}</span><br>{{ \App\Current::getLastEntry('amount') }}</div>
+    <div id="currdescr">{{ \Carbon\Carbon::parse(\App\Current::getLastEntry('date'))->format('d/m/Y') }} &pound;<span class="negcol">{{ \App\Current::getLastEntry('amount') }}</span><br>{{ \App\Current::getLastEntry('description') }}</div>
     <input class="ambox" type="text" name="txt_currrunbal" id="currrunbal" value="{{ \App\Current::getLastEntry('runbal') }}">
   </div>
       
   <div class="accsumm">
-    <button class="btn2" id="savbutt">Savings 24362957</button>        
-    <div>Tue 26th Jul &pound;0.00<br>Current account</div>
-    <input class="ambox" type="text" name="txt_savrunbal" id="savrunbal" value="391.59">
+    <button class="btn2" id="savbutt">Savings {{ \App\Saving::$account_number }}</button>        
+    <div>{{ \Carbon\Carbon::parse(\App\Saving::getLastEntry('date'))->format('d/m/Y') }} &pound;<span class="negcol">{{ \App\Saving::getLastEntry('amount') }}</span><br>{{ \App\Saving::getLastEntry('description') }}</div>
+    <input class="ambox" type="text" name="txt_savrunbal" id="savrunbal" value="{{ \App\Saving::getLastEntry('runbal') }}">
   </div>
       
   <div class="accsumm">      
     <button class="btn2" id="savbutt2">Total</button>
     <div>&nbsp;</div>
-    <input class="ambox" type="text" name="txt_savrunbal2" id="savrunbal2" value="413.72">
+    <input class="ambox" type="text" name="txt_savrunbal2" id="savrunbal2" value="{{ \App\Current::getLastEntry('runbal')+\App\Saving::getLastEntry('runbal') }}">
   </div>
 
   </div>
@@ -233,10 +233,8 @@ $(document).ready( function(){
         + '&descr='     + encodeURIComponent($('input[name=descr]').val())
         + '&notes='     + encodeURIComponent($('input[name=notes]').val()),
       success: function(data) {
-        //alert(data);
         $('#listview').html(data); // Repopulate listview
         //goToByScroll("listview #rw"+$('#rowidsel').text());
-        //Cufon.replace('#cellhead, fieldset legend'); // 
       }
     });
     e.preventDefault();
@@ -261,8 +259,7 @@ $(document).ready( function(){
     // Get contents of Accounts screen via ajax:
     $.ajax({
       type:'post',
-      url:'acc',
-      data:'a=' + $(this).attr('id'),
+      url:'acc/' + $(this).attr('id'),
       success: function(data) {
         //alert(data); // Id for row that was moved.
 
@@ -306,10 +303,9 @@ $(document).ready( function(){
   $('#btnUp,#btnDown').click(function(){
     var dir = ( $(this).attr('id') == 'btnUp' ) ? 'u' : 'd' ;
     $.ajax({
-      type:'post',
-      url:'moveupdown',
-      data:'rowid=' + $('#rowidsel').text()
-        + '&dir=' + dir,
+      type:'get',
+      url:'moveupdown/' + $('#rowidsel').text(),
+      data:'dir=' + dir,
       success: function(data) {
         //alert(data); // Id for row that was moved.
         var splitdata = data.split('|');
@@ -317,9 +313,8 @@ $(document).ready( function(){
           var newdata  = splitdata[0];
           var firstrow = splitdata[1];
           repopulatelistview(newdata, firstrow);
-        } else {
-          repopulatelistview(data);
         }
+        else {repopulatelistview(data);}
 
       } // End success.
 
@@ -338,6 +333,7 @@ $(document).ready( function(){
       type:'post',
       url:'addrow',
       success: function(newrowid) {
+        alert(newrowid);
         // Returns ID for the new row added in data
         repopulatelistview(newrowid);
       } // End success.
@@ -350,20 +346,19 @@ $(document).ready( function(){
     
   // Duplicate row:  
   $('#btnDuplicate').live('click', function(){
-    //alert();
     $.ajax({
       type:'post',
-      url:'duplicaterow',
-      data:'editrowid=' + $('#rowidsel').text()
+      url:'duplicaterow/' + $('#rowidsel').text(),
+      data:''
       + '&code='   + $('#code').val()
       + '&date='   + $('#date').val() 
-      + '&amount=' + $('#amount').val()
+      + '&amount=' + $('input[name=amount]').val()
       + '&in='     + $('#rdoIn').is(':checked')
-      + '&descr='  + $('#descr').val()
-      + '&notes='  + $('#notes').val(),
+      + '&descr='  + encodeURIComponent($('input[name=descr]').val())
+      + '&notes='  + encodeURIComponent($('input[name=notes]').val()),
       
       success: function(data) {
-        alert(data);
+        //alert(data);
         // data contains the ID of the new row.
         repopulatelistview(data);
       }
@@ -397,31 +392,29 @@ $(document).ready( function(){
     //alert('');
     $.ajax({
       type:'post',
-      url:'transfer',
-      data:'getrow=1'
-      + '&rowid=' + $('#rowidsel').text()
-      + '&runbal=' + $('#currrunbal').val(),
+      url:'transfer/' + $('#rowidsel').text(),
+      data:'runbal=' + $('#currrunbal').val(),
       success: function(runbal) {
-        var retstr = runbal.split('|');
-        runbal = retstr[0];
-        var descr = retstr[1];
+        //var retstr = runbal.split('|');
+        //runbal = retstr[0];
+        //var descr = retstr[1];
         if (confirm("Transfer row #"+$('#rowidsel').text()+"\n" + "to make new balance £" + (parseFloat(runbal).toFixed(2)) + "?")) {
           //alert('Transfered row');
           $.ajax({
             type:'post',
-            url:'transfer',
-            data:'getrow=0&rowid=' + $('#rowidsel').text() + '&runbal=' + runbal,
+            url:'transfer/' + $('#rowidsel').text(),
+            data:'getrow=0&runbal=' + runbal,
             success: function(data) {
               $.ajax({
                 type:'post',
-                url:'deleterow',
-                data:'highlightfirstrow=1&rowid=' + $('#rowidsel').text() + '&date=' + $('#txtDate').val(),
+                url:'deleterow/' + $('#rowidsel').text(),
+                data:'highlightfirstrow=1&date=' + $('#txtDate').val(),
                 success: function(rowid) {
                   repopulatelistview(rowid, rowid);
               
                   // Update account balance:
                   $('#currrunbal').val(parseFloat(runbal).toFixed(2)); // new running balance
-                  $('#currdescr').text(descr); // new descr
+                  //$('#currdescr').text(descr); // new descr
                 }
 
               });
