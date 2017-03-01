@@ -12,14 +12,14 @@
 {!! Form::text('notes', $editrows['notes'], ['style'=>'width:17em;', 'title'=>'notes']) !!}
 
 <div id="rdoBtnGroupinout">
-<div>
-{!! Form::label('in', 'In') !!}
-{!! Form::radio('in_out', 'in', 0, ['id'=>'in']) !!}
-</div>
-<div>
-{!! Form::label('out', 'Out') !!}
-{!! Form::radio('in_out', 'out', 1, ['id'=>'out']) !!}
-</div>
+  <div>
+  {!! Form::label('in', 'In') !!}
+  {!! Form::radio('in_out', 'in', $editrows['incoming'], ['id'=>'in']) !!}
+  </div>
+  <div>
+  {!! Form::label('out', 'Out') !!}
+  {!! Form::radio('in_out', 'out', $editrows['outgoing'], ['id'=>'out']) !!}
+  </div>
 </div>
 
 {!! Form::submit('Update', ['id'=>'editdata']) !!}
