@@ -14,7 +14,7 @@
   <script src="js/script.js"></script>
 </head>
 <body>
-
+{{ App\ProjectsMenu::display() }}
 <fieldset class="l">
   <legend>Edit row <span id="rowidsel">{{ \App\Budget::oldest('date')->take(1)->get(['id'])[0]->id }}</span></legend>
   <div id="editrow">@include('ajax.getrow')</div>
@@ -63,6 +63,14 @@
 // Highlight first row:
 
 $(document).ready( function(){
+
+  $('ul#projectsmenu').css({'background':'#c00'});
+  $('ul#projectsmenu li').css('float','none');
+  $('ul#projectsmenu li').has('a[href]').hide();
+  $('ul#projectsmenu li span').css('cursor','pointer').click(function() {
+    $('ul#projectsmenu li').has('a[href]').toggle();
+  });
+  
 
   // What to do when an item in 'listview' is clicked.
   $('.cellrow').die('click').live('click', function(){
