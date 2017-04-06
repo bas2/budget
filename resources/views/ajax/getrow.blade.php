@@ -1,15 +1,15 @@
 {{-- // Retrieves row to display in 'Edit row' section: --}}
-{!! Form::open() !!}
+{{-- {!! Form::open() !!} --}}
 
 {!! Form::select('code', $codes, $editrows['code']) !!}
 
-{!! Form::text('date', $editrows['date'], ['id'=>'date','style'=>'width:6em;', 'title'=>'date']) !!}
+{!! Form::text('date', $editrows['date'], ['id'=>'date','title'=>'date']) !!}
 
-{!! Form::text('descr', $editrows['descr'], ['style'=>'width:17em;', 'title'=>'description']) !!}
+{!! Form::text('descr', $editrows['descr'], ['title'=>'description']) !!}
 
-{!! Form::text('amount', $editrows['amount'], ['style'=>'width:4em;', 'title'=>'amount']) !!}
+{!! Form::text('amount', $editrows['amount'], ['title'=>'amount']) !!}
 
-{!! Form::text('notes', $editrows['notes'], ['style'=>'width:17em;', 'title'=>'notes']) !!}
+{!! Form::text('notes', $editrows['notes'], ['title'=>'notes']) !!}
 
 <div id="rdoBtnGroupinout">
   <div>
@@ -25,5 +25,5 @@
 {!! Form::submit('Update', ['id'=>'editdata']) !!}
 
 
-{!! Form::close() !!}
+{{-- {!! Form::close() !!} --}}
 
