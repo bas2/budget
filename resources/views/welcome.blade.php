@@ -15,28 +15,30 @@
 </head>
 <body>
 {{ App\ProjectsMenu::display() }}
+<div class="topdiv">
 <fieldset class="l">
   <legend>Edit row <span id="rowidsel">{{ \App\Budget::oldest('date')->take(1)->get(['id'])[0]->id }}</span></legend>
   <div id="editrow">@include('ajax.getrow')</div>
 </fieldset>
-    
+
+<div class="sep"></div>
 
 <fieldset id="r">
   <legend>Account Balances</legend>
-  <div style="float:left;width:100%;background:transparent;padding: 0;border: 0;">
+  <div>
 
   <div class="accsumm">      
     <button class="btn2" id="currbutt">Current {{ \App\Current::$account_number }}</button>        
     <div id="currdescr">{{ \Carbon\Carbon::parse(\App\Current::getLastEntry('date'))->format('d/m/Y') }} &pound;<span class="negcol">{{ \App\Current::getLastEntry('amount') }}</span><br>{{ \App\Current::getLastEntry('description') }}</div>
     <input class="ambox" type="text" name="txt_currrunbal" id="currrunbal" value="{{ \App\Current::getLastEntry('runbal') }}">
   </div>
-      
+  <div class="sep"></div>
   <div class="accsumm">
     <button class="btn2" id="savbutt">Savings {{ \App\Saving::$account_number }}</button>        
     <div>{{ \Carbon\Carbon::parse(\App\Saving::getLastEntry('date'))->format('d/m/Y') }} &pound;<span class="negcol">{{ \App\Saving::getLastEntry('amount') }}</span><br>{{ \App\Saving::getLastEntry('description') }}</div>
     <input class="ambox" type="text" name="txt_savrunbal" id="savrunbal" value="{{ \App\Saving::getLastEntry('runbal') }}">
   </div>
-      
+  <div class="sep"></div>
   <div class="accsumm">      
     <button class="btn2" id="savbutt2">Total</button>
     <div>&nbsp;</div>
@@ -45,7 +47,9 @@
 
   </div>
 </fieldset>
-      
+</div>
+
+
 <div id="buttons">
 {!! Form::button('Up', ['id'=>'btnUp']) !!}
 {!! Form::button('Add row &gt;', ['id'=>'btnAddrow']) !!}
@@ -478,9 +482,9 @@ $(document).ready( function(){
   }
    
 
-$('fieldset.l').css('height', $('fieldset#r').css('height') );
-$('#editdata').css('bottom', '10px');
-$('#editdata').css('right', 0);
+//$('fieldset.l').css('height', $('fieldset#r').css('height') );
+//$('#editdata').css('bottom', '10px');
+//$('#editdata').css('right', 0);
 });
 </script>
 </body>
