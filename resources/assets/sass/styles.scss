@@ -1,6 +1,4 @@
-body {
-  background-color: #fff;
-}
+body {background-color: #fff;}
 
 ul#projectsmenu {
   position:absolute;top:0;right:0;
@@ -17,11 +15,126 @@ ul#projectsmenu {
 
 }
 
-        
-#listview {
-  font: bold italic 80% verdana;
-  
+div.topdiv {
+  display:flex;
+  flex-wrap:wrap;
 }
+
+
+
+fieldset {
+  box-sizing: border-box;
+  border:0;
+  border-radius: 0.5em;
+  background: linear-gradient(green, black);
+  legend {
+    border-radius: 0.5em;
+    background: linear-gradient(red, black);
+    padding: 0;
+    text-align: center;
+    color: #fff;
+    text-transform: uppercase;
+  }
+  &.l {width:49.5%;margin:0;position: relative;
+    #editdata {position:absolute;bottom:5px;right:5px;}
+  }
+  &#r {
+    width:49.5%;margin:0;
+    > div {
+      display:flex;
+      flex-wrap:wrap;
+      > div {background: transparent;width:32%;text-align: center;position: relative;}
+      div.sep {background: transparent;width:2%;}
+      input {box-sizing:border-box;width:99%;text-align: center;}
+      > div:nth-child(5) input {position:absolute;left:0;bottom:0;background: yellow;}
+    }
+  }
+  div {
+    
+  }
+  input.btn2 {
+    
+  }
+  button {
+
+  }
+
+  textarea {
+    height:4em;
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+  
+
+}
+
+div.sep {width:1%;}
+
+.accsumm {
+  color: white;
+  text-align: center;
+  button {}
+  div {
+
+  }
+  input {}
+}
+
+/* Editrow fieldset */
+#editrow {
+  line-height: 1.8em;
+  border: 0;
+  label {color: white;}
+  input[name=date] {width:7em;}
+  input[name=descr] {width:17em;}
+  input[name=amount] {width:4em;}
+  input[name=notes] {width:30em;}
+}
+
+/* Update button */
+#editdata {
+  position: absolute;
+  right:0;
+  bottom:.5em;
+  font: 120% arial;
+  width: 10em;
+  border-radius: .3em;
+  background: yellow;
+  &:hover {background: rgba(255, 200, 100, .3);}
+  label {color: white;}
+}
+
+
+#btnUp {
+  border-top-left-radius:.5em;
+  border-top-right-radius:.5em;
+  width: 10em;
+}
+ 
+#btnDown {
+  border-bottom-left-radius:.5em;
+  border-bottom-right-radius:.5em;
+  margin-top: .5em;
+  width: 10em;
+}
+        
+#btnAddrow, #btnDuplicate, #btnDelete, #btnTransfer {
+  border-radius:.3em;
+}
+  
+#rowidsel {
+  font-weight: bold;
+  background-color: yellow;
+  padding: .2em;
+  border-radius: 0.5em;
+  color: #000;
+}
+
+
+
+        
+#listview {font: bold italic 80% verdana;}
   
 #cellhead {
   background: linear-gradient(red, black);
@@ -101,72 +214,13 @@ ul#projectsmenu {
   background-color: orange;
 }
  
-fieldset {
-  border: 0px solid #f99;
-  
-  font: 100% arial;
-  border-radius: 0.5em;
-  
-  background: linear-gradient(green, black);
-  legend {
-    border-radius: 0.5em;
-    background: linear-gradient(red, black);
-    padding: 0;
-    text-align: center;
-    color: #fff;
-    width: 20em;
-    text-transform: uppercase;
-  }
-  &.l {float:left; width:50%;}
-  div {
-    border-bottom: 1px solid #ccc; padding-bottom: .5em; margin-bottom: .5em; 
-  }
-  input.btn2 {
-    width:8em;
-    color: red;
-  }
-  button {
-    width: 7em;
-    font: 90% arial;
-  }
 
-  textarea {
-    height:4em;
-    border: 0;
-    padding: 0;
-    margin: 0;
-  }
-
-}
  
 #buttons {
-  margin: .5em 0;
+
 }
  
-#btnUp {
-  border-top-left-radius:.5em;
-  border-top-right-radius:.5em;
-  width: 10em;
-}
- 
-#btnDown {
-  border-bottom-left-radius:.5em;
-  border-bottom-right-radius:.5em;
-  margin-top: .5em;
-  width: 10em;
-}
-        
-#btnAddrow, #btnDuplicate, #btnDelete, #btnTransfer {
-  border-radius:.3em;
-}
-  
-#rowidsel {
-  font-weight: bold;
-  background-color: yellow;
-  padding: .2em;
-  border-radius: 0.5em;
-  color: #000;
-}
+
  
 form * {
   text-align: center;
@@ -174,7 +228,6 @@ form * {
  
 input {
   border: 1px solid #ccc;
-
 }
  
 select, input[type=text] {
@@ -182,43 +235,10 @@ select, input[type=text] {
 }
  
 .ambox {
-  text-align: right;
-  width: 5em;
-  padding: .3em;
-}
-
-/* Editrow fieldset */
-#editrow {
-  position: relative;
-  padding:.5em;
-  line-height: 1.8em;
-  border: 0;
-  height:100%;
-  form {
-    display: inline;
-  }
-  label {color: white;}
-}
-/* Update button */
-#editdata {
-  position: absolute;
-  right:0;
-  bottom:.5em;
-  font: 120% arial;
-  width: 10em;
-  border-radius: .3em;
-  background: yellow;
-  &:hover {
-    background: rgba(255, 200, 100, .3);
-  }
-  label {
-    color: white;
-  }
-  #btnZero {
-    width: 3em;
-  }
 
 }
+
+
  
 #accsdiv {
   position: absolute;
@@ -238,9 +258,9 @@ select, input[type=text] {
     font-weight: bold;
   }
   table {
-      border-collapse: collapse;
-      border: 1px solid black;
-      border-radius: .4em;
+    border-collapse: collapse;
+    border: 1px solid black;
+    border-radius: .4em;
   }
   tr {
     vertical-align: top;
@@ -265,43 +285,19 @@ select, input[type=text] {
     width: 950px;
     overflow: hidden;
   }
-
 }
 
 
 
-.negcol {
-  color: #c00;
-}
+.negcol {color: #c00;}
 
-.accsumm {
-  color: white;
-  float:left;
-  width:600%;
-  border:0; margin:0; width:32%;
-  border:0px solid purple;
-  text-align: center;
-  padding: .2em;
-  button {float:left;width:100%;margin:0 auto;padding:0;border:1;}
-  div {
-    float: left;width:90%;margin:auto 0;border:0;padding:0;font-size:.8em;height: 4em;text-align: center;font-weight: bold;
-    border:1px solid white; border-radius: .3em;width:100%; vertical-align: middle;
-  }
-  input {
-    clear:both;float:left;padding:0;text-align: center; border-radius: .3em;width:100%;
-  }
 
-}
 
 
 /* Today col */
-.todcol {
-  background:lime;
-}
+.todcol {background:lime;}
 /* prev days col */
-.prevdayscol {
-  background:orange;
-}
+.prevdayscol {background:orange;}
 
 /* prev days col */
 .negcol {
