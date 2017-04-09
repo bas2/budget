@@ -105,70 +105,22 @@ fieldset {
 
 }
 
-
-#listview {font: bold italic 80% verdana;}
-  
-#cellhead {
-  background: linear-gradient(red, black);
-  font-style: normal;
-  padding: .5em 0;
-  color: #fff;
-  float: left;
-  width: 100%;
-  border-bottom: 1px dotted #ccc;
-  border-radius: .5em .5em 0 0;
-}
-
-#datehead, #morderhead, #descrhead, #inhead, #outhead, #balhead, #savhead, #noteshead {
-  float: left;
-  width: 19em;
-  border-left: 0px solid #ccc;
-}
-
-#datehead, .celldate, #morderhead, .cellmorder, #descrhead, .celldescr, #noteshead, .cellnotes {
-  padding-left: .6em;
-}
-    
-.celldate, .cellmorder, .celldescr, .cellin, .cellout, .cellbal, .cellsav, .cellnotes {
-  float: left;
-  width: 19em;
-  border-left: 0px solid #ccc;
-                                
-}
-        
-#datehead, .celldate {
-  border-left: 0;
-}
-        
-      
-#datehead, .celldate, #morderhead, .cellmorder, #inhead, .cellin, #outhead, .cellout, #balhead, .cellbal, #savhead, .cellsav, #noteshead {
-  width: 9em;
-}
-
-#morderhead, .cellmorder {
-  width: 2em;
-}
-      
-.r, #inhead, #outhead, #balhead, #savhead {
-  text-align: right;
-  padding-right: .5em;
-}
-        
-.cellnotesx {
-  padding-left: .6em;
-}
         
 .cellrow {
   cursor: pointer;  
 }
-        
-#listviewbody {
-  height: 30em;
-  width: 100%;
-  float: left;
-  background: hsla(90,100%,50%,.5);
-  color: #fff;
-  overflow: auto;
+
+table.table {
+  thead tr {
+    background: linear-gradient(red,black);
+    border-radius: .5em .5em 0 0;
+    th {
+      font-variant: small-caps;
+    }
+  }
+  tbody tr {
+    &:hover {background:rgba(0,0,100%,.5);}
+  }
 }
         
 .hl {
