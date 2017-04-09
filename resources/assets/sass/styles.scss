@@ -1,62 +1,59 @@
-body {background-color: #fff;}
+body {background-color: #fff;margin:5px;}
 
 ul#projectsmenu {
+  background-color: rgba(0,0,0,.5);
+  z-index: 1;
   position:absolute;top:0;right:0;
   margin-top:0;padding-left: 0;
+  border-bottom-left-radius: 2px;
+  box-shadow: -2px 2px 2px;
   li {
     list-style: none;
-    padding-left: 0;
-    float:left;
+    text-align: center;
+    font: bold 1em verdana;
+    border-bottom: 1px solid rgba(196,196,196,.7);
+    cursor:pointer;
     a {
-      margin-right: .5em;color:#ccc;text-decoration: none;font-weight: bold;
+      display: block;
+      color:#ccc;
+      &:hover {background-color: rgba(255,255,255,.5);color:#000;};
     }
-    span {margin-right:.5em;font-weight: bold;color:yellow;}
+    &.sel {color:yellow;border:0;}
+    &.sel, a {padding:0;}
+    &:last-child{border:0;};
   }
 
 }
 
-div.topdiv {
-  display:flex;
+.equal {  
+  display: -webkit-flex;
+  display: flex;
   flex-wrap:wrap;
+  margin-bottom: 2em;
 }
 
-
+.container-fluid {
+  .row {
+    .hunp {height:100%;}
+  }
+  .panel {margin-bottom: 0;padding-bottom: 1em;}
+}
 
 fieldset {
-  box-sizing: border-box;
   border:0;
-  border-radius: 0.5em;
-  background: linear-gradient(green, black);
   legend {
-    border-radius: 0.5em;
-    background: linear-gradient(red, black);
-    padding: 0;
     text-align: center;
-    color: #fff;
     text-transform: uppercase;
   }
-  &.l {width:49.5%;margin:0;position: relative;
-    #editdata {position:absolute;bottom:5px;right:5px;}
+  &.l {position: relative;
+    #editdata {}
   }
   &#r {
-    width:49.5%;margin:0;
     > div {
-      display:flex;
-      flex-wrap:wrap;
-      > div {background: transparent;width:32%;text-align: center;position: relative;}
-      div.sep {background: transparent;width:2%;}
-      input {box-sizing:border-box;width:99%;text-align: center;}
-      > div:nth-child(5) input {position:absolute;left:0;bottom:0;background: yellow;}
+      > div {background: transparent;text-align: center;position: relative;}
+      input {text-align: center;color:#000;}
+      > div:nth-child(5) input {}
     }
-  }
-  div {
-    
-  }
-  input.btn2 {
-    
-  }
-  button {
-
   }
 
   textarea {
@@ -65,20 +62,12 @@ fieldset {
     padding: 0;
     margin: 0;
   }
-  
 
 }
-
-div.sep {width:1%;}
 
 .accsumm {
   color: white;
   text-align: center;
-  button {}
-  div {
-
-  }
-  input {}
 }
 
 /* Editrow fieldset */
@@ -86,54 +75,37 @@ div.sep {width:1%;}
   line-height: 1.8em;
   border: 0;
   label {color: white;}
-  input[name=date] {width:7em;}
-  input[name=descr] {width:17em;}
-  input[name=amount] {width:4em;}
-  input[name=notes] {width:30em;}
+  input[name=date] {width:7em;display: inline;}
+  input[name=descr] {width:17em;display: inline;}
+  input[name=amount] {width:4em;display: inline;}
+  input[name=notes] {width:30em;display: inline;}
 }
 
 /* Update button */
 #editdata {
-  position: absolute;
-  right:0;
-  bottom:.5em;
-  font: 120% arial;
-  width: 10em;
-  border-radius: .3em;
-  background: yellow;
-  &:hover {background: rgba(255, 200, 100, .3);}
-  label {color: white;}
+
 }
 
 
 #btnUp {
-  border-top-left-radius:.5em;
-  border-top-right-radius:.5em;
+  border-radius:.5em .5em 0 0;
   width: 10em;
 }
  
 #btnDown {
-  border-bottom-left-radius:.5em;
-  border-bottom-right-radius:.5em;
-  margin-top: .5em;
+  border-radius:.5em .5em 0 0;
   width: 10em;
 }
         
 #btnAddrow, #btnDuplicate, #btnDelete, #btnTransfer {
-  border-radius:.3em;
+
 }
   
 #rowidsel {
-  font-weight: bold;
-  background-color: yellow;
-  padding: .2em;
-  border-radius: 0.5em;
-  color: #000;
+
 }
 
 
-
-        
 #listview {font: bold italic 80% verdana;}
   
 #cellhead {
@@ -144,7 +116,7 @@ div.sep {width:1%;}
   float: left;
   width: 100%;
   border-bottom: 1px dotted #ccc;
-  border-radius: .5em;
+  border-radius: .5em .5em 0 0;
 }
 
 #datehead, #morderhead, #descrhead, #inhead, #outhead, #balhead, #savhead, #noteshead {
@@ -187,17 +159,14 @@ div.sep {width:1%;}
 }
         
 .cellrow {
-  float: left;
-  width:100%;
-  cursor: pointer;
-            
+  cursor: pointer;  
 }
         
 #listviewbody {
   height: 30em;
   width: 100%;
   float: left;
-  background: #c86868;
+  background: hsla(90,100%,50%,.5);
   color: #fff;
   overflow: auto;
 }
@@ -214,13 +183,6 @@ div.sep {width:1%;}
   background-color: orange;
 }
  
-
- 
-#buttons {
-
-}
- 
-
  
 form * {
   text-align: center;
@@ -233,10 +195,7 @@ input {
 select, input[type=text] {
   border-radius: 0.5em;
 }
- 
-.ambox {
 
-}
 
 
  
