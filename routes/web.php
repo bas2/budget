@@ -1,21 +1,12 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {
   return view('welcome');
 });
 
 Route::get('home', function () {
+  $dirpath='../..';$proj=[];foreach(\File::directories($dirpath) as $project){$prj=str_replace($dirpath.'/','',$project);if(substr($prj,0,1)!='_'){$proj[]=ucwords($prj);}}
+
   // Get codes:
   $codesall=App\Code::orderBy('code')->get(['code','info']);
   foreach($codesall as $code) {$codes[$code->code]="{$code->code}";}
@@ -38,7 +29,8 @@ Route::get('home', function () {
   ->with('editrows',['code'=>$rows[0]->code,'date'=>\Carbon\Carbon::parse($rows[0]->date)->format('d/m/Y'),'descr'=>$rows[0]->description,'amount'=>$amount,'notes'=>$rows[0]->notes,'incoming'=>$incoming,'outgoing'=>$outgoing])
   ->with('codes', $codes)
   ->with('rows', $rows2)
-  ->with('runbal',\App\Current::getLastEntry('runbal'));
+  ->with('runbal',\App\Current::getLastEntry('runbal'))
+  ->with('projlist',$proj)
   ;
 });
 
