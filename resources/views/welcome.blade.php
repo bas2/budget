@@ -3,66 +3,90 @@
 <head>
   <meta charset="utf-8">
   <title>CURRENT ACCOUNT TRANSACTIONS FORECAST GRID</title>
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="js/jquery/css/sunny/jquery-ui-1.8.22.custom.css">
+  <!-- Bootstrap -->
+  {!! Html::style('css/bootstrap.min.css') !!}
+  {!! Html::style('css/styles.css') !!}
+  {!! Html::style('js/jquery/css/sunny/jquery-ui-1.8.22.custom.css') !!}
+
   {{-- <link rel="stylesheet" href="css/autocomplete.css"> --}}
-  
-  <script src="js/jquery-1.8.3.min.js"></script>
-  <script src="js/jquery-ui-1.8.22.custom.min.js"></script>
-  {{-- <script src="js/cufon-yui.js"></script>
-  <script src="js/aurulent-sans-mono.cufonfonts.js"></script> --}}
-  <script src="js/script.js"></script>
+  {!! Html::script('js/jquery-1.8.3.min.js') !!}
+  {!! Html::script('js/jquery-ui-1.8.22.custom.min.js') !!}
+  {!! Html::script('js/script.js') !!}
 </head>
 <body>
-{{ App\ProjectsMenu::display() }}
-<div class="topdiv">
-<fieldset class="l">
-  <legend>Edit row <span id="rowidsel">{{ \App\Budget::oldest('date')->take(1)->get(['id'])[0]->id }}</span></legend>
-  <div id="editrow">@include('ajax.getrow')</div>
-</fieldset>
+@include('projectmenu')
+<div class="container-fluid">
 
-<div class="sep"></div>
+  <div class="row equal">
 
-<fieldset id="r">
-  <legend>Account Balances</legend>
-  <div>
+    <div class="col-md-5 panel">
+    <fieldset class="l hunp">
+      <legend>Edit row <span class="badge" id="rowidsel">{{ \App\Budget::oldest('date')->take(1)->get(['id'])[0]->id }}</span></legend>
+      <div id="editrow">@include('ajax.getrow')</div>
+    </fieldset>
+    </div>
 
-  <div class="accsumm">      
-    <button class="btn2" id="currbutt">Current {{ \App\Current::$account_number }}</button>        
-    <div id="currdescr">{{ \Carbon\Carbon::parse(\App\Current::getLastEntry('date'))->format('d/m/Y') }} &pound;<span class="negcol">{{ \App\Current::getLastEntry('amount') }}</span><br>{{ \App\Current::getLastEntry('description') }}</div>
-    <input class="ambox" type="text" name="txt_currrunbal" id="currrunbal" value="{{ \App\Current::getLastEntry('runbal') }}">
-  </div>
-  <div class="sep"></div>
-  <div class="accsumm">
-    <button class="btn2" id="savbutt">Savings {{ \App\Saving::$account_number }}</button>        
-    <div>{{ \Carbon\Carbon::parse(\App\Saving::getLastEntry('date'))->format('d/m/Y') }} &pound;<span class="negcol">{{ \App\Saving::getLastEntry('amount') }}</span><br>{{ \App\Saving::getLastEntry('description') }}</div>
-    <input class="ambox" type="text" name="txt_savrunbal" id="savrunbal" value="{{ \App\Saving::getLastEntry('runbal') }}">
-  </div>
-  <div class="sep"></div>
-  <div class="accsumm">      
-    <button class="btn2" id="savbutt2">Total</button>
-    <div>&nbsp;</div>
-    <input class="ambox" type="text" name="txt_savrunbal2" id="savrunbal2" value="{{ \App\Current::getLastEntry('runbal')+\App\Saving::getLastEntry('runbal') }}">
-  </div>
+    <div class="col-md-offset-1 col-md-6 panel">
+      {{-- <h2 class="panel-title">Test</h2> --}}
+      <fieldset class="hunp" id="r">
+        <legend>Account Balances</legend>
+
+        <div class="row">
+          <div class="col-md-4" id="currdescr">
+          <button class="btn btn-primary" id="currbutt">Current {{ \App\Current::$account_number }}</button> 
+          </div>
+          <div class="col-md-4">
+          <button class="btn btn-primary" id="savbutt">Savings {{ \App\Saving::$account_number }}</button> 
+          </div>
+          <div class="col-md-4">
+          <button class="btn btn-primary" id="savbutt2">Total</button> 
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+          {{ \Carbon\Carbon::parse(\App\Current::getLastEntry('date'))->format('d/m/Y') }} &pound;<span class="negcol">{{ \App\Current::getLastEntry('amount') }}</span><br>{{ \App\Current::getLastEntry('description') }} 
+          </div>
+          <div class="col-md-4">
+          {{ \Carbon\Carbon::parse(\App\Saving::getLastEntry('date'))->format('d/m/Y') }} &pound;<span class="negcol">{{ \App\Saving::getLastEntry('amount') }}</span><br>{{ \App\Saving::getLastEntry('description') }}
+          </div>
+          <div class="col-md-4">
+          
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+          <input class="ambox" type="text" name="txt_currrunbal" id="currrunbal" value="{{ \App\Current::getLastEntry('runbal') }}">
+          </div>
+          <div class="col-md-4">
+          <input class="ambox" type="text" name="txt_savrunbal" id="savrunbal" value="{{ \App\Saving::getLastEntry('runbal') }}">
+          </div>
+          <div class="col-md-4">
+          <input class="ambox" type="text" name="txt_savrunbal2" id="savrunbal2" value="{{ \App\Current::getLastEntry('runbal')+\App\Saving::getLastEntry('runbal') }}">
+          </div>
+        </div>
+
+      </fieldset>
+    </div>
 
   </div>
-</fieldset>
+
+
+  <div class="row form-group" id="buttons">
+  {!! Form::button('&uarr; Up',        ['class'=>'btn btn-primary','id'=>'btnUp']) !!}
+  {!! Form::button('Add row &rarr;',   ['class'=>'btn btn-primary','id'=>'btnAddrow']) !!}
+  {!! Form::button('Duplicate &rarr;', ['class'=>'btn btn-primary','id'=>'btnDuplicate']) !!}
+  {!! Form::button('Delete &rarr;',    ['class'=>'btn btn-primary','id'=>'btnDelete']) !!}
+  {!! Form::button('Transfer &rarr;',  ['class'=>'btn btn-primary','id'=>'btnTransfer']) !!}
+  {!! Form::button('&darr; Down',      ['class'=>'btn btn-primary','id'=>'btnDown']) !!}   
+  </div>
+
+  <div class="row" id="listview">
+  @include('ajax.listview')
+  </div>
+
 </div>
-
-
-<div id="buttons">
-{!! Form::button('Up', ['id'=>'btnUp']) !!}
-{!! Form::button('Add row &gt;', ['id'=>'btnAddrow']) !!}
-{!! Form::button('Duplicate &gt;', ['id'=>'btnDuplicate']) !!}
-{!! Form::button('Delete &gt;', ['id'=>'btnDelete']) !!}
-{!! Form::button('Transfer &gt;', ['id'=>'btnTransfer']) !!}
-{!! Form::button('Down', ['id'=>'btnDown']) !!}   
-</div>
-
-<div id="listview">
-@include('ajax.listview')
-</div>
-
 <script>
 // Highlight first row:
 
@@ -345,7 +369,7 @@ $(document).ready( function(){
       type:'post',
       url:'addrow',
       success: function(newrowid) {
-        alert(newrowid);
+        //alert(newrowid);
         // Returns ID for the new row added in data
         repopulatelistview(newrowid);
       } // End success.
