@@ -13,7 +13,7 @@
   </thead>
   <tbody>
   @foreach($rows as $budgetrow)
-    <tr id="rw{{ $budgetrow->id }}" class="cellrow">
+    <tr{{ ((++$rowcounter==1)?' title2=1':'') }} id="rw{{ $budgetrow->id }}" class="cellrow">
       <td>{{ \Carbon\Carbon::parse($budgetrow->date)->format('d/m/Y') }}</td>
       <td>{{ \Carbon\Carbon::parse($budgetrow->date)->diff(\Carbon\Carbon::now())->days }}</td>
       <td>{{ $budgetrow->description }}</td>
