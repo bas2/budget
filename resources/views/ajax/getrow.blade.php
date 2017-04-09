@@ -1,5 +1,4 @@
 {{-- // Retrieves row to display in 'Edit row' section: --}}
-{{-- {!! Form::open() !!} --}}
 
 {!! Form::select('code', $codes, $editrows['code']) !!}
 
@@ -7,7 +6,7 @@
 
 {!! Form::text('descr', $editrows['descr'], ['class'=>'form-control','title'=>'description']) !!}
 
-{!! Form::text('amount', $editrows['amount'], ['class'=>'form-control','title'=>'amount']) !!}
+{!! Form::text('amount', number_format($editrows['amount'],2), ['class'=>'form-control','title'=>'amount']) !!}
 
 {!! Form::text('notes', $editrows['notes'], ['class'=>'form-control','title'=>'notes']) !!}
 
@@ -18,7 +17,3 @@
 </div>
 
 {!! Form::submit('Update >', ['class'=>'btn btn-primary btn-block','id'=>'editdata']) !!}
-
-
-{{-- {!! Form::close() !!} --}}
-
