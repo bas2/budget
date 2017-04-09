@@ -3,26 +3,21 @@
 
 {!! Form::select('code', $codes, $editrows['code']) !!}
 
-{!! Form::text('date', $editrows['date'], ['id'=>'date','title'=>'date']) !!}
+{!! Form::date('date', $editrows['date'], ['class'=>'form-control','id'=>'date','title'=>'date']) !!}
 
-{!! Form::text('descr', $editrows['descr'], ['title'=>'description']) !!}
+{!! Form::text('descr', $editrows['descr'], ['class'=>'form-control','title'=>'description']) !!}
 
-{!! Form::text('amount', $editrows['amount'], ['title'=>'amount']) !!}
+{!! Form::text('amount', $editrows['amount'], ['class'=>'form-control','title'=>'amount']) !!}
 
-{!! Form::text('notes', $editrows['notes'], ['title'=>'notes']) !!}
+{!! Form::text('notes', $editrows['notes'], ['class'=>'form-control','title'=>'notes']) !!}
 
-<div id="rdoBtnGroupinout">
-  <div>
-  {!! Form::label('in', 'In') !!}
-  {!! Form::radio('in_out', 'in', $editrows['incoming'], ['id'=>'in']) !!}
-  </div>
-  <div>
-  {!! Form::label('out', 'Out') !!}
-  {!! Form::radio('in_out', 'out', $editrows['outgoing'], ['id'=>'out']) !!}
-  </div>
+<div class="form-group">
+{!! Form::label('in',Form::radio('in_out', 'in', $editrows['incoming'], ['id'=>'in']).'In',['class'=>'radio-inline'],false ) !!}
+
+{!! Form::label('out',Form::radio('in_out', 'out', $editrows['outgoing'], ['id'=>'out']).'Out',['class'=>'radio-inline'],false ) !!}
 </div>
 
-{!! Form::submit('Update', ['id'=>'editdata']) !!}
+{!! Form::submit('Update >', ['class'=>'btn btn-primary btn-block','id'=>'editdata']) !!}
 
 
 {{-- {!! Form::close() !!} --}}
