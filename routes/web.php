@@ -1,9 +1,5 @@
 <?php
 
-Route::get('/', function () {
-  return view('welcome');
-});
-
 Route::get('home', function () {
   $dirpath='../..';$proj=[];foreach(\File::directories($dirpath) as $project){$prj=str_replace($dirpath.'/','',$project);if(substr($prj,0,1)!='_'){$proj[]=ucwords($prj);}}
 
