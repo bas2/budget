@@ -33,17 +33,17 @@
 
         <div class="row">
           <div class="col-md-4" id="currdescr">
-          <button class="btn btn-primary" id="currbutt">Current {{ \App\Current::$account_number }}</button> 
+            <button class="btn btn-primary" id="currbutt">Current {{ \App\Current::$account_number }}</button> 
           </div>
           <div class="col-md-4">
-          <button class="btn btn-primary" id="savbutt">Savings {{ \App\Saving::$account_number }}</button> 
+            <button class="btn btn-primary" id="savbutt">Savings {{ \App\Saving::$account_number }}</button> 
           </div>
           <div class="col-md-4">
-          <button class="btn btn-primary" id="savbutt2">Total</button> 
+            <button class="btn btn-primary" id="savbutt2">Total</button> 
           </div>
         </div>
 
-        <div class="row">
+        <div class="row transaction-detail">
           <div class="col-md-4">
           {{ \Carbon\Carbon::parse(\App\Current::getLastEntry('date'))->format('d/m/Y') }} &pound;<span class="negcol">{{ \App\Current::getLastEntry('amount') }}</span><br>{{ \App\Current::getLastEntry('description') }} 
           </div>
@@ -57,13 +57,13 @@
 
         <div class="row">
           <div class="col-md-4">
-          <input class="ambox" type="text" name="txt_currrunbal" id="currrunbal" value="{{ \App\Current::getLastEntry('runbal') }}">
+            <input class="ambox" type="text" name="txt_currrunbal" id="currrunbal" value="{{ \App\Current::getLastEntry('runbal') }}">
           </div>
           <div class="col-md-4">
-          <input class="ambox" type="text" name="txt_savrunbal" id="savrunbal" value="{{ \App\Saving::getLastEntry('runbal') }}">
+            <input class="ambox" type="text" name="txt_savrunbal" id="savrunbal" value="{{ \App\Saving::getLastEntry('runbal') }}">
           </div>
           <div class="col-md-4">
-          <input class="ambox" type="text" name="txt_savrunbal2" id="savrunbal2" value="{{ \App\Current::getLastEntry('runbal')+\App\Saving::getLastEntry('runbal') }}">
+            <input class="ambox" type="text" name="txt_savrunbal2" id="savrunbal2" value="{{ \App\Current::getLastEntry('runbal')+\App\Saving::getLastEntry('runbal') }}">
           </div>
         </div>
 
@@ -83,7 +83,7 @@
   </div>
 
   <div class="row" id="listview">
-  @include('ajax.listview')
+  @include('ajax.listview',['rowcounter'=>0])
   </div>
 
 </div>
@@ -188,14 +188,11 @@ $(document).ready( function(){
 
 
   // http://djpate.com/2009/10/07/animated-scroll-to-anchorid-function-with-jquery/
-  function goToByScroll(id){
-    $('html, body').animate({scrollTop: $("#"+id).offset().top},'slow');
-  }
-
-});
+  //function goToByScroll(id){
+  //  $('html, body').animate({scrollTop: $("#"+id).offset().top},'slow');
+  //}
 
 
-$(document).ready( function(){
     
   $("#date").datepicker();
 
@@ -277,16 +274,15 @@ $(document).ready( function(){
   });
   
   $('#btnZero').live('click', function() {
-      //alert('');
-      var prevtext  = $('#txtAmount').val();
-      var prevtext1 = $('#txtAmount').data('prevtext1');
-      if ( prevtext1>0 ) {
-       $('#txtAmount').data('prevtext1',prevtext).val( prevtext1 );
-      }
-      else
-       {$('#txtAmount').data('prevtext1',prevtext).val('');}
-      
-    });
+    //alert('');
+    var prevtext  = $('#txtAmount').val();
+    var prevtext1 = $('#txtAmount').data('prevtext1');
+    if ( prevtext1>0 ) {
+     $('#txtAmount').data('prevtext1',prevtext).val( prevtext1 );
+    }
+    else
+     {$('#txtAmount').data('prevtext1',prevtext).val('');}
+  });
   
   // Open accounts div:
   $('#currbutt, #savbutt').click(function() {
@@ -359,8 +355,6 @@ $(document).ready( function(){
     
   });
   // End
-  
-  
 
   
   // Add row:
@@ -404,11 +398,7 @@ $(document).ready( function(){
   });
   // End duplicate row ajax code.
     
-    
-    
-    
-    
-    
+
     
   // Delete row:  
   $('#btnDelete').live('click', function(){
@@ -425,17 +415,12 @@ $(document).ready( function(){
   // Transfer row
   $('#btnTransfer').live('click', function() {
     // Get details of row to be transferred:
-    //alert('');
     $.ajax({
       type:'post',
       url:'transfer/' + $('#rowidsel').text(),
       data:'runbal=' + $('#currrunbal').val(),
       success: function(runbal) {
-        //var retstr = runbal.split('|');
-        //runbal = retstr[0];
-        //var descr = retstr[1];
         if (confirm("Transfer row #"+$('#rowidsel').text()+"\n" + "to make new balance £" + (parseFloat(runbal).toFixed(2)) + "?")) {
-          //alert('Transfered row');
           $.ajax({
             type:'post',
             url:'transfer/' + $('#rowidsel').text(),
@@ -450,19 +435,13 @@ $(document).ready( function(){
               
                   // Update account balance:
                   $('#currrunbal').val(parseFloat(runbal).toFixed(2)); // new running balance
-                  //$('#currdescr').text(descr); // new descr
                 }
-
               });
-              
               // End delete row.
             }
-
           });
-
         } // End if (conf).
-        
-      }
+      } // End ajax success.
     });
     
     
@@ -470,7 +449,7 @@ $(document).ready( function(){
     
   });
 
-  var cities = [  ];
+  var cities = [ ];
 
   $("#descr").autocomplete({
     source:cities,
@@ -497,18 +476,12 @@ $(document).ready( function(){
     this.css("left", Math.max(0, (($(window).width() - this.outerWidth()) / 2) +  $(window).scrollLeft()) + "px");
     return this;
   }
-
-
     
   // http://djpate.com/2009/10/07/animated-scroll-to-anchorid-function-with-jquery/
   function goToByScroll(id){
     $('#listviewbody').scrollTop($("#"+id).offset().top - 280);
   }
-   
 
-//$('fieldset.l').css('height', $('fieldset#r').css('height') );
-//$('#editdata').css('bottom', '10px');
-//$('#editdata').css('right', 0);
 });
 </script>
 </body>
