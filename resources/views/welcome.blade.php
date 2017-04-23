@@ -19,14 +19,14 @@
 
   <div class="row equal">
 
-    <div class="col-md-5 panel">
-    <fieldset class="l hunp">
-      <legend>Edit row <span class="badge" id="rowidsel">{{ \App\Budget::oldest('date')->take(1)->get(['id'])[0]->id }}</span></legend>
-      <div id="editrow">@include('ajax.getrow')</div>
-    </fieldset>
+    <div class="col-md-6 panel text-center">
+      <fieldset class="l hunp">
+        <legend>Edit row <span class="badge" id="rowidsel">{{ \App\Budget::oldest('date')->take(1)->get(['id'])[0]->id }}</span></legend>
+        <div id="editrow">@include('ajax.getrow')</div>
+      </fieldset>
     </div>
 
-    <div class="col-md-offset-1 col-md-6 panel">
+    <div class="col-md-6 panel">
       {{-- <h2 class="panel-title">Test</h2> --}}
       <fieldset class="hunp" id="r">
         <legend>Account Balances</legend>
@@ -45,25 +45,23 @@
 
         <div class="row transaction-detail">
           <div class="col-md-4">
-          {{ \Carbon\Carbon::parse(\App\Current::getLastEntry('date'))->format('d/m/Y') }} &pound;<span class="negcol">{{ \App\Current::getLastEntry('amount') }}</span><br>{{ \App\Current::getLastEntry('description') }} 
+            <div class="form-control-static alert-default currrunbal">{{ \Carbon\Carbon::parse(\App\Current::getLastEntry('date'))->format('d/m/Y') }} &pound;<span class="negcol">{{ \App\Current::getLastEntry('amount') }}</span><br>{{ \App\Current::getLastEntry('description') }}</div>
           </div>
           <div class="col-md-4">
-          {{ \Carbon\Carbon::parse(\App\Saving::getLastEntry('date'))->format('d/m/Y') }} &pound;<span class="negcol">{{ \App\Saving::getLastEntry('amount') }}</span><br>{{ \App\Saving::getLastEntry('description') }}
+            <div class="form-control-static alert-default savrunbal">{{ \Carbon\Carbon::parse(\App\Saving::getLastEntry('date'))->format('d/m/Y') }} &pound;<span class="negcol">{{ \App\Saving::getLastEntry('amount') }}</span><br>{{ \App\Saving::getLastEntry('description') }}</div>
           </div>
-          <div class="col-md-4">
-          
-          </div>
+          <div class="col-md-4"></div>
         </div>
 
         <div class="row">
           <div class="col-md-4">
-            <input class="ambox" type="text" name="txt_currrunbal" id="currrunbal" value="{{ \App\Current::getLastEntry('runbal') }}">
+            <div class="form-control-static alert-info currrunbal">{{ number_format(\App\Current::getLastEntry('runbal'),2) }}</div>
           </div>
           <div class="col-md-4">
-            <input class="ambox" type="text" name="txt_savrunbal" id="savrunbal" value="{{ \App\Saving::getLastEntry('runbal') }}">
+            <div class="form-control-static alert-info savrunbal">{{ number_format(\App\Saving::getLastEntry('runbal'),2) }}</div>
           </div>
           <div class="col-md-4">
-            <input class="ambox" type="text" name="txt_savrunbal2" id="savrunbal2" value="{{ \App\Current::getLastEntry('runbal')+\App\Saving::getLastEntry('runbal') }}">
+            <div class="form-control-static alert-info savrunbal2">{{ number_format(\App\Current::getLastEntry('runbal')+\App\Saving::getLastEntry('runbal'),2) }}</div>
           </div>
         </div>
 
@@ -77,7 +75,7 @@
   {!! Form::button('&uarr; Up',        ['class'=>'btn btn-primary','id'=>'btnUp']) !!}
   {!! Form::button('Add row &rarr;',   ['class'=>'btn btn-primary','id'=>'btnAddrow']) !!}
   {!! Form::button('Duplicate &rarr;', ['class'=>'btn btn-primary','id'=>'btnDuplicate']) !!}
-  {!! Form::button('Delete &rarr;',    ['class'=>'btn btn-primary','id'=>'btnDelete']) !!}
+  {!! Form::button('Delete &rarr;',    ['class'=>'btn btn-danger','id'=>'btnDelete']) !!}
   {!! Form::button('Transfer &rarr;',  ['class'=>'btn btn-primary','id'=>'btnTransfer']) !!}
   {!! Form::button('&darr; Down',      ['class'=>'btn btn-primary','id'=>'btnDown']) !!}   
   </div>
@@ -259,7 +257,7 @@ $(document).ready( function(){
       type:'POST',
       url:'listview/' + $('#rowidsel').text(),
       data:''
-        + '&code='      + $('#code').val()
+        + 'code='       + $('select[name=code]').val()
         + '&date='      + $('#date').val()
         + '&amount='    + $('input[name=amount]').val()
         + '&in='        + $('#in').is(':checked')
