@@ -95,8 +95,10 @@ Route::get('listview', function() {
   // Get budget rows.
   $rows2=\App\Budget::oldest('date')->get(['id','code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
 
-  return view('ajax.listview')->with('rows',$rows2)
+  return view('ajax.listview')
+  ->with('rows',$rows2)
   ->with('runbal',\App\Current::getLastEntry('runbal'))
+  ->with('rowcounter',0)
   ;
 });
 
@@ -108,13 +110,15 @@ Route::post('listview/{id}', function ($id) {
   $descr=(empty($input['descr'])) ? '' : $input['descr'];
   $notes=(empty($input['notes'])) ? '' : $input['notes'];
   $strsql = ( ($input['in']!=='false') ) ? [$input['amount'],0] : [0,$input['amount']];
-  $update->update(['date'=>\Carbon\Carbon::createFromFormat('d/m/Y',$input['date']),'description'=>$descr,'incoming'=>$strsql[0],'outgoing'=>$strsql[1],'notes'=>$notes]);
+  $update->update(['code'=>$input['code'],'date'=>\Carbon\Carbon::createFromFormat('d/m/Y',$input['date']),'description'=>$descr,'incoming'=>$strsql[0],'outgoing'=>$strsql[1],'notes'=>$notes]);
 
   // Get budget rows.
   $rows2=\App\Budget::oldest('date')->get(['id','code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
 
-  return view('ajax.listview')->with('rows',$rows2)
-  ->with('runbal',\App\Current::getLastEntry('runbal'));
+  return view('ajax.listview')
+  ->with('rows',$rows2)
+  ->with('runbal',\App\Current::getLastEntry('runbal'))
+  ->with('rowcounter',0)
   ;
 });
 
