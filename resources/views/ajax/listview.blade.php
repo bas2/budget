@@ -2,12 +2,12 @@
   <thead>
   <tr>
     <th>Date</th>
-    <th>-</th>
+    <th></th>
     <th>Description</th>
-    <th>IN</th>
-    <th>OUT</th>
-    <th>Balance</th>
-    <th>Total</th>
+    <th class="text-right">IN</th>
+    <th class="text-right">OUT</th>
+    <th class="text-right">Balance</th>
+    <th class="text-right">Total</th>
     <th>Notes</th>
   </tr>
   </thead>
@@ -17,10 +17,10 @@
       <td>{{ \Carbon\Carbon::parse($budgetrow->date)->format('d/m/Y') }}</td>
       <td>{{ \Carbon\Carbon::parse($budgetrow->date)->diff(\Carbon\Carbon::now())->days }}</td>
       <td>{{ $budgetrow->description }}</td>
-      <td>{{ number_format($budgetrow->incoming,2) }}</td>
-      <td>{{ number_format($budgetrow->outgoing,2) }}</td>
-      <td>{{ $runbal += $budgetrow->incoming -= $budgetrow->outgoing }}</td>
-      <td>{{ $runbal + \App\Saving::getLastEntry('runbal') }}</td>
+      <td class="text-right">{{ number_format($budgetrow->incoming,2) }}</td>
+      <td class="text-right">{{ number_format($budgetrow->outgoing,2) }}</td>
+      <td class="text-right">{{ number_format( ($runbal += $budgetrow->incoming -= $budgetrow->outgoing),2) }}</td>
+      <td class="text-right">{{ number_format( ($runbal + \App\Saving::getLastEntry('runbal')),2 ) }}</td>
       <td>{{ $budgetrow->notes }}&nbsp;</td>
     </tr>
   @endforeach
