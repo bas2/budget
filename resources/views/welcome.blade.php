@@ -33,13 +33,13 @@
 
         <div class="row">
           <div class="col-md-4" id="currdescr">
-            <button class="btn btn-primary" id="currbutt">Current {{ \App\Current::$account_number }}</button> 
+            <button class="btn btn-primary btn-block" id="currbutt">Current {{ \App\Current::$account_number }}</button> 
           </div>
           <div class="col-md-4">
-            <button class="btn btn-primary" id="savbutt">Savings {{ \App\Saving::$account_number }}</button> 
+            <button class="btn btn-primary btn-block" id="savbutt">Savings {{ \App\Saving::$account_number }}</button> 
           </div>
           <div class="col-md-4">
-            <button class="btn btn-primary" id="savbutt2">Total</button> 
+            <button class="btn btn-primary btn-block" id="savbutt2">Total</button> 
           </div>
         </div>
 
