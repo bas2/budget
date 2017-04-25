@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
 use \App;
 
 class BudgetController extends Controller
@@ -112,12 +112,11 @@ class BudgetController extends Controller
   // POST: listview/id
   // Complete update and/or get updated matrix html.
   public function listViewUpdate($rowid) {
-    $input=Request::all();
     $update=\App\Budget::where('id',$rowid);
-    $descr=(empty($input['descr'])) ? '' : $input['descr'];
-    $notes=(empty($input['notes'])) ? '' : $input['notes'];
-    $strsql = ( ($input['in']!=='false') ) ? [$input['amount'],0] : [0,$input['amount']];
-    $update->update(['code'=>$input['code'],'date'=>\Carbon\Carbon::createFromFormat('d/m/Y',$input['date']),'description'=>$descr,'incoming'=>$strsql[0],'outgoing'=>$strsql[1],'notes'=>$notes]);
+    $descr=(empty(request('descr'))) ? '' : request('descr');
+    $notes=(empty(request('notes'))) ? '' : request('notes');
+    $strsql = ( (request('in')!=='false') ) ? [request('amount'),0] : [0,request('amount')];
+    $update->update(['code'=>request('code'),'date'=>\Carbon\Carbon::createFromFormat('d/m/Y',request('date')),'description'=>$descr,'incoming'=>$strsql[0],'outgoing'=>$strsql[1],'notes'=>$notes]);
 
     // Get budget rows.
     $rows2=\App\Budget::oldest('date')->get(['id','code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
@@ -173,7 +172,7 @@ class BudgetController extends Controller
     $create->notes       = (empty($runbal2[0]->notes)) ? '' : $runbal2[0]->notes;
     $create->incoming    = $strsql[0];
     $create->outgoing    = $strsql[1];
-    $create->runbal      = $input['runbal'];
+    $create->runbal      = request('runbal');
     $create->save();
 
     return ($create->save()) ? $create->id : 0 ;
