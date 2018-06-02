@@ -1,6 +1,6 @@
 <?php
 
-Route::get('home',               'BudgetController@index');
+Route::get('/',               'BudgetController@index');
 
 Route::get('getrow/{id?}',       'BudgetController@getRow');
 
