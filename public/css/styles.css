@@ -1,60 +1,114 @@
 body {
-  background-color: #fff; }
+  background-color: #fff;
+  margin: 5px; }
 
-#listview {
-  font: bold italic 80% verdana; }
+ul#projectsmenu {
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 0;
+  padding-left: 0;
+  border-bottom-left-radius: 2px;
+  box-shadow: -2px 2px 2px; }
+  ul#projectsmenu li {
+    list-style: none;
+    text-align: center;
+    font: bold 1em verdana;
+    border-bottom: 1px solid rgba(196, 196, 196, 0.7);
+    cursor: pointer; }
+    ul#projectsmenu li a {
+      display: block;
+      color: #ccc; }
+      ul#projectsmenu li a:hover {
+        background-color: rgba(255, 255, 255, 0.5);
+        color: #000; }
+    ul#projectsmenu li.sel {
+      color: yellow;
+      border: 0; }
+    ul#projectsmenu li.sel, ul#projectsmenu li a {
+      padding: 0; }
+    ul#projectsmenu li:last-child {
+      border: 0; }
 
-#cellhead {
-  background: linear-gradient(red, black);
-  font-style: normal;
-  padding: .5em 0;
-  color: #fff;
-  float: left;
-  width: 100%;
-  border-bottom: 1px dotted #ccc;
-  border-radius: .5em; }
+.equal {
+  display: -webkit-flex;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 2em; }
 
-#datehead, #morderhead, #descrhead, #inhead, #outhead, #balhead, #savhead, #noteshead {
-  float: left;
-  width: 19em;
-  border-left: 0px solid #ccc; }
+.container-fluid .row .hunp {
+  height: 100%; }
+.container-fluid .panel {
+  margin-bottom: 0;
+  padding-bottom: 1em; }
 
-#datehead, .celldate, #morderhead, .cellmorder, #descrhead, .celldescr, #noteshead, .cellnotes {
-  padding-left: .6em; }
+fieldset {
+  border: 0; }
+  fieldset legend {
+    text-align: center;
+    text-transform: uppercase; }
+  fieldset.l {
+    position: relative; }
+  fieldset#r > div > div {
+    background: transparent;
+    text-align: center;
+    position: relative; }
+  fieldset#r > div input {
+    text-align: center;
+    color: #000; }
+  fieldset textarea {
+    height: 4em;
+    border: 0;
+    padding: 0;
+    margin: 0; }
 
-.celldate, .cellmorder, .celldescr, .cellin, .cellout, .cellbal, .cellsav, .cellnotes {
-  float: left;
-  width: 19em;
-  border-left: 0px solid #ccc; }
+.accsumm {
+  color: white;
+  text-align: center; }
 
-#datehead, .celldate {
-  border-left: 0; }
+/* Editrow fieldset */
+#editrow {
+  line-height: 1.8em;
+  border: 0; }
+  #editrow label {
+    color: white; }
+  #editrow input[name=date] {
+    width: 7em;
+    display: inline; }
+  #editrow input[name=descr] {
+    width: 17em;
+    display: inline; }
+  #editrow input[name=amount] {
+    width: 4em;
+    display: inline; }
+  #editrow input[name=notes] {
+    width: 30em;
+    display: inline; }
 
-#datehead, .celldate, #morderhead, .cellmorder, #inhead, .cellin, #outhead, .cellout, #balhead, .cellbal, #savhead, .cellsav, #noteshead {
-  width: 9em; }
+/* Update button */
+.transaction-detail {
+  padding: .3em; }
 
-#morderhead, .cellmorder {
-  width: 2em; }
+#btnUp {
+  border-radius: .5em .5em 0 0;
+  width: 10em; }
 
-.r, #inhead, #outhead, #balhead, #savhead {
-  text-align: right;
-  padding-right: .5em; }
-
-.cellnotesx {
-  padding-left: .6em; }
+#btnDown {
+  border-radius: .5em .5em 0 0;
+  width: 10em; }
 
 .cellrow {
-  float: left;
-  width: 100%;
   cursor: pointer; }
 
-#listviewbody {
-  height: 30em;
-  width: 100%;
-  float: left;
-  background: #c86868;
-  color: #fff;
-  overflow: auto; }
+table.table thead tr {
+  background: linear-gradient(rgba(255, 0, 0, 0.5), black);
+  border-radius: .5em .5em 0 0; }
+  table.table thead tr th {
+    font-variant: small-caps; }
+table.table tbody tr:hover {
+  background: rgba(0, 0, 255, 0.5); }
 
 .hl {
   background-color: orange;
@@ -66,62 +120,6 @@ body {
 .hl2 {
   background-color: orange; }
 
-fieldset {
-  border: 0px solid #f99;
-  font: 100% arial;
-  border-radius: 0.5em;
-  background: linear-gradient(green, black); }
-  fieldset legend {
-    border-radius: 0.5em;
-    background: linear-gradient(red, black);
-    padding: 0;
-    text-align: center;
-    color: #fff;
-    width: 20em;
-    text-transform: uppercase; }
-  fieldset.l {
-    float: left;
-    width: 50%; }
-  fieldset div {
-    border-bottom: 1px solid #ccc;
-    padding-bottom: .5em;
-    margin-bottom: .5em; }
-  fieldset input.btn2 {
-    width: 8em;
-    color: red; }
-  fieldset button {
-    width: 7em;
-    font: 90% arial; }
-  fieldset textarea {
-    height: 4em;
-    border: 0;
-    padding: 0;
-    margin: 0; }
-
-#buttons {
-  margin: .5em 0; }
-
-#btnUp {
-  border-top-left-radius: .5em;
-  border-top-right-radius: .5em;
-  width: 10em; }
-
-#btnDown {
-  border-bottom-left-radius: .5em;
-  border-bottom-right-radius: .5em;
-  margin-top: .5em;
-  width: 10em; }
-
-#btnAddrow, #btnDuplicate, #btnDelete, #btnTransfer {
-  border-radius: .3em; }
-
-#rowidsel {
-  font-weight: bold;
-  background-color: yellow;
-  padding: .2em;
-  border-radius: 0.5em;
-  color: #000; }
-
 form * {
   text-align: center; }
 
@@ -130,39 +128,6 @@ input {
 
 select, input[type=text] {
   border-radius: 0.5em; }
-
-.ambox {
-  text-align: right;
-  width: 5em;
-  padding: .3em; }
-
-/* Editrow fieldset */
-#editrow {
-  position: relative;
-  padding: .5em;
-  line-height: 1.8em;
-  border: 0;
-  height: 100%; }
-  #editrow form {
-    display: inline; }
-  #editrow label {
-    color: white; }
-
-/* Update button */
-#editdata {
-  position: absolute;
-  right: 0;
-  bottom: .5em;
-  font: 120% arial;
-  width: 10em;
-  border-radius: .3em;
-  background: yellow; }
-  #editdata:hover {
-    background: rgba(255, 200, 100, 0.3); }
-  #editdata label {
-    color: white; }
-  #editdata #btnZero {
-    width: 3em; }
 
 #accsdiv {
   position: absolute;
@@ -207,44 +172,6 @@ select, input[type=text] {
 
 .negcol {
   color: #c00; }
-
-.accsumm {
-  color: white;
-  float: left;
-  width: 600%;
-  border: 0;
-  margin: 0;
-  width: 32%;
-  border: 0px solid purple;
-  text-align: center;
-  padding: .2em; }
-  .accsumm button {
-    float: left;
-    width: 100%;
-    margin: 0 auto;
-    padding: 0;
-    border: 1; }
-  .accsumm div {
-    float: left;
-    width: 90%;
-    margin: auto 0;
-    border: 0;
-    padding: 0;
-    font-size: .8em;
-    height: 4em;
-    text-align: center;
-    font-weight: bold;
-    border: 1px solid white;
-    border-radius: .3em;
-    width: 100%;
-    vertical-align: middle; }
-  .accsumm input {
-    clear: both;
-    float: left;
-    padding: 0;
-    text-align: center;
-    border-radius: .3em;
-    width: 100%; }
 
 /* Today col */
 .todcol {
