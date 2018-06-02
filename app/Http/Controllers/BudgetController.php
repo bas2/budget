@@ -9,6 +9,7 @@ class BudgetController extends Controller
 {
   // GET home
   public function index() {
+
     $dirpath='../..';$proj=[];foreach(\File::directories($dirpath) as $project){$prj=str_replace($dirpath.'/','',$project);if(substr($prj,0,1)!='_'){$proj[]=ucwords($prj);}}
 
     // Get codes:
@@ -28,7 +29,6 @@ class BudgetController extends Controller
     
     // Get budget rows.
     $rows2=\App\Budget::oldest('date')->get(['id','code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
-
     return view('welcome')
     ->with('editrows',['code'=>$rows[0]->code,'date'=>\Carbon\Carbon::parse($rows[0]->date)->format('d/m/Y'),'descr'=>$rows[0]->description,'amount'=>$amount,'notes'=>$rows[0]->notes,'incoming'=>$incoming,'outgoing'=>$outgoing])
     ->with('codes', $codes)
@@ -116,7 +116,7 @@ class BudgetController extends Controller
     $descr=(empty(request('descr'))) ? '' : request('descr');
     $notes=(empty(request('notes'))) ? '' : request('notes');
     $strsql = ( (request('in')!=='false') ) ? [request('amount'),0] : [0,request('amount')];
-    $update->update(['code'=>request('code'),'date'=>\Carbon\Carbon::createFromFormat('d/m/Y',request('date')),'description'=>$descr,'incoming'=>$strsql[0],'outgoing'=>$strsql[1],'notes'=>$notes]);
+    $update->update(['code'=>request('code'),'date'=>\Carbon\Carbon::createFromFormat('Y-m-d',request('date')),'description'=>$descr,'incoming'=>$strsql[0],'outgoing'=>$strsql[1],'notes'=>$notes]);
 
     // Get budget rows.
     $rows2=\App\Budget::oldest('date')->get(['id','code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
@@ -144,21 +144,22 @@ class BudgetController extends Controller
 
   // POST: transfer/id
   public function transfer($rowid) {
-    $input=Request::all();
-    if (!isset($input['getrow'])){
+    if ( null == request('getrow') ) {
       $runbal=\App\Current::latest('date')->orderBy('id','desc')->get(['runbal']);
-      $runbal2=\App\Budget::where('id',$id)->get(['incoming','outgoing']);
+      $runbal2=\App\Budget::where('id',$rowid)->get(['incoming','outgoing']);
       return $runbal[0]->runbal - $runbal2[0]->outgoing + $runbal2[0]->incoming ;
     }
 
-    $runbal2=\App\Budget::where('id',$id)->get(['date','description','notes','incoming','outgoing']);
-    $strsql = ( ($runbal2[0]->incoming>0) ) ? [$runbal2[0]->incoming,0] : [0,$runbal2[0]->outgoing];
+    $runbal2=\App\Budget::where('id',$rowid)
+    ->get(['date','description','notes','incoming','outgoing'])
+    ->first();
+    $strsql = ( ($runbal2->incoming>0) ) ? [$runbal2->incoming,0] : [0,$runbal2->outgoing];
     // Transfer to/from Savings account.
-    if ($runbal2[0]->description=='ISA Account') {
+    if ($runbal2->description=='ISA Account') {
       $curbal=\App\Saving::latest('date')->orderBy('id','desc')->get(['runbal']);
       $create=new \App\Saving;
       $create->code        = 'TF';
-      $create->date        = $runbal2[0]->date;
+      $create->date        = $runbal2->date;
       $create->description = 'Current';
       $create->notes       = '';
       $create->incoming    = $strsql[1];
@@ -166,16 +167,17 @@ class BudgetController extends Controller
       $create->runbal      = $curbal[0]->runbal - $strsql[0];
       $create->save();
     }
+
     $create=new \App\Current;
-    $create->date = $runbal2[0]->date;
-    $create->description = (empty($runbal2[0]->description)) ? '' : $runbal2[0]->description;
-    $create->notes       = (empty($runbal2[0]->notes)) ? '' : $runbal2[0]->notes;
+    $create->date = $runbal2->date;
+    $create->description = (empty($runbal2->description)) ? '' : $runbal2->description;
+    $create->notes       = (empty($runbal2->notes)) ? '' : $runbal2->notes;
     $create->incoming    = $strsql[0];
     $create->outgoing    = $strsql[1];
     $create->runbal      = request('runbal');
     $create->save();
 
-    return ($create->save()) ? $create->id : 0 ;
+    return ($create->save()) ? request('runbal') : 0 ;
   }
 
 
