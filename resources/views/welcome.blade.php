@@ -128,7 +128,7 @@ $(document).ready( function(){
         
         //Cufon.replace('#cellhead, fieldset legend, #editdata'); // 
         // 
-        $("#date").datepicker();
+        //$("#date").datepicker();
         
         $.ajax({
           type:'post',
@@ -192,7 +192,7 @@ $(document).ready( function(){
 
 
     
-  $("#date").datepicker();
+  //$("#date").datepicker();
 
   // Update edit bit
   function updateeditbit(newrowid) {
@@ -217,7 +217,7 @@ $(document).ready( function(){
         // Update scroll position
         //goToByScroll("listview #rw"+$('#rowidsel').text());
         //Cufon.replace('#cellhead, fieldset legend'); // 
-        $("#date").datepicker();
+        //$("#date").datepicker();
       }
     });
     // 
@@ -416,9 +416,12 @@ $(document).ready( function(){
     $.ajax({
       type:'post',
       url:'transfer/' + $('#rowidsel').text(),
-      data:'runbal=' + $('#currrunbal').val(),
+      data:'runbal=' + $('.currrunbal').last().text(),
       success: function(runbal) {
-        if (confirm("Transfer row #"+$('#rowidsel').text()+"\n" + "to make new balance £" + (parseFloat(runbal).toFixed(2)) + "?")) {
+        if (confirm("Transfer row #"+$('#rowidsel').text()+"\n" 
+        + "to make new balance £" 
+        + (parseFloat(runbal).toFixed(2)) + "?")) {
+
           $.ajax({
             type:'post',
             url:'transfer/' + $('#rowidsel').text(),
@@ -432,7 +435,7 @@ $(document).ready( function(){
                   repopulatelistview(rowid, rowid);
               
                   // Update account balance:
-                  $('#currrunbal').val(parseFloat(runbal).toFixed(2)); // new running balance
+                  $('.currrunbal').last().text(parseFloat(runbal).toFixed(2)); // new running balance
                 }
               });
               // End delete row.
