@@ -2,7 +2,7 @@
 <div class="form-group">
 {!! Form::select('code', $codes, $editrows['code']) !!}
 
-{!! Form::date('date', $editrows['date'], ['class'=>'form-control','id'=>'date','title'=>'date']) !!}
+{!! Form::text('date', $editrows['date'], ['class'=>'form-control','id'=>'datepicker','title'=>'date']) !!}
 
 {!! Form::text('descr', $editrows['descr'], ['class'=>'form-control','title'=>'description']) !!}
 
