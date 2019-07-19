@@ -29,7 +29,7 @@ class BudgetController extends Controller
     $amount = ($incoming) ? $rows[0]->incoming : $rows[0]->outgoing ;
     
     // Get budget rows.
-    $rows2=\App\Budget::oldest('date')->get(['id','code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
+    $rows2=\App\Budget::oldest('date')->orderBy('morder')->get(['id','code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
     return view('welcome')
     ->with('editrows',['code'=>$rows[0]->code,'date'=>\Carbon\Carbon::parse($rows[0]->date)->format('d/m/Y'),'descr'=>$rows[0]->description,'amount'=>$amount,'notes'=>$rows[0]->notes,'incoming'=>$incoming,'outgoing'=>$outgoing])
     ->with('codes', $codes)
@@ -117,7 +117,7 @@ class BudgetController extends Controller
     $descr=(empty(request('descr'))) ? '' : request('descr');
     $notes=(empty(request('notes'))) ? '' : request('notes');
     $strsql = ( (request('in')!=='false') ) ? [request('amount'),0] : [0,request('amount')];
-    $update->update(['code'=>request('code'),'date'=>\Carbon\Carbon::createFromFormat('Y-m-d',request('date')),'description'=>$descr,'incoming'=>$strsql[0],'outgoing'=>$strsql[1],'notes'=>$notes]);
+    $update->update(['code'=>request('code'),'date'=>\Carbon\Carbon::createFromFormat('d/m/Y',request('date')),'description'=>$descr,'incoming'=>$strsql[0],'outgoing'=>$strsql[1],'notes'=>$notes]);
 
     // Get budget rows.
     $rows2=\App\Budget::oldest('date')->get(['id','code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
