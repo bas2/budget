@@ -21,7 +21,8 @@
 
     <div class="col-md-6 panel text-center">
       <fieldset class="l hunp">
-        <legend>Edit row <span class="badge" id="rowidsel">{{ \App\Budget::oldest('date')->take(1)->get(['id'])[0]->id }}</span></legend>
+        <legend>Edit row <span class="badge" id="rowidsel">
+        {{ \App\Budget::oldest('date')->take(1)->get(['id'])[0]->id }}</span></legend>
         <div id="editrow">@include('ajax.getrow')</div>
       </fieldset>
     </div>
@@ -119,16 +120,9 @@ $(document).ready( function(){
       type:'get',
       url:'getrow/' + selid,
       success: function (data){
-        //alert(data);
-        //var splitdata = data.split('|');
         var editdata  = data;
-        //handleupdown(splitdata[1]); // min||morder||max
-        
+
         $('#editrow').html(editdata); // Update edit
-        
-        //Cufon.replace('#cellhead, fieldset legend, #editdata'); // 
-        // 
-        //$("#date").datepicker();
         
         $.ajax({
           type:'post',
@@ -185,14 +179,7 @@ $(document).ready( function(){
   });
 
 
-  // http://djpate.com/2009/10/07/animated-scroll-to-anchorid-function-with-jquery/
-  //function goToByScroll(id){
-  //  $('html, body').animate({scrollTop: $("#"+id).offset().top},'slow');
-  //}
-
-
-    
-  //$("#date").datepicker();
+      
 
   // Update edit bit
   function updateeditbit(newrowid) {
@@ -207,17 +194,8 @@ $(document).ready( function(){
       type:'get',
       url:'getrow/' + newrowid,
       success: function (data){
-        //alert(data);
-        //var splitdata = data.split('|');
         var editdata  = data;
-        //handleupdown(splitdata[1]);
-
         $('#editrow').html(editdata); // Update edit
-
-        // Update scroll position
-        //goToByScroll("listview #rw"+$('#rowidsel').text());
-        //Cufon.replace('#cellhead, fieldset legend'); // 
-        //$("#date").datepicker();
       }
     });
     // 
@@ -233,7 +211,7 @@ $(document).ready( function(){
     } else {
       $('#btnTransfer').attr('disabled', 'disabled')
     } // End if.
-    //alert(newrowid);
+
     // Update listview
     $.ajax({
       type:'get',
@@ -265,14 +243,12 @@ $(document).ready( function(){
         + '&notes='     + encodeURIComponent($('input[name=notes]').val()),
       success: function(data) {
         $('#listview').html(data); // Repopulate listview
-        //goToByScroll("listview #rw"+$('#rowidsel').text());
       }
     });
     e.preventDefault();
   });
   
   $('#btnZero').live('click', function() {
-    //alert('');
     var prevtext  = $('#txtAmount').val();
     var prevtext1 = $('#txtAmount').data('prevtext1');
     if ( prevtext1>0 ) {
@@ -291,7 +267,6 @@ $(document).ready( function(){
       type:'post',
       url:'acc/' + $(this).attr('id'),
       success: function(data) {
-        //alert(data); // Id for row that was moved.
 
         $('<div id="accsdiv"><div id="accsdivinnerbottom">'+data+'</div></div>')
         .hide()
@@ -321,7 +296,6 @@ $(document).ready( function(){
       url:'acc',
       data:'a=' + accnum1[0] + '&rowid=' + accnum1[1],
       success: function(data) {
-        //alert(data); // Id for row that was moved.
         $('#accsdiv').html(data);
       } // End success.
 
@@ -337,7 +311,6 @@ $(document).ready( function(){
       url:'moveupdown/' + $('#rowidsel').text(),
       data:'dir=' + dir,
       success: function(data) {
-        //alert(data); // Id for row that was moved.
         var splitdata = data.split('|');
         if (splitdata.length==2) {
           var newdata  = splitdata[0];
@@ -361,7 +334,6 @@ $(document).ready( function(){
       type:'post',
       url:'addrow',
       success: function(newrowid) {
-        //alert(newrowid);
         // Returns ID for the new row added in data
         repopulatelistview(newrowid);
       } // End success.
@@ -386,7 +358,6 @@ $(document).ready( function(){
       + '&notes='  + encodeURIComponent($('input[name=notes]').val()),
       
       success: function(data) {
-        //alert(data);
         // data contains the ID of the new row.
         repopulatelistview(data);
       }
