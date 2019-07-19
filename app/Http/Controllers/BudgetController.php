@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 //use Illuminate\Http\Request;
 use \App;
 
+use Carbon\Carbon;
+
 class BudgetController extends Controller
 {
   // GET home
@@ -29,9 +31,12 @@ class BudgetController extends Controller
     $amount = ($incoming) ? $rows[0]->incoming : $rows[0]->outgoing ;
     
     // Get budget rows.
-    $rows2=\App\Budget::oldest('date')->orderBy('morder')->get(['id','code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
+    $rows2=\App\Budget::oldest('date')->orderBy('morder')
+    ->get(['id','code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
     return view('welcome')
-    ->with('editrows',['code'=>$rows[0]->code,'date'=>\Carbon\Carbon::parse($rows[0]->date)->format('d/m/Y'),'descr'=>$rows[0]->description,'amount'=>$amount,'notes'=>$rows[0]->notes,'incoming'=>$incoming,'outgoing'=>$outgoing])
+    ->with('editrows',['code'=>$rows[0]->code,'date'=>Carbon::parse($rows[0]->date)->format('d/m/Y'),
+    'descr'=>$rows[0]->description,'amount'=>$amount,'notes'=>$rows[0]->notes,
+    'incoming'=>$incoming,'outgoing'=>$outgoing])
     ->with('codes', $codes)
     ->with('rows', $rows2)
     ->with('runbal',\App\Current::getLastEntry('runbal'))
@@ -42,9 +47,11 @@ class BudgetController extends Controller
   // GET: getrow/id
   public function getRow($rowid=0) {
     if($rowid==0) {
-      $rows=\App\Budget::oldest('date')->get(['morder', 'code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
+      $rows=\App\Budget::oldest('date')
+      ->get(['morder', 'code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
     } else {
-      $rows=\App\Budget::where('id',$rowid)->get(['morder', 'code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
+      $rows=\App\Budget::where('id',$rowid)
+      ->get(['morder', 'code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
     }
 
     $incoming  = ($rows[0]->outgoing=='0.00' && $rows[0]->incoming!='0.00') ? 1 : 0;
@@ -78,14 +85,14 @@ class BudgetController extends Controller
 
     return view('ajax.getrow')
     ->with('codes', $codes)
-    ->with('editrows',['code'=>$rows[0]->code,'date'=>\Carbon\Carbon::parse($rows[0]->date)->format('d/m/Y'),'descr'=>$rows[0]->description,'amount'=>$amount,'notes'=>$rows[0]->notes,'incoming'=>$incoming,'outgoing'=>$outgoing])
+    ->with('editrows',['code'=>$rows[0]->code,'date'=>Carbon::parse($rows[0]->date)->format('d/m/Y'),'descr'=>$rows[0]->description,'amount'=>$amount,'notes'=>$rows[0]->notes,'incoming'=>$incoming,'outgoing'=>$outgoing])
     ;
   }
 
   // POST: addrow
   public function addRow() {
     $create=new \App\Budget;
-    $create->date = \Carbon\Carbon::now();
+    $create->date = Carbon::now();
     $create->notes = '';
     $create->save();
     return ($create->save()) ? $create->id : 0 ;
@@ -101,7 +108,8 @@ class BudgetController extends Controller
   // GET: listview
   public function listView() {
     // Get budget rows.
-    $rows2=\App\Budget::oldest('date')->get(['id','code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
+    $rows2=\App\Budget::oldest('date')->orderBy('morder')
+    ->get(['id','code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
 
     return view('ajax.listview')
     ->with('rows',$rows2)
@@ -117,7 +125,8 @@ class BudgetController extends Controller
     $descr=(empty(request('descr'))) ? '' : request('descr');
     $notes=(empty(request('notes'))) ? '' : request('notes');
     $strsql = ( (request('in')!=='false') ) ? [request('amount'),0] : [0,request('amount')];
-    $update->update(['code'=>request('code'),'date'=>\Carbon\Carbon::createFromFormat('d/m/Y',request('date')),'description'=>$descr,'incoming'=>$strsql[0],'outgoing'=>$strsql[1],'notes'=>$notes]);
+    $update->update(['code'=>request('code'),'date'=>Carbon::createFromFormat('d/m/Y',request('date')),
+    'description'=>$descr,'incoming'=>$strsql[0],'outgoing'=>$strsql[1],'notes'=>$notes]);
 
     // Get budget rows.
     $rows2=\App\Budget::oldest('date')->get(['id','code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
@@ -132,7 +141,7 @@ class BudgetController extends Controller
   // POST: duplicaterow/id
   public function duplicateRow($rowid) {
     $create=new \App\Budget;
-    $create->date        = \Carbon\Carbon::createFromFormat('d/m/Y',request('date'));
+    $create->date        = Carbon::createFromFormat('d/m/Y',request('date'));
     $create->description = (empty(request('descr'))) ? '' : request('descr');
     $create->notes       = (empty(request('notes'))) ? '' : request('notes');
     $strsql = ( (request('in')!=='false') ) ? [request('amount'),0] : [0,request('amount')];
