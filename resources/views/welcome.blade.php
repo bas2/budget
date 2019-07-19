@@ -6,6 +6,7 @@
   <!-- Bootstrap -->
   {!! Html::style('css/bootstrap.min.css') !!}
   {!! Html::style('css/styles.css') !!}
+  <link id="bsdp-css" href="{{ asset('css/bootstrap-datepicker3.min.css') }}" rel="stylesheet">
 
   {{-- <link rel="stylesheet" href="css/autocomplete.css"> --}}
   <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
@@ -99,7 +100,7 @@ $(document).ready( function(){
 
   $('input#datepicker').datepicker({
         format: "dd/mm/yyyy"
-    });
+  });
   
 
   // What to do when an item in 'listview' is clicked.
@@ -126,6 +127,9 @@ $(document).ready( function(){
         var editdata  = data;
 
         $('#editrow').html(editdata); // Update edit
+        $('input#datepicker').datepicker({
+        format: "dd/mm/yyyy"
+        });
         
         $.ajax({
           type:'post',
@@ -135,14 +139,14 @@ $(document).ready( function(){
             var data_split = data.split('|');
             var cities = [];
             for (var i=0; i<data_split.length; i++) cities[i]=data_split[i];
-
+/*
             $("#descr").autocomplete({
               source:cities,
               minLength: 0
             }).click(function(){
               $(this).autocomplete("search");
             });
-        
+  */      
           } // end ajax success callback.
         
         });
@@ -155,14 +159,14 @@ $(document).ready( function(){
             var data_split = data.split('|');
             var cities = [];
             for (var i=0; i<data_split.length; i++) cities[i]=data_split[i];
-
+/*
             $("#amount").autocomplete({
               source:cities,
               minLength: 0
             }).click(function(){
               $(this).autocomplete("search");
             });
-        
+*/      
           } // end ajax success callback.
         
         });
@@ -226,8 +230,13 @@ $(document).ready( function(){
         $('#rowidsel').hide().fadeIn('slow').text(newrowid); // Update id
             
         updateeditbit(newrowid);
+
       }
     });
+    $('input#datepicker').datepicker({
+        format: "dd/mm/yyyy"
+    });
+    //alert ( $('input#datepicker').attr('value') );
     // 
   } // End function.
   
@@ -239,18 +248,21 @@ $(document).ready( function(){
       url:'listview/' + $('#rowidsel').text(),
       data:''
         + 'code='       + $('select[name=code]').val()
-        + '&date='      + $('#date').val()
+        + '&date='      + $('#datepicker').val()
         + '&amount='    + $('input[name=amount]').val()
         + '&in='        + $('#in').is(':checked')
         + '&descr='     + encodeURIComponent($('input[name=descr]').val())
         + '&notes='     + encodeURIComponent($('input[name=notes]').val()),
       success: function(data) {
         $('#listview').html(data); // Repopulate listview
+        $('.cellrow').removeClass('hl');  // Remove highlight from all rows.
+        $('#rw'+$('#rowidsel').text()).addClass('hl'); // Add highlight to the Updated row.
       }
     });
     e.preventDefault();
   });
   
+
   $('body').on('click', '#btnZero', function() {
     var prevtext  = $('#txtAmount').val();
     var prevtext1 = $('#txtAmount').data('prevtext1');
@@ -339,6 +351,10 @@ $(document).ready( function(){
       success: function(newrowid) {
         // Returns ID for the new row added in data
         repopulatelistview(newrowid);
+        $('input#datepicker').datepicker({
+        format: "dd/mm/yyyy"
+        });
+
       } // End success.
 
     });
@@ -354,7 +370,7 @@ $(document).ready( function(){
       url:'duplicaterow/' + $('#rowidsel').text(),
       data:''
       + '&code='   + $('#code').val()
-      + '&date='   + $('#date').val() 
+      + '&date='   + $('#datepicker').val() 
       + '&amount=' + $('input[name=amount]').val()
       + '&in='     + $('#rdoIn').is(':checked')
       + '&descr='  + encodeURIComponent($('input[name=descr]').val())
