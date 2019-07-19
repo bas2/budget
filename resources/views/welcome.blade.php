@@ -19,7 +19,7 @@
 
   <div class="row equal">
 
-    <div class="col-md-6 panel text-center">
+    <div class="col-md-6 col-sm-12 col-xs-12 panel text-center">
       <fieldset class="l hunp">
         <legend>Edit row <span class="badge" id="rowidsel">
         {{ \App\Budget::oldest('date')->take(1)->get(['id'])[0]->id }}</span></legend>
@@ -27,42 +27,51 @@
       </fieldset>
     </div>
 
-    <div class="col-md-6 panel">
+    <div class="col-md-6 col-sm-12 col-xs-12 panel">
       {{-- <h2 class="panel-title">Test</h2> --}}
       <fieldset class="hunp" id="r">
         <legend>Account Balances</legend>
 
         <div class="row">
-          <div class="col-md-4" id="currdescr">
+          <div class="col-md-4 col-sm-4 col-xs-4" id="currdescr">
             <button class="btn btn-primary btn-block" id="currbutt">Current {{ \App\Current::$account_number }}</button> 
           </div>
-          <div class="col-md-4">
+          <div class="col-md-4 col-sm-4 col-xs-4">
             <button class="btn btn-primary btn-block" id="savbutt">Savings {{ \App\Saving::$account_number }}</button> 
           </div>
-          <div class="col-md-4">
+          <div class="col-md-4 col-sm-4 col-xs-4">
             <button class="btn btn-primary btn-block" id="savbutt2">Total</button> 
           </div>
         </div>
 
         <div class="row transaction-detail">
-          <div class="col-md-4">
-            <div class="form-control-static alert-default currrunbal">{{ \Carbon\Carbon::parse(\App\Current::getLastEntry('date'))->format('d/m/Y') }} &pound;<span class="negcol">{{ \App\Current::getLastEntry('amount') }}</span><br>{{ \App\Current::getLastEntry('description') }}</div>
+          <div class="col-md-4 col-sm-4 col-xs-4">
+            <div class="form-control-static alert-default currrunbal">
+              {{ \Carbon\Carbon::parse(\App\Current::getLastEntry('date'))->format('d/m/Y') }} 
+              &pound;<span class="negcol">{{ \App\Current::getLastEntry('amount') }}</span><br>
+              {{ \App\Current::getLastEntry('description') }}</div>
           </div>
-          <div class="col-md-4">
-            <div class="form-control-static alert-default savrunbal">{{ \Carbon\Carbon::parse(\App\Saving::getLastEntry('date'))->format('d/m/Y') }} &pound;<span class="negcol">{{ \App\Saving::getLastEntry('amount') }}</span><br>{{ \App\Saving::getLastEntry('description') }}</div>
+          <div class="col-md-4 col-sm-4 col-xs-4">
+            <div class="form-control-static alert-default savrunbal">
+              {{ \Carbon\Carbon::parse(\App\Saving::getLastEntry('date'))->format('d/m/Y') }} 
+              &pound;<span class="negcol">{{ \App\Saving::getLastEntry('amount') }}</span><br>
+              {{ \App\Saving::getLastEntry('description') }}</div>
           </div>
-          <div class="col-md-4"></div>
+          <div class="col-md-4 col-sm-4 col-xs-4"></div>
         </div>
 
         <div class="row">
-          <div class="col-md-4">
-            <div class="form-control-static alert-info currrunbal">{{ number_format(\App\Current::getLastEntry('runbal'),2) }}</div>
+          <div class="col-md-4 col-sm-4 col-xs-4">
+            <div class="form-control-static alert-info currrunbal">
+              {{ number_format(\App\Current::getLastEntry('runbal'),2) }}</div>
           </div>
-          <div class="col-md-4">
-            <div class="form-control-static alert-info savrunbal">{{ number_format(\App\Saving::getLastEntry('runbal'),2) }}</div>
+          <div class="col-md-4 col-sm-4 col-xs-4">
+            <div class="form-control-static alert-info savrunbal">
+              {{ number_format(\App\Saving::getLastEntry('runbal'),2) }}</div>
           </div>
-          <div class="col-md-4">
-            <div class="form-control-static alert-info savrunbal2">{{ number_format(\App\Current::getLastEntry('runbal')+\App\Saving::getLastEntry('runbal'),2) }}</div>
+          <div class="col-md-4 col-sm-4 col-xs-4">
+            <div class="form-control-static alert-info savrunbal2">
+              {{ number_format(\App\Current::getLastEntry('runbal')+\App\Saving::getLastEntry('runbal'),2) }}</div>
           </div>
         </div>
 
@@ -425,7 +434,9 @@ $(document).ready( function(){
                   repopulatelistview(rowid, rowid);
               
                   // Update account balance:
-                  $('.currrunbal').last().text(parseFloat(runbal).toFixed(2)); // new running balance
+                  $('.currrunbal').eq(1).text(parseFloat(runbal).toFixed(2)); // new running balance
+                  $('.currrunbal').eq(0).text('');
+                  //$('.currrunbal').eq(1).text('');
                 }
               });
               // End delete row.
