@@ -1,6 +1,7 @@
 body {
   background-color: #fff;
-  margin: 5px; }
+  margin: 5px;
+}
 
 ul#projectsmenu {
   background-color: rgba(0, 0, 0, 0.5);
@@ -11,123 +12,161 @@ ul#projectsmenu {
   margin-top: 0;
   padding-left: 0;
   border-bottom-left-radius: 2px;
-  box-shadow: -2px 2px 2px; }
-  ul#projectsmenu li {
-    list-style: none;
-    text-align: center;
-    font: bold 1em verdana;
-    border-bottom: 1px solid rgba(196, 196, 196, 0.7);
-    cursor: pointer; }
-    ul#projectsmenu li a {
-      display: block;
-      color: #ccc; }
-      ul#projectsmenu li a:hover {
-        background-color: rgba(255, 255, 255, 0.5);
-        color: #000; }
-    ul#projectsmenu li.sel {
-      color: yellow;
-      border: 0; }
-    ul#projectsmenu li.sel, ul#projectsmenu li a {
-      padding: 0; }
-    ul#projectsmenu li:last-child {
-      border: 0; }
+  box-shadow: -2px 2px 2px;
+}
+ul#projectsmenu li {
+  list-style: none;
+  text-align: center;
+  font: bold 1em verdana;
+  border-bottom: 1px solid rgba(196, 196, 196, 0.7);
+  cursor: pointer;
+}
+ul#projectsmenu li a {
+  display: block;
+  color: #ccc;
+}
+ul#projectsmenu li a:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+  color: #000;
+}
+ul#projectsmenu li.sel {
+  color: yellow;
+  border: 0;
+}
+ul#projectsmenu li.sel, ul#projectsmenu li a {
+  padding: 0;
+}
+ul#projectsmenu li:last-child {
+  border: 0;
+}
 
 .equal {
   display: -webkit-flex;
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 2em; }
+  margin-bottom: 2em;
+}
 
 .container-fluid .row .hunp {
-  height: 100%; }
+  height: 100%;
+}
 .container-fluid .panel {
   margin-bottom: 0;
-  padding-bottom: 1em; }
+  padding-bottom: 1em;
+}
 
 fieldset {
-  border: 0; }
-  fieldset legend {
-    text-align: center;
-    text-transform: uppercase; }
-  fieldset.l {
-    position: relative; }
-  fieldset#r > div > div {
-    background: transparent;
-    text-align: center;
-    position: relative; }
-  fieldset#r > div input {
-    text-align: center;
-    color: #000; }
-  fieldset textarea {
-    height: 4em;
-    border: 0;
-    padding: 0;
-    margin: 0; }
+  border: 0;
+}
+fieldset legend {
+  text-align: center;
+  text-transform: uppercase;
+}
+fieldset.l {
+  position: relative;
+}
+fieldset#r > div > div {
+  background: transparent;
+  text-align: center;
+  position: relative;
+}
+fieldset#r > div input {
+  text-align: center;
+  color: #000;
+}
+fieldset textarea {
+  height: 4em;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
 
 .accsumm {
   color: white;
-  text-align: center; }
+  text-align: center;
+}
 
 /* Editrow fieldset */
 #editrow {
   line-height: 1.8em;
-  border: 0; }
-  #editrow label {
-    color: white; }
-  #editrow input[name=date] {
-    width: 7em;
-    display: inline; }
-  #editrow input[name=descr] {
-    width: 17em;
-    display: inline; }
-  #editrow input[name=amount] {
-    width: 4em;
-    display: inline; }
-  #editrow input[name=notes] {
-    width: 30em;
-    display: inline; }
+  border: 0;
+}
+#editrow label {
+  color: white;
+}
+#editrow input[name=date] {
+  width: 7em;
+  display: inline;
+}
+#editrow input[name=descr] {
+  width: 17em;
+  display: inline;
+}
+#editrow input[name=amount] {
+  width: 4em;
+  display: inline;
+}
+#editrow input[name=notes] {
+  width: 30em;
+  display: inline;
+}
 
 /* Update button */
 .transaction-detail {
-  padding: .3em; }
+  padding: 0.3em;
+}
 
 #btnUp {
-  border-radius: .5em .5em 0 0;
-  width: 10em; }
+  border-radius: 0.5em 0.5em 0 0;
+  width: 10em;
+}
 
 #btnDown {
-  border-radius: .5em .5em 0 0;
-  width: 10em; }
+  border-radius: 0.5em 0.5em 0 0;
+  width: 10em;
+}
 
 .cellrow {
-  cursor: pointer; }
+  cursor: pointer;
+}
 
+table.table {
+  height: 500px;
+}
 table.table thead tr {
   background: linear-gradient(rgba(255, 0, 0, 0.5), black);
-  border-radius: .5em .5em 0 0; }
-  table.table thead tr th {
-    font-variant: small-caps; }
+  border-radius: 0.5em 0.5em 0 0;
+}
+table.table thead tr th {
+  font-variant: small-caps;
+}
 table.table tbody tr:hover {
-  background: rgba(0, 0, 255, 0.5); }
+  background: rgba(0, 0, 255, 0.5);
+}
 
 .hl {
   background-color: orange;
   font-weight: bold;
   border-top: 2px solid yellow;
   border-bottom: 2px solid yellow;
-  padding: .4em 0; }
+  padding: 0.4em 0;
+}
 
 .hl2 {
-  background-color: orange; }
+  background-color: orange;
+}
 
 form * {
-  text-align: center; }
+  text-align: center;
+}
 
 input {
-  border: 1px solid #ccc; }
+  border: 1px solid #ccc;
+}
 
 select, input[type=text] {
-  border-radius: 0.5em; }
+  border-radius: 0.5em;
+}
 
 #accsdiv {
   position: absolute;
@@ -138,57 +177,71 @@ select, input[type=text] {
   height: 500px;
   overflow: auto;
   border: 0px solid #000;
-  border-radius: .4em;
+  border-radius: 0.4em;
   padding: 0 1em 1em 1em;
-  box-shadow: 2px, 2px, 2px, 2px; }
-  #accsdiv h2 {
-    text-align: center;
-    color: #000;
-    font-weight: bold; }
-  #accsdiv table {
-    border-collapse: collapse;
-    border: 1px solid black;
-    border-radius: .4em; }
-  #accsdiv tr {
-    vertical-align: top; }
-    #accsdiv tr:hover {
-      background: yellow; }
-  #accsdiv th, #accsdiv td {
-    padding: .3em;
-    border-bottom: 1px dotted black; }
-  #accsdiv a {
-    display: block;
-    position: fixed;
-    background: red;
-    width: 20px;
-    left: 50%;
-    top: 0;
-    margin-left: 435px; }
-  #accsdiv #accsdivinnertop {
-    background: yellow;
-    position: fixed;
-    width: 950px;
-    overflow: hidden; }
+  box-shadow: 2px, 2px, 2px, 2px;
+}
+#accsdiv h2 {
+  text-align: center;
+  color: #000;
+  font-weight: bold;
+}
+#accsdiv table {
+  border-collapse: collapse;
+  border: 1px solid black;
+  border-radius: 0.4em;
+}
+#accsdiv tr {
+  vertical-align: top;
+}
+#accsdiv tr:hover {
+  background: yellow;
+}
+#accsdiv th, #accsdiv td {
+  padding: 0.3em;
+  border-bottom: 1px dotted black;
+}
+#accsdiv a {
+  display: block;
+  position: fixed;
+  background: red;
+  width: 20px;
+  left: 50%;
+  top: 0;
+  margin-left: 435px;
+}
+#accsdiv #accsdivinnertop {
+  background: yellow;
+  position: fixed;
+  width: 950px;
+  overflow: hidden;
+}
 
 .negcol {
-  color: #c00; }
+  color: #c00;
+}
 
 /* Today col */
 .todcol {
-  background: lime; }
+  background: lime;
+}
 
 /* prev days col */
 .prevdayscol {
-  background: orange; }
+  background: orange;
+}
 
 /* prev days col */
 .negcol {
   background: red;
-  color: #fff; }
+  color: #fff;
+}
 
 #rdoBtnGroupinout {
-  border: none; }
-  #rdoBtnGroupinout div {
-    float: left; }
+  border: none;
+}
+#rdoBtnGroupinout div {
+  float: left;
+}
 
 /*# sourceMappingURL=styles.css.map */
