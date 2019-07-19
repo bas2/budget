@@ -6,11 +6,10 @@
   <!-- Bootstrap -->
   {!! Html::style('css/bootstrap.min.css') !!}
   {!! Html::style('css/styles.css') !!}
-  {!! Html::style('js/jquery/css/sunny/jquery-ui-1.8.22.custom.css') !!}
 
   {{-- <link rel="stylesheet" href="css/autocomplete.css"> --}}
-  {!! Html::script('js/jquery-1.8.3.min.js') !!}
-  {!! Html::script('js/jquery-ui-1.8.22.custom.min.js') !!}
+  <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
+  <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
   {!! Html::script('js/script.js') !!}
 </head>
 <body>
@@ -97,10 +96,14 @@ $(document).ready( function(){
   $('ul#projectsmenu li span').css('cursor','pointer').click(function() {
     $('ul#projectsmenu li').has('a[href]').toggle();
   });
+
+  $('input#datepicker').datepicker({
+        format: "dd/mm/yyyy"
+    });
   
 
   // What to do when an item in 'listview' is clicked.
-  $('.cellrow').die('click').live('click', function(){
+  $('body').on('click', '.cellrow', function(){
     // Enable / disable Transfer button depending on whether
     // the first row is selected:
     var rowsel  = $(this).attr('title2');
@@ -170,7 +173,7 @@ $(document).ready( function(){
   });
 
 
-  $('.cellrow').live('hover', function() {
+  $('body').on('hover', '.cellrow', function() {
     $(this).addClass('hl2'); // Add highlight to the selected row.
   }, function() {
     $('.cellrow').removeClass('hl hl2'); // Remove highlight from all rows.
@@ -230,7 +233,7 @@ $(document).ready( function(){
   
   
   // Update row
-  $('#editdata').live('click', function(e) {
+  $('body').on('click', '#editdata', function(e) {
     $.ajax({
       type:'POST',
       url:'listview/' + $('#rowidsel').text(),
@@ -248,7 +251,7 @@ $(document).ready( function(){
     e.preventDefault();
   });
   
-  $('#btnZero').live('click', function() {
+  $('body').on('click', '#btnZero', function() {
     var prevtext  = $('#txtAmount').val();
     var prevtext1 = $('#txtAmount').data('prevtext1');
     if ( prevtext1>0 ) {
@@ -281,12 +284,12 @@ $(document).ready( function(){
 
   });
   
-  $('#accsdivclose').live('click', function() {
+  $('body').on('click', '#accsdivclose', function() {
     $('#accsdiv').remove();  
   });
 
   // 13/05/13 -
-  $('#accsdiv tr').live('click', function(){
+  $('#accsdiv').on('click', 'tr', function(){
     var accnum1 = $(this).attr('id').split('-');
     accnum = accnum1[1]; // rowid
     $('#accsdiv tr').css('background', 'white');
@@ -304,7 +307,7 @@ $(document).ready( function(){
   });
   
   // Move row up or down
-  $('#btnUp,#btnDown').click(function(){
+  $('body').on('click', '#btnUp,#btnDown', function(){
     var dir = ( $(this).attr('id') == 'btnUp' ) ? 'u' : 'd' ;
     $.ajax({
       type:'get',
@@ -329,7 +332,7 @@ $(document).ready( function(){
 
   
   // Add row:
-  $('#btnAddrow').live('click', function(){
+  $('body').on('click', '#btnAddrow', function(){
     $.ajax({
       type:'post',
       url:'addrow',
@@ -345,7 +348,7 @@ $(document).ready( function(){
     
     
   // Duplicate row:  
-  $('#btnDuplicate').live('click', function(){
+  $('body').on('click', '#btnDuplicate', function(){
     $.ajax({
       type:'post',
       url:'duplicaterow/' + $('#rowidsel').text(),
@@ -370,7 +373,7 @@ $(document).ready( function(){
 
     
   // Delete row:  
-  $('#btnDelete').live('click', function(){
+  $('body').on('click', '#btnDelete', function(){
     $.ajax({
       type:'post',
       url:'deleterow/' + $('#rowidsel').text(),
@@ -382,7 +385,7 @@ $(document).ready( function(){
     
     
   // Transfer row
-  $('#btnTransfer').live('click', function() {
+  $('body').on('click', '#btnTransfer', function() {
     // Get details of row to be transferred:
     $.ajax({
       type:'post',
@@ -420,7 +423,7 @@ $(document).ready( function(){
 
     
   });
-
+/*
   var cities = [ ];
 
   $("#descr").autocomplete({
@@ -438,7 +441,7 @@ $(document).ready( function(){
   }).click(function(){
     $(this).autocomplete("search");
   });
-    
+*/  
   // Disable up/down button  
   $('#btnUp,#btnDown').attr('disabled','disabled');
     
