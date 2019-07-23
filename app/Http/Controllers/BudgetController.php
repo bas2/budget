@@ -17,22 +17,23 @@ class BudgetController extends Controller
     foreach($codesall as $code) {$codes[$code->code] = "{$code->code}";}
 
     // 
-    $rows = App\Budget::oldest('date')->get(['id','code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
+    $rows = App\Budget::oldest('date')
+    ->get(['id','code', 'description', 'incoming', 'outgoing', 'notes', 'date'])->first();
  
-    $incoming  = ($rows[0]->outgoing=='0.00' && $rows[0]->incoming!='0.00') ? 1 : 0;
-    $outgoing  = ($rows[0]->outgoing!='0.00' && $rows[0]->incoming=='0.00') ? 1 : 0;
+    $incoming  = ($rows->outgoing=='0.00' && $rows->incoming!='0.00') ? 1 : 0;
+    $outgoing  = ($rows->outgoing!='0.00' && $rows->incoming=='0.00') ? 1 : 0;
     if (!$incoming && !$outgoing) {
       $incoming = 0;
       $outgoing = 1;
     } // End if.
-    $amount = ($incoming) ? $rows[0]->incoming : $rows[0]->outgoing ;
+    $amount = ($incoming) ? $rows->incoming : $rows->outgoing ;
     
     // Get budget rows.
     $rows2 = App\Budget::oldest('date')->orderBy('morder')
     ->get(['id','code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
     return view('welcome')
-    ->with('editrows',['code' => $rows[0]->code,'date' => Carbon::parse($rows[0]->date)->format('d/m/Y'),
-    'descr' => $rows[0]->description, 'amount' => $amount, 'notes' => $rows[0]->notes,
+    ->with('editrows',['code' => $rows->code,'date' => Carbon::parse($rows->date)->format('d/m/Y'),
+    'descr' => $rows->description, 'amount' => $amount, 'notes' => $rows->notes,
     'incoming' => $incoming, 'outgoing' => $outgoing])
     ->with('codes', $codes)
     ->with('rows', $rows2)
@@ -60,19 +61,19 @@ class BudgetController extends Controller
   public function getRow($rowid=0) {
     if($rowid==0) {
       $rows=\App\Budget::oldest('date')
-      ->get(['morder', 'code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
+      ->get(['morder', 'code', 'description', 'incoming', 'outgoing', 'notes', 'date'])->first();
     } else {
       $rows=\App\Budget::where('id',$rowid)
-      ->get(['morder', 'code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
+      ->get(['morder', 'code', 'description', 'incoming', 'outgoing', 'notes', 'date'])->first();
     }
 
-    $incoming  = ($rows[0]->outgoing=='0.00' && $rows[0]->incoming!='0.00') ? 1 : 0;
-    $outgoing  = ($rows[0]->outgoing!='0.00' && $rows[0]->incoming=='0.00') ? 1 : 0;
+    $incoming  = ($rows->outgoing=='0.00' && $rows->incoming!='0.00') ? 1 : 0;
+    $outgoing  = ($rows->outgoing!='0.00' && $rows->incoming=='0.00') ? 1 : 0;
     if (!$incoming && !$outgoing) {
       $incoming = 0;
       $outgoing = 1;
     } // End if.
-    $amount = ($incoming) ? $rows[0]->incoming : $rows[0]->outgoing ;
+    $amount = ($incoming) ? $rows->incoming : $rows->outgoing ;
   /*
     // 20/01/15: Reorder morders:
     $r2 = $$myclass->link->prepare("SELECT id, morder FROM statements_budget WHERE date=? ORDER BY date, morder");$r2->execute([$db_date]);
@@ -97,7 +98,8 @@ class BudgetController extends Controller
 
     return view('ajax.getrow')
     ->with('codes', $codes)
-    ->with('editrows',['code'=>$rows[0]->code,'date'=>Carbon::parse($rows[0]->date)->format('d/m/Y'),'descr'=>$rows[0]->description,'amount'=>$amount,'notes'=>$rows[0]->notes,'incoming'=>$incoming,'outgoing'=>$outgoing])
+    ->with('editrows',['code'=>$rows->code,'date'=>Carbon::parse($rows->date)->format('d/m/Y'),
+    'descr'=>$rows->description,'amount'=>$amount,'notes'=>$rows->notes,'incoming'=>$incoming,'outgoing'=>$outgoing])
     ;
   }
 
@@ -115,8 +117,8 @@ class BudgetController extends Controller
   // POST: deleterow/id
   public function deleteRow($rowid) {
     $delete=\App\Budget::where('id',$rowid)->delete();
-    $rows2=\App\Budget::oldest('date')->take(1)->get(['id']);
-    return $rows2[0]->id; # ID for first entry so it can be focussed.
+    $rows2=\App\Budget::oldest('date')->take(1)->get(['id'])->first();
+    return $rows2->id; # ID for first entry so it can be focussed.
   }
 
 
@@ -173,9 +175,9 @@ class BudgetController extends Controller
   // POST: transfer/id
   public function transfer($rowid) {
     if ( null == request('getrow') ) {
-      $runbal=\App\Current::latest('date')->orderBy('id','desc')->get(['runbal']);
-      $runbal2=\App\Budget::where('id',$rowid)->get(['incoming','outgoing']);
-      return $runbal[0]->runbal - $runbal2[0]->outgoing + $runbal2[0]->incoming ;
+      $runbal=\App\Current::latest('date')->orderBy('id','desc')->get(['runbal'])->first();
+      $runbal2=\App\Budget::where('id',$rowid)->get(['incoming','outgoing'])->first();
+      return $runbal->runbal - $runbal2->outgoing + $runbal2->incoming ;
     }
 
     $runbal2=\App\Budget::where('id',$rowid)
@@ -184,7 +186,7 @@ class BudgetController extends Controller
     $strsql = ( ($runbal2->incoming>0) ) ? [$runbal2->incoming,0] : [0,$runbal2->outgoing];
     // Transfer to/from Savings account.
     if ($runbal2->description=='ISA Account') {
-      $curbal=\App\Saving::latest('date')->orderBy('id','desc')->get(['runbal']);
+      $curbal=\App\Saving::latest('date')->orderBy('id','desc')->get(['runbal'])->first();
       $create=new \App\Saving;
       $create->code        = 'TF';
       $create->date        = $runbal2->date;
@@ -192,7 +194,7 @@ class BudgetController extends Controller
       $create->notes       = '';
       $create->incoming    = $strsql[1];
       $create->outgoing    = $strsql[0];
-      $create->runbal      = $curbal[0]->runbal - $strsql[0];
+      $create->runbal      = $curbal->runbal - $strsql[0];
       $create->save();
     }
 
