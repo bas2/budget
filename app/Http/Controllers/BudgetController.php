@@ -12,16 +12,16 @@ class BudgetController extends Controller
   // GET home
   public function index() {
 
-    $dirpath='../..';$proj=[];
+    //$dirpath = '../..';$proj=[];
     //foreach(\File::directories($dirpath) as $project){$prj=str_replace($dirpath.'/','',$project);if(substr($prj,0,1)!='_'){$proj[]=ucwords($prj);}}
 
     // Get codes:
-    $codesall=App\Code::orderBy('code')->get(['code','info']);
-    foreach($codesall as $code) {$codes[$code->code]="{$code->code}";}
+    $codesall = App\Code::orderBy('code')->get(['code','info']);
+    foreach($codesall as $code) {$codes[$code->code] = "{$code->code}";}
 
     // 
-    $rows=\App\Budget::oldest('date')->get(['id','code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
-
+    $rows = App\Budget::oldest('date')->get(['id','code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
+ 
     $incoming  = ($rows[0]->outgoing=='0.00' && $rows[0]->incoming!='0.00') ? 1 : 0;
     $outgoing  = ($rows[0]->outgoing!='0.00' && $rows[0]->incoming=='0.00') ? 1 : 0;
     if (!$incoming && !$outgoing) {
@@ -31,16 +31,30 @@ class BudgetController extends Controller
     $amount = ($incoming) ? $rows[0]->incoming : $rows[0]->outgoing ;
     
     // Get budget rows.
-    $rows2=\App\Budget::oldest('date')->orderBy('morder')
+    $rows2 = App\Budget::oldest('date')->orderBy('morder')
     ->get(['id','code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
     return view('welcome')
-    ->with('editrows',['code'=>$rows[0]->code,'date'=>Carbon::parse($rows[0]->date)->format('d/m/Y'),
-    'descr'=>$rows[0]->description,'amount'=>$amount,'notes'=>$rows[0]->notes,
-    'incoming'=>$incoming,'outgoing'=>$outgoing])
+    ->with('editrows',['code' => $rows[0]->code,'date' => Carbon::parse($rows[0]->date)->format('d/m/Y'),
+    'descr' => $rows[0]->description, 'amount' => $amount, 'notes' => $rows[0]->notes,
+    'incoming' => $incoming, 'outgoing' => $outgoing])
     ->with('codes', $codes)
     ->with('rows', $rows2)
-    ->with('runbal',\App\Current::getLastEntry('runbal'))
-    ->with('projlist',$proj)
+    ->with('runbal', App\Current::getLastEntry('runbal'))
+    ->with('latestID', App\Budget::oldest('date')->take(1)->get(['id'])[0]->id)
+    ->with('account_numbers', ['Current'=>'C ' . App\Current::$account_number, 
+    'Savings'=>'S ' . App\Saving::$account_number])
+    ->with('last_entries', 
+    ['CurrentDate' => Carbon::parse(App\Current::getLastEntry('date'))->format('d/m/Y'), 
+    'CurrentAmount' => App\Current::getLastEntry('amount'), 
+    'CurrentDescr' => App\Current::getLastEntry('description'), 
+    'SavingsDate' => Carbon::parse(App\Saving::getLastEntry('date'))->format('d/m/Y'), 
+    'SavingsAmount' => App\Saving::getLastEntry('amount'), 
+    'SavingsDescr' => App\Saving::getLastEntry('description')])
+    ->with('running_balances', [
+    'Current' => number_format(App\Current::getLastEntry('runbal'),2), 
+    'Savings' => number_format(App\Saving::getLastEntry('runbal'),2), 
+    'Total' => number_format(App\Current::getLastEntry('runbal') + App\Saving::getLastEntry('runbal'),2)])
+    //->with('projlist',$proj)
     ;
   }
 
