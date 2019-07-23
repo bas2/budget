@@ -12,9 +12,6 @@ class BudgetController extends Controller
   // GET home
   public function index() {
 
-    //$dirpath = '../..';$proj=[];
-    //foreach(\File::directories($dirpath) as $project){$prj=str_replace($dirpath.'/','',$project);if(substr($prj,0,1)!='_'){$proj[]=ucwords($prj);}}
-
     // Get codes:
     $codesall = App\Code::orderBy('code')->get(['code','info']);
     foreach($codesall as $code) {$codes[$code->code] = "{$code->code}";}
@@ -57,6 +54,7 @@ class BudgetController extends Controller
     //->with('projlist',$proj)
     ;
   }
+
 
   // GET: getrow/id
   public function getRow($rowid=0) {
@@ -103,6 +101,7 @@ class BudgetController extends Controller
     ;
   }
 
+
   // POST: addrow
   public function addRow() {
     $create=new \App\Budget;
@@ -112,12 +111,14 @@ class BudgetController extends Controller
     return ($create->save()) ? $create->id : 0 ;
   }
 
+
   // POST: deleterow/id
   public function deleteRow($rowid) {
     $delete=\App\Budget::where('id',$rowid)->delete();
     $rows2=\App\Budget::oldest('date')->take(1)->get(['id']);
     return $rows2[0]->id; # ID for first entry so it can be focussed.
   }
+
 
   // GET: listview
   public function listView() {
@@ -131,6 +132,7 @@ class BudgetController extends Controller
     ->with('rowcounter',0)
     ;
   }
+
 
   // POST: listview/id
   // Complete update and/or get updated matrix html.
@@ -152,6 +154,7 @@ class BudgetController extends Controller
     ;
   }
 
+
   // POST: duplicaterow/id
   public function duplicateRow($rowid) {
     $create=new \App\Budget;
@@ -166,6 +169,7 @@ class BudgetController extends Controller
     return ($create->save()) ? $create->id : 0 ;
   }
 
+  
   // POST: transfer/id
   public function transfer($rowid) {
     if ( null == request('getrow') ) {
