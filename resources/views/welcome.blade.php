@@ -19,59 +19,55 @@
 
   <div class="row equal">
 
-    <div class="col-md-6 col-sm-12 col-xs-12 panel text-center">
+    <div class="col-md-7 col-sm-12 col-xs-12 panel text-center">
       <fieldset class="l hunp">
-        <legend>Edit row <span class="badge" id="rowidsel">
-        {{ \App\Budget::oldest('date')->take(1)->get(['id'])[0]->id }}</span></legend>
+        <legend>Edit row <span class="badge" id="rowidsel">{{ $latestID }}</span></legend>
         <div id="editrow">@include('ajax.getrow')</div>
       </fieldset>
     </div>
 
-    <div class="col-md-6 col-sm-12 col-xs-12 panel">
+    <div class="col-md-5 col-sm-12 col-xs-12 panel">
       {{-- <h2 class="panel-title">Test</h2> --}}
       <fieldset class="hunp" id="r">
         <legend>Account Balances</legend>
 
         <div class="row">
-          <div class="col-md-4 col-sm-4 col-xs-4" id="currdescr">
-            <button class="btn btn-primary btn-block" id="currbutt">Current {{ \App\Current::$account_number }}</button> 
+          <div class="col-md-4 col-sm-5 col-xs-5" id="currdescr">
+            <button class="btn btn-primary btn-block" id="currbutt">{{ $account_numbers['Current'] }}</button> 
           </div>
-          <div class="col-md-4 col-sm-4 col-xs-4">
-            <button class="btn btn-primary btn-block" id="savbutt">Savings {{ \App\Saving::$account_number }}</button> 
+          <div class="col-md-4 col-sm-5 col-xs-5">
+            <button class="btn btn-primary btn-block" id="savbutt">{{ $account_numbers['Savings'] }}</button> 
           </div>
-          <div class="col-md-4 col-sm-4 col-xs-4">
+          <div class="col-md-4 col-sm-2 col-xs-2">
             <button class="btn btn-primary btn-block" id="savbutt2">Total</button> 
           </div>
         </div>
 
         <div class="row transaction-detail">
-          <div class="col-md-4 col-sm-4 col-xs-4">
+          <div class="col-md-4 col-sm-5 col-xs-5">
             <div class="form-control-static alert-default currrunbal">
-              {{ \Carbon\Carbon::parse(\App\Current::getLastEntry('date'))->format('d/m/Y') }} 
-              &pound;<span class="negcol">{{ \App\Current::getLastEntry('amount') }}</span><br>
-              {{ \App\Current::getLastEntry('description') }}</div>
+              {{ $last_entries['CurrentDate'] }} 
+              &pound;<span class="negcol">{{ $last_entries['CurrentAmount'] }}</span><br>
+              {{ $last_entries['CurrentDescr'] }}</div>
           </div>
-          <div class="col-md-4 col-sm-4 col-xs-4">
+          <div class="col-md-4 col-sm-5 col-xs-5">
             <div class="form-control-static alert-default savrunbal">
-              {{ \Carbon\Carbon::parse(\App\Saving::getLastEntry('date'))->format('d/m/Y') }} 
-              &pound;<span class="negcol">{{ \App\Saving::getLastEntry('amount') }}</span><br>
-              {{ \App\Saving::getLastEntry('description') }}</div>
+              {{ $last_entries['SavingsDate'] }} 
+              &pound;<span class="negcol">{{ $last_entries['SavingsAmount'] }}</span><br>
+              {{ $last_entries['SavingsDescr'] }}</div>
           </div>
-          <div class="col-md-4 col-sm-4 col-xs-4"></div>
+          <div class="col-md-4 col-sm-2 col-xs-2"></div>
         </div>
 
         <div class="row">
-          <div class="col-md-4 col-sm-4 col-xs-4">
-            <div class="form-control-static alert-info currrunbal">
-              {{ number_format(\App\Current::getLastEntry('runbal'),2) }}</div>
+          <div class="col-md-4 col-sm-5 col-xs-5">
+            <div class="form-control-static alert-info currrunbal">{{ $running_balances['Current'] }}</div>
           </div>
-          <div class="col-md-4 col-sm-4 col-xs-4">
-            <div class="form-control-static alert-info savrunbal">
-              {{ number_format(\App\Saving::getLastEntry('runbal'),2) }}</div>
+          <div class="col-md-4 col-sm-5 col-xs-5">
+            <div class="form-control-static alert-info savrunbal">{{ $running_balances['Savings'] }}</div>
           </div>
-          <div class="col-md-4 col-sm-4 col-xs-4">
-            <div class="form-control-static alert-info savrunbal2">
-              {{ number_format(\App\Current::getLastEntry('runbal')+\App\Saving::getLastEntry('runbal'),2) }}</div>
+          <div class="col-md-4 col-sm-2 col-xs-2">
+            <div class="form-control-static alert-info savrunbal2">{{ $running_balances['Total'] }}</div>
           </div>
         </div>
 
