@@ -480,6 +480,8 @@ $(document).ready( function(){
     $('#listviewbody').scrollTop($("#"+id).offset().top - 280);
   }
 
+  $('tr[title2=1]').addClass('hl');
+
 });
 </script>
 </body>
