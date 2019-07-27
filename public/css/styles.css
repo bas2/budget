@@ -94,8 +94,8 @@ fieldset textarea {
 #editrow label {
   color: white;
 }
-#editrow input[name=date] {
-  width: 7em;
+#editrow input#datepicker {
+  width: 8em;
   display: inline;
 }
 #editrow input[name=descr] {
@@ -103,7 +103,7 @@ fieldset textarea {
   display: inline;
 }
 #editrow input[name=amount] {
-  width: 4em;
+  width: 5em;
   display: inline;
 }
 #editrow input[name=notes] {
