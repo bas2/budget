@@ -19,12 +19,6 @@
 
   <div class="row equal">
 
-    <div class="col-md-7 col-sm-12 col-xs-12 panel text-center">
-      <fieldset class="l hunp">
-        <legend>Edit row <span class="badge" id="rowidsel">{{ $latestID }}</span></legend>
-        <div id="editrow">@include('ajax.getrow')</div>
-      </fieldset>
-    </div>
 
     <div class="col-md-5 col-sm-12 col-xs-12 panel">
       {{-- <h2 class="panel-title">Test</h2> --}}
@@ -73,6 +67,15 @@
 
       </fieldset>
     </div>
+
+
+    <div class="col-md-7 col-sm-12 col-xs-12 panel text-center">
+      <fieldset class="l hunp">
+        <legend>Edit row <span class="badge" id="rowidsel">{{ $latestID }}</span></legend>
+        <div id="editrow">@include('ajax.getrow')</div>
+      </fieldset>
+    </div>
+
 
   </div>
 
