@@ -16,3 +16,5 @@ Route::post('duplicaterow/{id}', 'BudgetController@duplicateRow');
 Route::post('transfer/{id}',     'BudgetController@transfer');
 
 Route::post('getlist', function () {} );
+
+Route::get('moveupdown/{id}/{dir}', 'BudgetController@moveupdown');

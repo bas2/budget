@@ -136,7 +136,7 @@ $(document).ready( function(){
 
         $('#editrow').html(editdata); // Update edit
         $('input#datepicker').datepicker({
-        format: "dd/mm/yyyy"
+          format: "dd/mm/yyyy"
         });
         
         $.ajax({
@@ -180,6 +180,38 @@ $(document).ready( function(){
         });
         
       } // end ajax success callback.
+    });
+
+    // Handle Up/Down buttons:
+
+
+
+    $.ajax({
+      type:'get',
+      url:'moveupdown/' + $('#rowidsel').text() + '/no',
+      //data:'dir=' + 'no',
+      success: function(data) {
+        //var splitdata = data.split('|');
+        //if (splitdata.length==2) {
+        //  var newdata  = splitdata[0];
+        //  var firstrow = splitdata[1];
+        //  repopulatelistview(newdata, firstrow);
+        //}
+        //else {repopulatelistview(data);}
+        //alert(data);
+        var data_split = data.split('|');
+        //alert(data_split[0]);
+        $('#btnUp,#btnDown').attr('disabled', 'disabled');
+        if (data_split[0]>1)
+        {
+          
+          if (data_split[1] == 1) $('#btnDown').removeAttr('disabled');
+          if (data_split[2] == 1) $('#btnUp').removeAttr('disabled');
+          //alert(data);
+        }
+
+      } // End success.
+
     });
         
   });
@@ -236,11 +268,14 @@ $(document).ready( function(){
         $('.cellrow').removeClass('hl');  // Remove highlight from all rows.
         $('#rw'+newrowid).addClass('hl'); // Add highlight to the new row.
         $('#rowidsel').hide().fadeIn('slow').text(newrowid); // Update id
+
+
             
         updateeditbit(newrowid);
 
       }
     });
+
     $('input#datepicker').datepicker({
         format: "dd/mm/yyyy"
     });
@@ -262,8 +297,8 @@ $(document).ready( function(){
         + '&descr='     + encodeURIComponent($('input[name=descr]').val())
         + '&notes='     + encodeURIComponent($('input[name=notes]').val()),
       success: function(data) {
-        $('#listview').html(data); // Repopulate listview
-        $('.cellrow').removeClass('hl');  // Remove highlight from all rows.
+        $('#listview').html(data);                     // Repopulate listview
+        $('.cellrow').removeClass('hl');               // Remove highlight from all rows.
         $('#rw'+$('#rowidsel').text()).addClass('hl'); // Add highlight to the Updated row.
       }
     });
@@ -329,22 +364,7 @@ $(document).ready( function(){
   // Move row up or down
   $('body').on('click', '#btnUp,#btnDown', function(){
     var dir = ( $(this).attr('id') == 'btnUp' ) ? 'u' : 'd' ;
-    $.ajax({
-      type:'get',
-      url:'moveupdown/' + $('#rowidsel').text(),
-      data:'dir=' + dir,
-      success: function(data) {
-        var splitdata = data.split('|');
-        if (splitdata.length==2) {
-          var newdata  = splitdata[0];
-          var firstrow = splitdata[1];
-          repopulatelistview(newdata, firstrow);
-        }
-        else {repopulatelistview(data);}
 
-      } // End success.
-
-    });
     
     
   });
@@ -360,7 +380,7 @@ $(document).ready( function(){
         // Returns ID for the new row added in data
         repopulatelistview(newrowid);
         $('input#datepicker').datepicker({
-        format: "dd/mm/yyyy"
+          format: "dd/mm/yyyy"
         });
 
       } // End success.
