@@ -17,7 +17,7 @@ class BudgetController extends Controller
     foreach($codesall as $code) {$codes[$code->code] = "{$code->code}";}
 
     // 
-    $rows = App\Budget::oldest('date')
+    $rows = App\Budget::oldest('date')->orderby('morder')
     ->get(['id','code', 'description', 'incoming', 'outgoing', 'notes', 'date'])->first();
  
     $incoming  = ($rows->outgoing=='0.00' && $rows->incoming!='0.00') ? 1 : 0;
@@ -210,8 +210,33 @@ class BudgetController extends Controller
     return ($create->save()) ? request('runbal') : 0 ;
   }
 
+  // Given current rowID, return whether there are rows above or below to swap with.
+  public function moveupdown($rowid, $dir)
+  {
+    // To be able to move a row up, there needs to be a row with a lower ID and same morder.
+    $row = \App\Budget::where('id', $rowid)->get(['date'])->first();
+    $rows = \App\Budget::where('date', $row->date)->orderby('morder')->get(['id']);
 
+    $data = []; $ids = 0;
+    foreach ($rows as $row)
+    {
+      $update = \App\Budget::where('id', $row->id);
+      $data[$row->id] = $ids;
+      $update->update(['morder'=>$ids]);
+      $ids++;
+    }
+    $morder = $data[$rowid];
+    $up   = ($morder == 0)        ? 1 : 0 ;
+    $down = ($morder == ($ids-1)) ? 1 : 0 ;
 
+    if ($ids <= 1) return "0|0|0";
+    else if ($ids == 2) return "2|$up|$down";
+    else if ( $ids > 2 && $morder == 0 ) return "$ids|$up|$down";
+    else if ( $ids > 2 && ($morder > 0 && $morder < ($ids - 1)) ) return "$ids|1|1";
+    else if ( $ids > 2 && $morder == ($ids - 1) ) return "$ids|$up|$down";
+
+    //return "$ids|$up|$morder";
+  }
 
 
 
