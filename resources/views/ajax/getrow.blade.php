@@ -20,3 +20,8 @@
 </div>
 
 {!! Form::submit('Update >', ['class'=>'btn btn-primary btn-block','id'=>'editdata']) !!}
+<script>
+        $('input#datepicker').datepicker({
+        format: "dd/mm/yyyy"
+    });
+</script>
