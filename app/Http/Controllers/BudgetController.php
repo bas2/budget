@@ -211,7 +211,7 @@ class BudgetController extends Controller
   }
 
   // Given current rowID, return whether there are rows above or below to swap with.
-  public function moveupdown($rowid, $dir)
+  public function moveupdown($rowid)
   {
     // To be able to move a row up, there needs to be a row with a lower ID and same morder.
     $row = \App\Budget::where('id', $rowid)->get(['date'])->first();
@@ -236,6 +236,34 @@ class BudgetController extends Controller
     else if ( $ids > 2 && $morder == ($ids - 1) ) return "$ids|$up|$down";
 
     //return "$ids|$up|$morder";
+  }
+
+  // Alter morder for row to move up or down.
+  public function moveupdown2($rowid, $dir='u')
+  {
+    // Assume the direction of up:
+    // We basically need to swap morders with the one the row is moving places with.
+    // 1. Get morder for the row that is moving:
+    $row = \App\Budget::where('id', $rowid)->get(['morder', 'date'])->first();
+    $curmorder      = $row->morder;
+    $rowdate        = $row->date;
+
+    $moveupmorder   = $curmorder - 1;
+    $movedownmorder = $curmorder + 1;
+    // 2. Get the morder for the row we're swapping with. This will depend on whether wer're 
+    // moving the row up or down.
+    
+    // Instead, for moving a row up, we'll decrease the selected  by one and increase the row it's 
+    // swapping by one. Simples!
+
+    $row2 = \App\budget::where('date', $rowdate)->where('morder', $moveupmorder)->get(['id'])->first();
+    $id2 = $row2->id;
+
+    $row = \App\budget::where('id', $rowid)->update(['morder'=>$moveupmorder]);
+    $row = \App\budget::where('id', $id2)->update(['morder'=>$curmorder]);
+
+    return $rowid;
+    //return "Row moved. morder for $rowid is now $moveupmorder and the other is $curmorder.";
   }
 
 

@@ -17,4 +17,5 @@ Route::post('transfer/{id}',     'BudgetController@transfer');
 
 Route::post('getlist', function () {} );
 
-Route::get('moveupdown/{id}/{dir}', 'BudgetController@moveupdown');
+Route::get('moveupdown/{id}', 'BudgetController@moveupdown');
+Route::get('moveupdown2/{id}/{dir}', 'BudgetController@moveupdown2');

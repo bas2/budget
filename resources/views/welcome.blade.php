@@ -106,11 +106,6 @@ $(document).ready( function(){
     $('ul#projectsmenu li').has('a[href]').toggle();
   });
 
-  $('input#datepicker').datepicker({
-        format: "dd/mm/yyyy"
-  });
-  
-
   // What to do when an item in 'listview' is clicked.
   $('body').on('click', '.cellrow', function(){
     // Enable / disable Transfer button depending on whether
@@ -135,9 +130,6 @@ $(document).ready( function(){
         var editdata  = data;
 
         $('#editrow').html(editdata); // Update edit
-        $('input#datepicker').datepicker({
-          format: "dd/mm/yyyy"
-        });
         
         $.ajax({
           type:'post',
@@ -188,8 +180,7 @@ $(document).ready( function(){
 
     $.ajax({
       type:'get',
-      url:'moveupdown/' + $('#rowidsel').text() + '/no',
-      //data:'dir=' + 'no',
+      url:'moveupdown/' + $('#rowidsel').text(),
       success: function(data) {
         //var splitdata = data.split('|');
         //if (splitdata.length==2) {
@@ -268,19 +259,12 @@ $(document).ready( function(){
         $('.cellrow').removeClass('hl');  // Remove highlight from all rows.
         $('#rw'+newrowid).addClass('hl'); // Add highlight to the new row.
         $('#rowidsel').hide().fadeIn('slow').text(newrowid); // Update id
-
-
             
         updateeditbit(newrowid);
 
       }
     });
 
-    $('input#datepicker').datepicker({
-        format: "dd/mm/yyyy"
-    });
-    //alert ( $('input#datepicker').attr('value') );
-    // 
   } // End function.
   
   
@@ -364,8 +348,16 @@ $(document).ready( function(){
   // Move row up or down
   $('body').on('click', '#btnUp,#btnDown', function(){
     var dir = ( $(this).attr('id') == 'btnUp' ) ? 'u' : 'd' ;
+    var curr = $('#rowidsel').text();
+    $.ajax({
+      type:'get',
+      url:'moveupdown2/' + curr + '/' + dir,
+      success: function(newrowid) {
+        //alert(newrowid);
+        repopulatelistview(curr);
+      } // End success.
 
-    
+    });
     
   });
   // End
@@ -379,10 +371,6 @@ $(document).ready( function(){
       success: function(newrowid) {
         // Returns ID for the new row added in data
         repopulatelistview(newrowid);
-        $('input#datepicker').datepicker({
-          format: "dd/mm/yyyy"
-        });
-
       } // End success.
 
     });
@@ -407,9 +395,14 @@ $(document).ready( function(){
       success: function(data) {
         // data contains the ID of the new row.
         repopulatelistview(data);
+
       }
 
+ 
+
     });
+
+
 
   });
   // End duplicate row ajax code.
