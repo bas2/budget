@@ -86,7 +86,6 @@
   {!! Form::button('Duplicate &rarr;', ['class'=>'btn btn-primary','id'=>'btnDuplicate']) !!}
   {!! Form::button('Delete &rarr;',    ['class'=>'btn btn-danger','id'=>'btnDelete']) !!}
   {!! Form::button('Transfer &rarr;',  ['class'=>'btn btn-primary','id'=>'btnTransfer']) !!}
-  {!! Form::button('&darr; Down',      ['class'=>'btn btn-primary','id'=>'btnDown']) !!}   
   </div>
 
   <div class="row" id="listview">
