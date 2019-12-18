@@ -267,14 +267,28 @@ class BudgetController extends Controller
   }
 
 
-  public function acc($acc)
+  public function acc($rowid=0)
   {
+
+    if ($rowid > 0)
+    {
+      // Update row:
+      $latest_id = $rowid;
+      $update=\App\Current::where('id',$rowid);
+      $descr=(empty(request('descr'))) ? '' : request('descr');
+      $notes=(empty(request('notes'))) ? '' : request('notes');
+      $strsql = ( (request('in')!=='false') ) ? [request('amount'),0] : [0,request('amount')];
+      $update->update(['code'=>request('code'),'date'=>Carbon::createFromFormat('d/m/Y',request('date')),
+      'description'=>$descr,'incoming'=>$strsql[0],'outgoing'=>$strsql[1],'notes'=>$notes]);
+    }
+    else {
+      $latest_id = App\Current::orderby('date', 'desc')->orderby('id')->take(1)->get(['id'])[0]->id;
+    }
+
     $rows = App\Current::orderby('date', 'desc')->orderby('id', 'desc')->get();
 
-    $latest_id = App\Current::orderby('date', 'desc')->orderby('id')->take(1)->get(['id'])[0]->id;
-
     $rows2 = App\Current::where('id', $latest_id)
-    ->get(['incoming', 'outgoing', 'date'])->first();
+    ->get(['incoming', 'outgoing', 'code', 'date', 'description', 'notes'])->first();
 
     $incoming  = ($rows2->outgoing=='0.00' && $rows2->incoming!='0.00') ? 1 : 0;
     $outgoing  = ($rows2->outgoing!='0.00' && $rows2->incoming=='0.00') ? 1 : 0;
@@ -284,11 +298,16 @@ class BudgetController extends Controller
     } // End if.
     $amount = ($incoming) ? $rows2->incoming : $rows2->outgoing ;
 
+    // Get codes:
+    $codesall=App\Code::orderBy('code')->get(['code','info']);
+    foreach($codesall as $code) {$codes[$code->code]="{$code->code}";}
+    
     return view('ajax.acc')
+    ->with('codes', $codes)
     ->with('rows', $rows)
     ->with('latestID', $latest_id)
-    ->with('editrows2', ['date'=>Carbon::parse($rows2->date)->format('d/m/Y'),
-    'description'=>$rows2->description,'amount'=>$amount,'notes'=>$rows2->notes,'incoming'=>$incoming,
+    ->with('editrows2', ['code'=>$rows2->code,'date'=>Carbon::parse($rows2->date)->format('d/m/Y'),
+    'descr'=>$rows2->description,'amount'=>$amount,'notes'=>$rows2->notes,'incoming'=>$incoming,
     'outgoing'=>$outgoing])
     ; // $acc;
   }
@@ -307,12 +326,27 @@ class BudgetController extends Controller
     } // End if.
     $amount = ($incoming) ? $rows2->incoming : $rows2->outgoing ;
 
+    // Get codes:
+    $codesall=App\Code::orderBy('code')->get(['id','code','info']);
+    foreach($codesall as $code) {$codes[$code->code]="{$code->code}";}
+
     return view('ajax.getrow2')
+    ->with('codes', $codes)
     ->with('latest_id', $id)
-    ->with('editrows2',['code'=>$rows2->code,
+    ->with('editrows2',['id'=>$rows2->id,'code'=>$rows2->code,
     'date'=>Carbon::parse($rows2->date)->format('d/m/Y'),
-    'description'=>$rows2->description,'amount'=>$amount,'notes'=>$rows2->notes,'incoming'=>$incoming,
+    'descr'=>$rows2->description,'amount'=>$amount,'notes'=>$rows2->notes,'incoming'=>$incoming,
     'outgoing'=>$outgoing]);
+  }
+
+  public function row2update()
+  {
+    return 'test';
+  }
+
+  public function row2Budget()
+  {
+
   }
 
 

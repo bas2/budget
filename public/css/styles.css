@@ -98,15 +98,15 @@ fieldset textarea {
   width: 8em;
   display: inline;
 }
-#editrow input[name=descr], #editrow2 input [name=description] {
+#editrow input[name=descr], #editrow2 input [name=descr2] {
   width: 17em;
   display: inline;
 }
-#editrow input[name=amount], #editrow2 input [name=amount] {
+#editrow input[name=amount], #editrow2 input [name=amount2] {
   width: 5em;
   display: inline;
 }
-#editrow input[name=notes], #editrow2 input [name=notes] {
+#editrow input[name=notes], #editrow2 input [name=notes2] {
   width: 30em;
   display: inline;
 }

@@ -20,5 +20,8 @@ Route::post('getlist', function () {} );
 Route::get('moveupdown/{id}', 'BudgetController@moveupdown');
 Route::get('moveupdown2/{id}/{dir}', 'BudgetController@moveupdown2');
 
-Route::get('acc/{acc}', 'BudgetController@acc');
+Route::get('acc/{id?}', 'BudgetController@acc');
 Route::get('getrows2/{id}', 'BudgetController@getRow2');
+
+Route::post('acc/{id}', 'BudgetController@acc');
+Route::post('row2budget/{id}', 'BudgetController@row2Budget');

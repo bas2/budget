@@ -307,14 +307,13 @@ $(document).ready( function(){
     // Get contents of Accounts screen via ajax:
     $.ajax({
       type:'get',
-      url:'acc/' + $(this).attr('id'),
+      url:'acc/0',
       success: function(data) {
 
         $('<div id="accsdiv" class="togglewidth">'+data+'</div>')
         .hide()
         .appendTo('body')
         .fadeIn();
-        $('#accsdiv table tr').eq(1).addClass('hl');
         $('body, html').css('overflow','hidden');
         
       } // End success.
@@ -342,7 +341,6 @@ $(document).ready( function(){
     $.ajax({
       type:'get',
       url:'getrows2/' + rowsel,
-      //data:'a=' + accnum1[0] + '&rowid=' + accnum1[1],
       success: function(data) {
         $('#editrow2').html(data);
       } // End success.
@@ -352,24 +350,6 @@ $(document).ready( function(){
   });
 
 
-  // 13/05/13 -
-  $('#accsdiv').on('click', 'tr', function(){
-    var accnum1 = $(this).attr('id').split('-');
-    accnum = accnum1[1]; // rowid
-    $('#accsdiv tr').css('background', 'white');
-    $(this).css('background', 'red');
-    $.ajax({
-      type:'post',
-      url:'acc',
-      data:'a=' + accnum1[0] + '&rowid=' + accnum1[1],
-      success: function(data) {
-        $('#accsdiv').html(data);
-      } // End success.
-
-    });
-    
-  });
-  
   // Move row up or down
   $('body').on('click', '#btnUp,#btnDown', function(){
     var dir = ( $(this).attr('id') == 'btnUp' ) ? 'u' : 'd' ;
