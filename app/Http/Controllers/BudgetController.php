@@ -256,14 +256,63 @@ class BudgetController extends Controller
     // Instead, for moving a row up, we'll decrease the selected  by one and increase the row it's 
     // swapping by one. Simples!
 
-    $row2 = \App\budget::where('date', $rowdate)->where('morder', $moveupmorder)->get(['id'])->first();
+    $row2 = \App\Budget::where('date', $rowdate)->where('morder', $moveupmorder)->get(['id'])->first();
     $id2 = $row2->id;
 
-    $row = \App\budget::where('id', $rowid)->update(['morder'=>$moveupmorder]);
-    $row = \App\budget::where('id', $id2)->update(['morder'=>$curmorder]);
+    $row = \App\Budget::where('id', $rowid)->update(['morder'=>$moveupmorder]);
+    $row = \App\Budget::where('id', $id2)->update(['morder'=>$curmorder]);
 
     return $rowid;
     //return "Row moved. morder for $rowid is now $moveupmorder and the other is $curmorder.";
+  }
+
+
+  public function acc($acc)
+  {
+    $rows = App\Current::orderby('date', 'desc')->orderby('id', 'desc')->get();
+
+    $latest_id = App\Current::orderby('date', 'desc')->orderby('id')->take(1)->get(['id'])[0]->id;
+
+    $rows2 = App\Current::where('id', $latest_id)
+    ->get(['incoming', 'outgoing', 'date'])->first();
+
+    $incoming  = ($rows2->outgoing=='0.00' && $rows2->incoming!='0.00') ? 1 : 0;
+    $outgoing  = ($rows2->outgoing!='0.00' && $rows2->incoming=='0.00') ? 1 : 0;
+    if (!$incoming && !$outgoing) {
+      $incoming = 0;
+      $outgoing = 1;
+    } // End if.
+    $amount = ($incoming) ? $rows2->incoming : $rows2->outgoing ;
+
+    return view('ajax.acc')
+    ->with('rows', $rows)
+    ->with('latestID', $latest_id)
+    ->with('editrows2', ['date'=>Carbon::parse($rows2->date)->format('d/m/Y'),
+    'description'=>$rows2->description,'amount'=>$amount,'notes'=>$rows2->notes,'incoming'=>$incoming,
+    'outgoing'=>$outgoing])
+    ; // $acc;
+  }
+
+  public function getRow2($id)
+  {
+
+    $rows2 = App\Current::where('id', $id)
+    ->get(['code', 'date', 'description', 'runbal', 'notes', 'incoming', 'outgoing'])->first();
+
+    $incoming  = ($rows2->outgoing=='0.00' && $rows2->incoming!='0.00') ? 1 : 0;
+    $outgoing  = ($rows2->outgoing!='0.00' && $rows2->incoming=='0.00') ? 1 : 0;
+    if (!$incoming && !$outgoing) {
+      $incoming = 0;
+      $outgoing = 1;
+    } // End if.
+    $amount = ($incoming) ? $rows2->incoming : $rows2->outgoing ;
+
+    return view('ajax.getrow2')
+    ->with('latest_id', $id)
+    ->with('editrows2',['code'=>$rows2->code,
+    'date'=>Carbon::parse($rows2->date)->format('d/m/Y'),
+    'description'=>$rows2->description,'amount'=>$amount,'notes'=>$rows2->notes,'incoming'=>$incoming,
+    'outgoing'=>$outgoing]);
   }
 
 

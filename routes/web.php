@@ -19,3 +19,6 @@ Route::post('getlist', function () {} );
 
 Route::get('moveupdown/{id}', 'BudgetController@moveupdown');
 Route::get('moveupdown2/{id}/{dir}', 'BudgetController@moveupdown2');
+
+Route::get('acc/{acc}', 'BudgetController@acc');
+Route::get('getrows2/{id}', 'BudgetController@getRow2');

@@ -99,12 +99,12 @@
 
 $(document).ready( function(){
 
-  $('ul#projectsmenu').css({'background':'#c00'});
-  $('ul#projectsmenu li').css('float','none');
-  $('ul#projectsmenu li').has('a[href]').hide();
-  $('ul#projectsmenu li span').css('cursor','pointer').click(function() {
-    $('ul#projectsmenu li').has('a[href]').toggle();
-  });
+  //$('ul#projectsmenu').css({'background':'#c00'});
+  //$('ul#projectsmenu li').css('float','none');
+  //$('ul#projectsmenu li').has('a[href]').hide();
+  //$('ul#projectsmenu li span').css('cursor','pointer').click(function() {
+  //  $('ul#projectsmenu li').has('a[href]').toggle();
+  //});
 
   // What to do when an item in 'listview' is clicked.
   $('body').on('click', '.cellrow', function(){
@@ -151,14 +151,14 @@ $(document).ready( function(){
         
         });
             
-        $.ajax({
-          type:'post',
-          url:'getlist',
-          data:'act=amount&id=' + selid,
-          success: function (data){
-            var data_split = data.split('|');
-            var cities = [];
-            for (var i=0; i<data_split.length; i++) cities[i]=data_split[i];
+        //$.ajax({
+        //  type:'post',
+        //  url:'getlist',
+        //  data:'act=amount&id=' + selid,
+        //  success: function (data){
+        //    var data_split = data.split('|');
+        //    var cities = [];
+        //    for (var i=0; i<data_split.length; i++) cities[i]=data_split[i];
 /*
             $("#amount").autocomplete({
               source:cities,
@@ -167,9 +167,9 @@ $(document).ready( function(){
               $(this).autocomplete("search");
             });
 */      
-          } // end ajax success callback.
+        //  } // end ajax success callback.
         
-        });
+        //});
         
       } // end ajax success callback.
     });
@@ -306,15 +306,16 @@ $(document).ready( function(){
     
     // Get contents of Accounts screen via ajax:
     $.ajax({
-      type:'post',
+      type:'get',
       url:'acc/' + $(this).attr('id'),
       success: function(data) {
 
-        $('<div id="accsdiv"><div id="accsdivinnerbottom">'+data+'</div></div>')
+        $('<div id="accsdiv" class="togglewidth">'+data+'</div>')
         .hide()
-        .center()
         .appendTo('body')
         .fadeIn();
+        $('#accsdiv table tr').eq(1).addClass('hl');
+        $('body, html').css('overflow','hidden');
         
       } // End success.
 
@@ -323,9 +324,33 @@ $(document).ready( function(){
 
   });
   
-  $('body').on('click', '#accsdivclose', function() {
-    $('#accsdiv').remove();  
+  $('body').on('click', '#accsdiv p', function() {
+    $('#accsdiv').remove();
+    $('body, html').css('overflow','auto');
   });
+
+
+  $('body').on('click', '.cellrow2', function(){
+
+    var rowsel  = $(this).attr('title2');
+
+    $('.cellrow2').removeClass('hl'); // Remove highlight from all rows.
+    $(this).addClass('hl');          // Add highlight to the selected row.
+
+    $('#rowidsel2').hide().fadeIn('slow').text($(this).attr('title2'));
+
+    $.ajax({
+      type:'get',
+      url:'getrows2/' + rowsel,
+      //data:'a=' + accnum1[0] + '&rowid=' + accnum1[1],
+      success: function(data) {
+        $('#editrow2').html(data);
+      } // End success.
+
+    });
+
+  });
+
 
   // 13/05/13 -
   $('#accsdiv').on('click', 'tr', function(){

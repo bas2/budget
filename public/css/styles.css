@@ -87,26 +87,26 @@ fieldset textarea {
 }
 
 /* Editrow fieldset */
-#editrow {
+#editrow, #editrow2 {
   line-height: 1.8em;
   border: 0;
 }
 #editrow label {
   color: white;
 }
-#editrow input#datepicker {
+#editrow input#datepicker, #editrow2 input#datepicker2 {
   width: 8em;
   display: inline;
 }
-#editrow input[name=descr] {
+#editrow input[name=descr], #editrow2 input [name=description] {
   width: 17em;
   display: inline;
 }
-#editrow input[name=amount] {
+#editrow input[name=amount], #editrow2 input [name=amount] {
   width: 5em;
   display: inline;
 }
-#editrow input[name=notes] {
+#editrow input[name=notes], #editrow2 input [name=notes] {
   width: 30em;
   display: inline;
 }
@@ -168,6 +168,17 @@ select, input[type=text] {
   border-radius: 0.5em;
 }
 
+.togglewidth {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: auto;
+  height: 100%;
+  margin: 0;
+  background: rgba(128, 128, 128, 1); }
+}
+
 #accsdiv {
   position: absolute;
   top: 0;
@@ -195,7 +206,7 @@ select, input[type=text] {
   vertical-align: top;
 }
 #accsdiv tr:hover {
-  background: yellow;
+  background: rgba(0, 0, 255, 0.5);
 }
 #accsdiv th, #accsdiv td {
   padding: 0.3em;
