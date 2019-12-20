@@ -130,14 +130,14 @@ $(document).ready( function(){
 
         $('#editrow').html(editdata); // Update edit
         
-        $.ajax({
-          type:'post',
-          url:'getlist',
-          data:'act=descr&id=' + selid,
-          success: function (data){
-            var data_split = data.split('|');
-            var cities = [];
-            for (var i=0; i<data_split.length; i++) cities[i]=data_split[i];
+        //$.ajax({
+        //  type:'post',
+        //  url:'getlist',
+        //  data:'act=descr&id=' + selid,
+        //  success: function (data){
+            //var data_split = data.split('|');
+            //var cities = [];
+            //for (var i=0; i<data_split.length; i++) cities[i]=data_split[i];
 /*
             $("#descr").autocomplete({
               source:cities,
@@ -146,9 +146,9 @@ $(document).ready( function(){
               $(this).autocomplete("search");
             });
   */      
-          } // end ajax success callback.
+        //  } // end ajax success callback.
         
-        });
+        //});
             
         //$.ajax({
         //  type:'post',
@@ -191,11 +191,11 @@ $(document).ready( function(){
         //alert(data);
         var data_split = data.split('|');
         //alert(data_split[0]);
-        $('#btnUp,#btnDown').attr('disabled', 'disabled');
+        $('#btnUp').attr('disabled', 'disabled');
         if (data_split[0]>1)
         {
           
-          if (data_split[1] == 1) $('#btnDown').removeAttr('disabled');
+          //if (data_split[1] == 1) $('#btnDown').removeAttr('disabled');
           if (data_split[2] == 1) $('#btnUp').removeAttr('disabled');
           //alert(data);
         }
