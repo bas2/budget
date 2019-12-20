@@ -285,9 +285,9 @@ class BudgetController extends Controller
       $latest_id = App\Current::orderby('date', 'desc')->orderby('id')->take(1)->get(['id'])[0]->id;
     }
 
-    $rows = App\Current::orderby('date', 'desc')->orderby('id', 'desc')->get();
+    $rows = App\Current::orderby('date', 'desc')->orderby('id', 'desc')->take(100)->get();
 
-    $rows2 = App\Current::where('id', $latest_id)
+    $rows2 = App\Current::where('id', $latest_id)->take(100)
     ->get(['incoming', 'outgoing', 'code', 'date', 'description', 'notes'])->first();
 
     $incoming  = ($rows2->outgoing=='0.00' && $rows2->incoming!='0.00') ? 1 : 0;
