@@ -25,3 +25,5 @@ Route::get('getrows2/{id}', 'BudgetController@getRow2');
 
 Route::post('acc/{id}', 'BudgetController@acc');
 Route::post('row2budget/{id}', 'BudgetController@row2Budget');
+
+Route::get('time', 'BudgetController@getTime');
