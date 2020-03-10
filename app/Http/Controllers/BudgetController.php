@@ -147,7 +147,7 @@ class BudgetController extends Controller
     'description'=>$descr,'incoming'=>$strsql[0],'outgoing'=>$strsql[1],'notes'=>$notes]);
 
     // Get budget rows.
-    $rows2=\App\Budget::oldest('date')->get(['id','code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
+    $rows2=\App\Budget::oldest('date')->orderBy('morder')->get(['id','code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
 
     return view('ajax.listview')
     ->with('rows',$rows2)
