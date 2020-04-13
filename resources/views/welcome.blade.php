@@ -405,9 +405,7 @@ $(window).scroll(function(e) {
       type:'get',
       url:'moveupdown2/' + curr + '/' + dir,
       success: function(newrowid) {
-        //alert(newrowid);
         repopulatelistview(curr);
-        
       } // End success.
 
     });
@@ -445,10 +443,10 @@ $(window).scroll(function(e) {
       + '&descr='  + encodeURIComponent($('input[name=descr]').val())
       + '&notes='  + encodeURIComponent($('input[name=notes]').val()),
       
-      success: function(data) {
+      success: function(newrow) {
         // data contains the ID of the new row.
-        repopulatelistview(data);
-
+        //alert(newrowid);
+        repopulatelistview(newrow);
       }
 
  
