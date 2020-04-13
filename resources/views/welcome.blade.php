@@ -79,6 +79,8 @@
 
   </div>
 
+    <!-- This div is used to indicate the original position of the scrollable fixed div. -->
+    <div class="scroller_anchor"></div>
 
   <div class="row form-group" id="buttons">
   {!! Form::button('&uarr; Up',        ['class'=>'btn btn-primary','id'=>'btnUp']) !!}
@@ -97,6 +99,34 @@
 // Highlight first row:
 
 $(document).ready( function(){
+
+  // This function will be executed when the user scrolls the page.
+$(window).scroll(function(e) {
+    // Get the position of the location where the scroller starts.
+    var scroller_anchor = $(".scroller_anchor").offset().top;
+     
+    // Check if the user has scrolled and the current position is after the scroller start location and if its not already fixed at the top 
+    if ($(this).scrollTop() >= scroller_anchor && $('#buttons').css('position') != 'fixed') 
+    {    // Change the CSS of the scroller to hilight it and fix it at the top of the screen.
+        $('#buttons').css({
+            'position': 'fixed',
+            'top': '20px'
+        });
+        // Changing the height of the scroller anchor to that of scroller so that there is no change in the overall height of the page.
+        $('.scroller_anchor').css('height', '50px');
+    } 
+    else if ($(this).scrollTop() < scroller_anchor && $('#buttons').css('position') != 'relative') 
+    {    // If the user has scrolled back to the location above the scroller anchor place it back into the content.
+         
+        // Change the height of the scroller anchor to 0 and now we will be adding the scroller back to the content.
+        $('.scroller_anchor').css('height', '20px');
+         
+        // Change the CSS and put it back to its original position.
+        $('#buttons').css({
+            'position': 'relative'
+        });
+    }
+});
 
   function getTimeAndDate()
     {
@@ -198,32 +228,8 @@ $(document).ready( function(){
 
 
 
-    $.ajax({
-      type:'get',
-      url:'moveupdown/' + $('#rowidsel').text(),
-      success: function(data) {
-        //var splitdata = data.split('|');
-        //if (splitdata.length==2) {
-        //  var newdata  = splitdata[0];
-        //  var firstrow = splitdata[1];
-        //  repopulatelistview(newdata, firstrow);
-        //}
-        //else {repopulatelistview(data);}
-        //alert(data);
-        var data_split = data.split('|');
-        //alert(data_split[0]);
-        $('#btnUp').attr('disabled', 'disabled');
-        if (data_split[0]>1)
-        {
-          
-          //if (data_split[1] == 1) $('#btnDown').removeAttr('disabled');
-          if (data_split[2] == 1) $('#btnUp').removeAttr('disabled');
-          //alert(data);
-        }
 
-      } // End success.
-
-    });
+    enable_disable_up($('#rowidsel').text());
         
   });
 
@@ -235,6 +241,25 @@ $(document).ready( function(){
     var rowsel = $('#rowidsel').text();
     $('#rw'+rowsel).addClass('hl'); // Add highlight to the selected row.
   });
+
+
+  function enable_disable_up(row)
+  {
+  $.ajax({
+      type:'get',
+      url:'moveupdown/' + row,
+      success: function(data) {
+        var data_split = data.split('|');
+        $('#btnUp').attr('disabled', 'disabled');
+        if (data_split[0]>1)
+        {
+          if (data_split[2] == 1) $('#btnUp').removeAttr('disabled');
+        }
+
+      } // End success.
+
+    });
+  }
 
 
       
@@ -279,6 +304,8 @@ $(document).ready( function(){
         $('.cellrow').removeClass('hl');  // Remove highlight from all rows.
         $('#rw'+newrowid).addClass('hl'); // Add highlight to the new row.
         $('#rowidsel').hide().fadeIn('slow').text(newrowid); // Update id
+
+        enable_disable_up(newrowid);
             
         updateeditbit(newrowid);
 
@@ -380,6 +407,7 @@ $(document).ready( function(){
       success: function(newrowid) {
         //alert(newrowid);
         repopulatelistview(curr);
+        
       } // End success.
 
     });
