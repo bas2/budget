@@ -452,7 +452,7 @@ $(window).scroll(function(e) {
       + '&code='   + $('#code').val()
       + '&date='   + $('#datepicker').val() 
       + '&amount=' + $('input[name=amount]').val()
-      + '&in='     + $('#rdoIn').is(':checked')
+      + '&in='     + $('#in').is(':checked')
       + '&descr='  + encodeURIComponent($('input[name=descr]').val())
       + '&notes='  + encodeURIComponent($('input[name=notes]').val()),
       
