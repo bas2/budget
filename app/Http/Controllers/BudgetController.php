@@ -135,19 +135,40 @@ class BudgetController extends Controller
     ;
   }
 
+  // New function to return highest morder plus one for a date:
+  public function morderplusone($date)
+  {
+    $morder = \App\Budget::where('date', $date)
+    ->orderBy('morder', 'desc')
+    ->take(1)
+    ->get(['morder']);
+    if ($morder->count() == 0)
+    {
+      return 0;
+    } else 
+    {
+      return $morder->first()->morder + 1;
+    }
+
+  }
+
 
   // POST: listview/id
   // Complete update and/or get updated matrix html.
   public function listViewUpdate($rowid) {
+    $date = explode(' ', Carbon::createFromFormat('d/m/Y',request('date')));
+
     $update=\App\Budget::where('id',$rowid);
     $descr=(empty(request('descr'))) ? '' : request('descr');
     $notes=(empty(request('notes'))) ? '' : request('notes');
     $strsql = ( (request('in')!=='false') ) ? [request('amount'),0] : [0,request('amount')];
-    $update->update(['code'=>request('code'),'date'=>Carbon::createFromFormat('d/m/Y',request('date')),
-    'description'=>$descr,'incoming'=>$strsql[0],'outgoing'=>$strsql[1],'notes'=>$notes]);
+    $update->update(['code'=>request('code'),'date'=>$date[0],
+    'morder'=>$this->morderplusone($date[0]),'description'=>$descr,
+    'incoming'=>$strsql[0],'outgoing'=>$strsql[1],'notes'=>$notes]);
 
     // Get budget rows.
-    $rows2=\App\Budget::oldest('date')->orderBy('morder')->get(['id','code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
+    $rows2=\App\Budget::oldest('date')->orderBy('morder')
+    ->get(['id','code', 'description', 'incoming', 'outgoing', 'notes', 'date']);
 
     return view('ajax.listview')
     ->with('rows',$rows2)
@@ -160,12 +181,6 @@ class BudgetController extends Controller
   // POST: duplicaterow/id
   public function duplicateRow($rowid) {
     $date = explode(' ', Carbon::createFromFormat('d/m/Y',request('date')));
-    $morder = \App\Budget::where('date', $date[0])
-    ->orderBy('morder', 'desc')
-    ->take(1)
-    ->get(['morder'])
-    ->first()
-    ;
 
     $create=new \App\Budget;
     $create->date        = $date[0];
@@ -174,7 +189,7 @@ class BudgetController extends Controller
     $strsql = ( (request('in')!=='false') ) ? [request('amount'),0] : [0,request('amount')];
     $create->incoming    = $strsql[0];
     $create->outgoing    = $strsql[1];
-    $create->morder      = $morder->morder + 1;
+    $create->morder      = $this->morderplusone($date[0]);
     $create->save();
 
     return ($create->save()) ? $create->id : 0 ;
