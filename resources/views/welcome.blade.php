@@ -69,7 +69,7 @@
     </div>
 
 
-    <div class="col-md-7 col-sm-12 col-xs-12 panel text-center">
+    <div class="col-md-7 col-sm-12 col-xs-12 panel text-center" id="diveditrow">
       <fieldset class="l hunp">
         <legend>Edit row <span class="badge" id="rowidsel">{{ $latestID }}</span></legend>
         <div id="editrow">@include('ajax.getrow')</div>
@@ -84,10 +84,12 @@
 
   <div class="row form-group" id="buttons">
   {!! Form::button('&uarr; Up',        ['class'=>'btn btn-primary','id'=>'btnUp']) !!}
-  {!! Form::button('Add row &rarr;',   ['class'=>'btn btn-primary','id'=>'btnAddrow']) !!}
-  {!! Form::button('Duplicate &rarr;', ['class'=>'btn btn-primary','id'=>'btnDuplicate']) !!}
+  {!! Form::button('Add &rarr;',   ['class'=>'btn btn-primary','id'=>'btnAddrow']) !!}
+  {!! Form::button('Clone &rarr;', ['class'=>'btn btn-primary','id'=>'btnDuplicate']) !!}
   {!! Form::button('Delete &rarr;',    ['class'=>'btn btn-danger','id'=>'btnDelete']) !!}
   {!! Form::button('Transfer &rarr;',  ['class'=>'btn btn-primary','id'=>'btnTransfer']) !!}
+  {!! Form::button($editrows['descr'], ['class'=>'btn btn-warning','id'=>'btnRowSelected']) !!}
+  {!! Form::button('Edit &uarr;',  ['class'=>'btn btn-primary','id'=>'btnRowEdit']) !!}
   </div>
 
   <div class="row" id="listview">
@@ -99,6 +101,18 @@
 // Highlight first row:
 
 $(document).ready( function(){
+
+  $('#btnRowSelected').click(function(){
+    $([document.documentElement, document.body]).animate({
+        scrollTop: $(".hl").offset().top - 60
+    }, 1000);
+  });
+
+  $('#btnRowEdit').click(function(){
+    $([document.documentElement, document.body]).animate({
+        scrollTop: $("#diveditrow").offset().top - 20
+    }, 1000);
+  });
 
   // This function will be executed when the user scrolls the page.
 $(window).scroll(function(e) {
@@ -180,7 +194,7 @@ $(window).scroll(function(e) {
         var editdata  = data;
 
         $('#editrow').html(editdata); // Update edit
-        
+
         //$.ajax({
         //  type:'post',
         //  url:'getlist',
@@ -226,8 +240,7 @@ $(window).scroll(function(e) {
 
     // Handle Up/Down buttons:
 
-
-
+    $('#btnRowSelected').text($(this).text().substring(25, 50));
 
     enable_disable_up($('#rowidsel').text());
         
