@@ -317,6 +317,7 @@ $(window).scroll(function(e) {
         $('.cellrow').removeClass('hl');  // Remove highlight from all rows.
         $('#rw'+newrowid).addClass('hl'); // Add highlight to the new row.
         $('#rowidsel').hide().fadeIn('slow').text(newrowid); // Update id
+        $('#btnRowSelected').text($('#rw'+newrowid).text().substring(25, 50));
 
         enable_disable_up(newrowid);
             
