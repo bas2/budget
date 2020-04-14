@@ -117,7 +117,8 @@ class BudgetController extends Controller
   // POST: deleterow/id
   public function deleteRow($rowid) {
     $delete=\App\Budget::where('id',$rowid)->delete();
-    $rows2=\App\Budget::oldest('date')->take(1)->get(['id'])->first();
+
+    $rows2=\App\Budget::oldest('date')->orderby('morder')->take(1)->get(['id'])->first();
     return $rows2->id; # ID for first entry so it can be focussed.
   }
 
@@ -157,13 +158,18 @@ class BudgetController extends Controller
   // Complete update and/or get updated matrix html.
   public function listViewUpdate($rowid) {
     $date = explode(' ', Carbon::createFromFormat('d/m/Y',request('date')));
+    // Only alter morder to the end if date changes.
+    $date2 = \App\Budget::where('id', $rowid)->get(['date', 'morder'])->first();
+    //return $date[0] . ' ' . $date2->date ;
+    $changed = ( $date[0] == $date2->date ) ? $date2->morder : $this->morderplusone($date[0]) ;
+    //return $changed;
 
     $update=\App\Budget::where('id',$rowid);
     $descr=(empty(request('descr'))) ? '' : request('descr');
     $notes=(empty(request('notes'))) ? '' : request('notes');
     $strsql = ( (request('in')!=='false') ) ? [request('amount'),0] : [0,request('amount')];
     $update->update(['code'=>request('code'),'date'=>$date[0],
-    'morder'=>$this->morderplusone($date[0]),'description'=>$descr,
+    'morder'=>$changed,'description'=>$descr,
     'incoming'=>$strsql[0],'outgoing'=>$strsql[1],'notes'=>$notes]);
 
     // Get budget rows.
