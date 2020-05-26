@@ -16,6 +16,7 @@
 </div>
 
 <div class="form-group">
+{!! Form::text('runbal2', number_format($editrows2['runbal'],2), ['class'=>'form-control','title'=>'runbal']) !!}
 {!! Form::text('notes2', $editrows2['notes'], ['class'=>'form-control text-block','title'=>'notes']) !!}
 </div>
 

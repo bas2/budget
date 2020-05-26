@@ -54,7 +54,7 @@
         + '&date='      + $('#datepicker2').val()
         + '&amount='    + $('input[name=amount2]').val()
         + '&in='        + $('#in2').is(':checked')
-        //+ '&runbal='    + 
+        + '&runbal='    + $('input[name=runbal2]').val()
         + '&descr='     + encodeURIComponent($('input[name=descr2]').val())
         + '&notes='     + encodeURIComponent($('input[name=notes2]').val()),
       success: function(data) {

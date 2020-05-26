@@ -305,10 +305,12 @@ class BudgetController extends Controller
       // Update row:
       $latest_id = $rowid;
       $update=\App\Current::where('id',$rowid);
+      $runbal=(empty(request('runbal'))) ? 0 : request('runbal');     
       $descr=(empty(request('descr'))) ? '' : request('descr');
       $notes=(empty(request('notes'))) ? '' : request('notes');
       $strsql = ( (request('in')!=='false') ) ? [request('amount'),0] : [0,request('amount')];
       $update->update(['code'=>request('code'),'date'=>Carbon::createFromFormat('d/m/Y',request('date')),
+      'runbal'=>$runbal,
       'description'=>$descr,'incoming'=>$strsql[0],'outgoing'=>$strsql[1],'notes'=>$notes]);
     }
     else {
@@ -318,7 +320,7 @@ class BudgetController extends Controller
     $rows = App\Current::orderby('date', 'desc')->orderby('id', 'desc')->take(100)->get();
 
     $rows2 = App\Current::where('id', $latest_id)->take(100)
-    ->get(['incoming', 'outgoing', 'code', 'date', 'description', 'notes'])->first();
+    ->get(['incoming', 'outgoing', 'code', 'date', 'description', 'notes', 'runbal'])->first();
 
     $incoming  = ($rows2->outgoing=='0.00' && $rows2->incoming!='0.00') ? 1 : 0;
     $outgoing  = ($rows2->outgoing!='0.00' && $rows2->incoming=='0.00') ? 1 : 0;
@@ -338,7 +340,7 @@ class BudgetController extends Controller
     ->with('latestID', $latest_id)
     ->with('editrows2', ['code'=>$rows2->code,'date'=>Carbon::parse($rows2->date)->format('d/m/Y'),
     'descr'=>$rows2->description,'amount'=>$amount,'notes'=>$rows2->notes,'incoming'=>$incoming,
-    'outgoing'=>$outgoing])
+    'outgoing'=>$outgoing,'runbal'=>$rows2->runbal])
     ; // $acc;
   }
 
