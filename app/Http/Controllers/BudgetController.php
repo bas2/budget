@@ -368,7 +368,7 @@ class BudgetController extends Controller
     ->with('editrows2',['id'=>$rows2->id,'code'=>$rows2->code,
     'date'=>Carbon::parse($rows2->date)->format('d/m/Y'),
     'descr'=>$rows2->description,'amount'=>$amount,'notes'=>$rows2->notes,'incoming'=>$incoming,
-    'outgoing'=>$outgoing]);
+    'outgoing'=>$outgoing,'runbal'=>$rows2->runbal]);
   }
 
   public function row2update()
