@@ -17,7 +17,7 @@
   <thead>
   <tr>
     <th>Code</th>
-    <th>Date</th>
+    <th class="text-right">Date</th>
     <th>Description</th>
     <th class="text-right">Incoming</th>
     <th class="text-right">Outgoing</th>
@@ -30,7 +30,7 @@
   @foreach($rows as $accrow)
     <tr title2="{{ $accrow->id }}" class="cellrow2 {{ ($accrow->id == $latestID) ? ' hl' : '' }}">
       <td>{{ $accrow->code }}</td>
-      <td>{{ \Carbon\Carbon::parse($accrow->date)->format('d/m/Y') }}</td>
+      <td class="text-right" nowrap="nowrap">{{ \Carbon\Carbon::parse($accrow->date)->format('D j M') }}</td>
       <td>{{ $accrow->description }}</td>
       <td class="text-right">{{ number_format($accrow->incoming, 2) }}</td>
       <td class="text-right">{{ number_format($accrow->outgoing, 2) }}</td>
