@@ -32,7 +32,7 @@
       <td>{{ $accrow->code }}</td>
       <td class="text-right" nowrap="nowrap">{{ \Carbon\Carbon::parse($accrow->date)->format('D j M') }}</td>
       <td>{{ $accrow->description }}</td>
-      <td class="text-right">{{ number_format($accrow->incoming, 2) }}</td>
+      <td class="text-right">{{ ( ($accrow->incoming==0) ? '' : number_format($accrow->incoming, 2) )  }}</td>
       <td class="text-right">{{ number_format($accrow->outgoing, 2) }}</td>
       <td class="text-right">{{ number_format($accrow->runbal, 2) }}</td>
       <td>{{ $accrow->notes }}</td>

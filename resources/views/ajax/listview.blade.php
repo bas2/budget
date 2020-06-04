@@ -17,8 +17,8 @@
       <td class="text-right" nowrap="nowrap">{{ \Carbon\Carbon::parse($budgetrow->date)->format('D j M') }}</td>
       <td>{{ \Carbon\Carbon::parse(date('Y-m-d'))->diff( \Carbon\Carbon::parse($budgetrow->date) )->days }}</td>
       <td>{{ $budgetrow->description }}</td>
-      <td class="text-right">{{ number_format($budgetrow->incoming,2) }}</td>
-      <td class="text-right">{{ number_format($budgetrow->outgoing,2) }}</td>
+      <td class="text-right">{{ ( ($budgetrow->incoming==0) ? '' : number_format($budgetrow->incoming,2) ) }}</td>
+      <td class="text-right">{{ ( ($budgetrow->outgoing==0) ? '' : number_format($budgetrow->outgoing,2) ) }}</td>
       <td class="text-right">{{ number_format( ($runbal += $budgetrow->incoming -= $budgetrow->outgoing),2) }}</td>
       <!-- <td class="text-right">{{ number_format( ($runbal + \App\Saving::getLastEntry('runbal')),2 ) }}</td> -->
       <td>{{ $budgetrow->notes }}&nbsp;</td>
