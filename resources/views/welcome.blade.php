@@ -70,10 +70,10 @@
 
 
     <div class="col-md-7 col-sm-12 col-xs-12 panel text-center" id="diveditrow">
-      <fieldset class="l hunp">
+    <fieldset class="l hunp">
         <legend>Edit row <span class="badge" id="rowidsel">{{ $latestID }}</span></legend>
-        <div id="editrow">@include('ajax.getrow')</div>
-      </fieldset>
+
+        </fieldset>
     </div>
 
 
@@ -108,11 +108,13 @@ $(document).ready( function(){
     }, 1000);
   });
 
+/*
   $('#btnRowEdit').click(function(){
     $([document.documentElement, document.body]).animate({
         scrollTop: $("#diveditrow").offset().top - 20
     }, 1000);
   });
+  */
 
   // This function will be executed when the user scrolls the page.
 $(window).scroll(function(e) {
@@ -345,6 +347,9 @@ $(window).scroll(function(e) {
         $('#listview').html(data);                     // Repopulate listview
         $('.cellrow').removeClass('hl');               // Remove highlight from all rows.
         $('#rw'+$('#rowidsel').text()).addClass('hl'); // Add highlight to the Updated row.
+
+        $('#editdiv').remove();
+        $('body, html').css('overflow','auto');
       }
     });
     e.preventDefault();
@@ -383,7 +388,36 @@ $(window).scroll(function(e) {
     
 
   });
+
+  // Open Edit dialog.
+  $('#btnRowEdit').click(function(){
   
+    $('#editdiv').remove();
+
+    // Get contents of Edit row screen via ajax:
+    $.ajax({
+      type:'get',
+      url:'edit/' + $('#rowidsel').text(),
+      success: function(data) {
+
+        $('<div id="editdiv" class="togglewidth">'+data+'</div>')
+        .hide()
+        .appendTo('body')
+        .fadeIn();
+        $('body, html').css('overflow','hidden')
+        
+      } // End success.
+
+    });
+  
+  });
+
+  $('body').on('click', '#editclose', function() {
+    $('#editdiv').remove();
+    $('body, html').css('overflow','auto');
+  });
+  
+
   $('body').on('click', '#accsdiv p', function() {
     $('#accsdiv').remove();
     $('body, html').css('overflow','auto');

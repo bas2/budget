@@ -12,9 +12,7 @@ class BudgetController extends Controller
   // GET home
   public function index() {
 
-    // Get codes:
-    $codesall = App\Code::orderBy('code')->get(['code','info']);
-    foreach($codesall as $code) {$codes[$code->code] = "{$code->code}";}
+
 
     // 
     $rows = App\Budget::oldest('date')->orderby('morder')
@@ -35,7 +33,7 @@ class BudgetController extends Controller
     ->with('editrows',['code' => $rows->code,'date' => Carbon::parse($rows->date)->format('d/m/Y'),
     'descr' => $rows->description, 'amount' => $amount, 'notes' => $rows->notes,
     'incoming' => $incoming, 'outgoing' => $outgoing])
-    ->with('codes', $codes)
+    
     ->with('rows', $rows2)
     ->with('runbal', App\Current::getLastEntry('runbal'))
     ->with('latestID', App\Budget::oldest('date')->take(1)->get(['id'])[0]->id)
@@ -388,6 +386,29 @@ class BudgetController extends Controller
     public function getTime()
     {
         return date('H:i') . ' / ' . date('D j M');
+    }
+
+    /*
+     * GET: edit/id
+    */
+    public function editRow($id)
+    {
+      $rows = App\Budget::where('id', $id)
+      ->get(['id','code', 'description', 'incoming', 'outgoing', 'notes', 'date'])->first();
+      $incoming  = ($rows->outgoing=='0.00' && $rows->incoming!='0.00') ? 1 : 0;
+      $outgoing  = ($rows->outgoing!='0.00' && $rows->incoming=='0.00') ? 1 : 0;
+      if (!$incoming && !$outgoing) {
+        $incoming = 0;
+        $outgoing = 1;
+      } // End if.
+      $amount = ($incoming) ? $rows->incoming : $rows->outgoing ;
+    // Get codes:
+    $codesall = App\Code::orderBy('code')->get(['code','info']);
+    foreach($codesall as $code) {$codes[$code->code] = "{$code->code}";}
+      return view('ajax.editrow')    ->with('editrows',['code' => $rows->code,'date' => Carbon::parse($rows->date)->format('d/m/Y'),
+      'descr' => $rows->description, 'amount' => $amount, 'notes' => $rows->notes,
+      'incoming' => $incoming, 'outgoing' => $outgoing])
+      ->with('latestID', $id)->with('codes', $codes);
     }
 
 }
