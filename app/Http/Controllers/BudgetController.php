@@ -312,7 +312,7 @@ class BudgetController extends Controller
       'description'=>$descr,'incoming'=>$strsql[0],'outgoing'=>$strsql[1],'notes'=>$notes]);
     }
     else {
-      $latest_id = App\Current::orderby('date', 'desc')->orderby('id')->take(1)->get(['id'])[0]->id;
+      $latest_id = App\Current::orderby('date', 'desc')->orderby('id', 'desc')->take(1)->get(['id'])[0]->id;
     }
 
     $rows = App\Current::orderby('date', 'desc')->orderby('id', 'desc')->take(100)->get();
