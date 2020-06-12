@@ -184,16 +184,17 @@ class BudgetController extends Controller
 
   // POST: duplicaterow/id
   public function duplicateRow($rowid) {
-    $date = explode(' ', Carbon::createFromFormat('d/m/Y',request('date')));
+    $row=\App\Budget::where('id',$rowid)
+    ->get(['date','description','notes','incoming','outgoing'])
+    ->first();
 
     $create=new \App\Budget;
-    $create->date        = $date[0];
-    $create->description = (empty(request('descr'))) ? '' : request('descr');
-    $create->notes       = (empty(request('notes'))) ? '' : request('notes');
-    $strsql = ( (request('in')!=='false') ) ? [request('amount'),0] : [0,request('amount')];
-    $create->incoming    = $strsql[0];
-    $create->outgoing    = $strsql[1];
-    $create->morder      = $this->morderplusone($date[0]);
+    $create->date        = $row->date;
+    $create->description = (empty($row->description)) ? '' : $row->description;
+    $create->notes       = (empty($row->notes)) ? '' : $row->notes;
+    $create->incoming    = $row->incoming;
+    $create->outgoing    = $row->outgoing;
+    $create->morder      = $this->morderplusone($row->date);
     $create->save();
 
     return ($create->save()) ? $create->id : 0 ;

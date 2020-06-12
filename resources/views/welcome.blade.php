@@ -483,17 +483,9 @@ $(window).scroll(function(e) {
     $.ajax({
       type:'post',
       url:'duplicaterow/' + $('#rowidsel').text(),
-      data:''
-      + '&code='   + $('#code').val()
-      + '&date='   + $('#datepicker').val() 
-      + '&amount=' + $('input[name=amount]').val()
-      + '&in='     + $('#in').is(':checked')
-      + '&descr='  + encodeURIComponent($('input[name=descr]').val())
-      + '&notes='  + encodeURIComponent($('input[name=notes]').val()),
       
       success: function(newrow) {
         // data contains the ID of the new row.
-        //alert(newrowid);
         repopulatelistview(newrow);
       }
 
