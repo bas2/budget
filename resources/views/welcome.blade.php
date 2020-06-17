@@ -116,7 +116,7 @@ $(document).ready( function(){
   });
   */
 
-  // This function will be executed when the user scrolls the page.
+// This function will be executed when the user scrolls the page.
 $(window).scroll(function(e) {
     // Get the position of the location where the scroller starts.
     var scroller_anchor = $(".scroller_anchor").offset().top;
@@ -126,16 +126,16 @@ $(window).scroll(function(e) {
     {    // Change the CSS of the scroller to hilight it and fix it at the top of the screen.
         $('#buttons').css({
             'position': 'fixed',
-            'top': '20px'
+            'top': '0'
         });
         // Changing the height of the scroller anchor to that of scroller so that there is no change in the overall height of the page.
-        $('.scroller_anchor').css('height', '50px');
+        $('.scroller_anchor').css('height', '0');
     } 
     else if ($(this).scrollTop() < scroller_anchor && $('#buttons').css('position') != 'relative') 
     {    // If the user has scrolled back to the location above the scroller anchor place it back into the content.
          
         // Change the height of the scroller anchor to 0 and now we will be adding the scroller back to the content.
-        $('.scroller_anchor').css('height', '20px');
+        $('.scroller_anchor').css('height', '0');
          
         // Change the CSS and put it back to its original position.
         $('#buttons').css({
@@ -156,7 +156,7 @@ $(window).scroll(function(e) {
         });
     }
 
-    $('<div class="tm" style="position:fixed;left:50%;top:0;transform:translateX(-50%);background-color:rgba(192,33,33,0.842);border:1px solid #fff;border-radius:.3em;color:#fff;font-family:Impact,arial;width:10em;z-index:1;font-weight:bold;opacity:1;text-align:center;">'
+    $('<div class="tm" style="position:fixed;left:90%;top:0;transform:translateX(-50%);background-color:rgba(192,33,33,0.842);border:1px solid #fff;border-radius:.3em;color:#fff;font-family:Impact,arial;width:10em;z-index:1;font-weight:bold;opacity:1;text-align:center;">'
     + '</div>')
     .prependTo('body');
 
