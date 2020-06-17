@@ -65,12 +65,6 @@
           </div>
         </div>
 
-        <div class="row">
-        <div class="col-md-12 col-sm-15 col-xs-15">
-        <div class="form-control-static"></span></div>
-        </div>
-        </div>
-
       </fieldset>
     </div>
 
@@ -99,6 +93,16 @@
 // Highlight first row:
 
 $(document).ready( function(){
+
+  $('#r > div').hide();
+
+  $('#r > legend').click(function(){
+    if ($(this).parent().find('div').is(':visible')) {
+      $(this).parent().find('div').hide()
+    } else {
+      $(this).parent().find('div').show()
+    }
+  });
 
   $('#btnRowSelected').click(function(){
     $([document.documentElement, document.body]).animate({
