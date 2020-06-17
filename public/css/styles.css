@@ -44,7 +44,7 @@ ul#projectsmenu li:last-child {
   display: -webkit-flex;
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 2em;
+  margin-bottom: 1em;
 }
 
 .container-fluid .row .hunp {
@@ -61,6 +61,8 @@ fieldset {
 fieldset legend {
   text-align: center;
   text-transform: uppercase;
+  margin-bottom: 0;
+  border-bottom: 0;
 }
 fieldset.l {
   position: relative;
