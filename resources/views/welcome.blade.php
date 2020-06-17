@@ -27,7 +27,7 @@
 
         <div class="row">
           <div class="col-md-4 col-sm-5 col-xs-5" id="currdescr">
-            <button class="btn btn-primary btn-block" id="currbutt">{{ $account_numbers['Current'] }}</button> 
+            <button class="btn btn-primary btn-block">{{ $account_numbers['Current'] }}</button> 
           </div>
           <div class="col-md-4 col-sm-5 col-xs-5">
             <button class="btn btn-primary btn-block" id="savbutt">{{ $account_numbers['Savings'] }}</button> 
@@ -65,17 +65,14 @@
           </div>
         </div>
 
+        <div class="row">
+        <div class="col-md-12 col-sm-15 col-xs-15">
+        <div class="form-control-static"></span></div>
+        </div>
+        </div>
+
       </fieldset>
     </div>
-
-
-    <div class="col-md-7 col-sm-12 col-xs-12 panel text-center" id="diveditrow">
-    <fieldset class="l hunp">
-        <legend>Edit row <span class="badge" id="rowidsel">{{ $latestID }}</span></legend>
-
-        </fieldset>
-    </div>
-
 
   </div>
 
@@ -84,12 +81,13 @@
 
   <div class="row form-group" id="buttons">
   {!! Form::button('&uarr; Up',        ['class'=>'btn btn-primary','id'=>'btnUp']) !!}
-  {!! Form::button('Add &rarr;',   ['class'=>'btn btn-primary','id'=>'btnAddrow']) !!}
-  {!! Form::button('Clone &rarr;', ['class'=>'btn btn-primary','id'=>'btnDuplicate']) !!}
-  {!! Form::button('Delete &rarr;',    ['class'=>'btn btn-danger','id'=>'btnDelete']) !!}
-  {!! Form::button('Transfer &rarr;',  ['class'=>'btn btn-primary','id'=>'btnTransfer']) !!}
+  {!! Form::button('Add',   ['class'=>'btn btn-primary','id'=>'btnAddrow']) !!}
+  {!! Form::button('Edit <span class="badge" id="rowidsel">' . $latestID . '</span>',  ['class'=>'btn btn-primary','id'=>'btnRowEdit']) !!}
+  {!! Form::button('Clone', ['class'=>'btn btn-primary','id'=>'btnDuplicate']) !!}
+  {!! Form::button('Delete',    ['class'=>'btn btn-danger','id'=>'btnDelete']) !!}
+  {!! Form::button('TFR',  ['class'=>'btn btn-primary','id'=>'btnTransfer']) !!}
   {!! Form::button($editrows['descr'], ['class'=>'btn btn-warning','id'=>'btnRowSelected']) !!}
-  {!! Form::button('Edit &uarr;',  ['class'=>'btn btn-primary','id'=>'btnRowEdit']) !!}
+  {!! Form::button('&pound;' . $running_balances['Current'],  ['class'=>'btn btn-primary','id'=>'currbutt']) !!}
   </div>
 
   <div class="row" id="listview">
