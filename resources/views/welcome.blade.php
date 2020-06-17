@@ -424,20 +424,24 @@ $(window).scroll(function(e) {
   });
 
 
+  // Click on row in Account screen.
   $('body').on('click', '.cellrow2', function(){
-
-    var rowsel  = $(this).attr('title2');
 
     $('.cellrow2').removeClass('hl'); // Remove highlight from all rows.
     $(this).addClass('hl');          // Add highlight to the selected row.
 
     $('#rowidsel2').hide().fadeIn('slow').text($(this).attr('title2'));
 
+    var rowsel = $(this).attr('title2');
+    var rowsel2 = $(this).attr('title3');
+
     $.ajax({
       type:'get',
       url:'getrows2/' + rowsel,
       success: function(data) {
         $('#editrow2').html(data);
+
+        (rowsel2==1) ? $('#movedata2').removeAttr('disabled') : $('#movedata2').attr('disabled','disabled') ;
       } // End success.
 
     });

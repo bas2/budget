@@ -181,6 +181,20 @@ class BudgetController extends Controller
     ;
   }
 
+  // Function to create a row in Budget table:
+  public function createBudgetRow($values)
+  {
+    $create=new \App\Budget;
+    $create->date        = $values[0];
+    $create->description = $values[1];
+    $create->notes       = $values[2];
+    $create->incoming    = $values[3];
+    $create->outgoing    = $values[4];
+    $create->morder      = $values[5];
+    $create->save();
+
+    return $create;
+  }
 
   // POST: duplicaterow/id
   public function duplicateRow($rowid) {
@@ -188,14 +202,8 @@ class BudgetController extends Controller
     ->get(['date','description','notes','incoming','outgoing'])
     ->first();
 
-    $create=new \App\Budget;
-    $create->date        = $row->date;
-    $create->description = (empty($row->description)) ? '' : $row->description;
-    $create->notes       = (empty($row->notes)) ? '' : $row->notes;
-    $create->incoming    = $row->incoming;
-    $create->outgoing    = $row->outgoing;
-    $create->morder      = $this->morderplusone($row->date);
-    $create->save();
+    $create = $this->createBudgetRow([ $row->date, (empty($row->description)) ? '' : $row->description, 
+    (empty($row->notes)) ? '' : $row->notes, $row->incoming, $row->outgoing, $this->morderplusone($row->date) ]);
 
     return ($create->save()) ? $create->id : 0 ;
   }
@@ -340,6 +348,7 @@ class BudgetController extends Controller
     ->with('editrows2', ['code'=>$rows2->code,'date'=>Carbon::parse($rows2->date)->format('d/m/Y'),
     'descr'=>$rows2->description,'amount'=>$amount,'notes'=>$rows2->notes,'incoming'=>$incoming,
     'outgoing'=>$outgoing,'runbal'=>$rows2->runbal])
+    ->with('rowcounter',0)
     ; // $acc;
   }
 
@@ -375,10 +384,25 @@ class BudgetController extends Controller
     return 'test';
   }
 
-  public function row2Budget()
+  public function row2Budget($rowid)
   {
+    // 1. Get info for Current account row to be moved back.
+    $row=\App\Current::where('id',$rowid)->get()->first();
 
+    // 2. Create row in Budget
+    $create = $this->createBudgetRow([ $row->date, (empty($row->description)) ? '' : $row->description, 
+    (empty($row->notes)) ? '' : $row->notes, $row->incoming, $row->outgoing, $this->morderplusone($row->date) ]);
   }
+
+
+    // POST: deleterow/id
+    public function deleteRow2($rowid) {
+      $delete=\App\Current::where('id',$rowid)->delete();
+  
+      //$rows2=\App\Current::oldest('date')->orderby('morder')->take(1)->get(['id'])->first();
+      //return $rows2->id; # ID for first entry so it can be focussed.
+      return $rowid;
+    }
 
     /*
      * Return current time.

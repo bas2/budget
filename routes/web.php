@@ -30,3 +30,6 @@ Route::get('time', 'BudgetController@getTime');
 
 Route::get('edit/{id}', 'BudgetController@editRow');
 Route::post('edit/{id}', 'BudgetController@editRowUpdate');
+
+Route::post('move/{id}', 'BudgetController@row2Budget');
+Route::post('deleterow2/{id}', 'BudgetController@deleteRow2');

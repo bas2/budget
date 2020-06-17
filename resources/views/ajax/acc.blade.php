@@ -28,7 +28,7 @@
   </thead>
   <tbody>
   @foreach($rows as $accrow)
-    <tr title2="{{ $accrow->id }}" class="cellrow2 {{ ($accrow->id == $latestID) ? ' hl' : '' }}">
+    <tr{{ ((++$rowcounter==1)?' title3=1':'') }} title2="{{ $accrow->id }}" class="cellrow2 {{ ($accrow->id == $latestID) ? ' hl' : '' }}">
       <td>{{ $accrow->code }}</td>
       <td class="text-right" nowrap="nowrap">{{ \Carbon\Carbon::parse($accrow->date)->format('D j M') }}</td>
       <td>{{ $accrow->description }}</td>
@@ -62,5 +62,30 @@
       }
     });
     e.preventDefault();
+  });
+
+
+  $('body').on('click', '#movedata2', function(e){
+          var rowid = $('#rowidsel2').text();
+          $.ajax({
+            type:'post',
+            url:'move/' + rowid,
+            success: function(data) {
+              $.ajax({
+                type:'post',
+                url:'deleterow2/' + rowid,
+              //  data:'highlightfirstrow=1&date=' + $('#datepicker2').val(),
+                success: function(rowid2) {
+              //    repopulatelistview(rowid, rowid);
+              
+                  // Update account balance:
+                  //$('.currrunbal').eq(1).text(parseFloat(runbal).toFixed(2)); // new running balance
+                  //$('.currrunbal').eq(0).text('');
+                  //$('.currrunbal').eq(1).text('');
+                }
+              });
+              // End delete row.
+            }
+          });
   });
 </script>
