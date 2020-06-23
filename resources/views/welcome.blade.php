@@ -106,17 +106,9 @@ $(document).ready( function(){
 
   $('#btnRowSelected').click(function(){
     $([document.documentElement, document.body]).animate({
-        scrollTop: $(".hl").offset().top - 60
+        scrollTop: $(".hl").offset().top - 40
     }, 1000);
   });
-
-/*
-  $('#btnRowEdit').click(function(){
-    $([document.documentElement, document.body]).animate({
-        scrollTop: $("#diveditrow").offset().top - 20
-    }, 1000);
-  });
-  */
 
 // This function will be executed when the user scrolls the page.
 $(window).scroll(function(e) {
