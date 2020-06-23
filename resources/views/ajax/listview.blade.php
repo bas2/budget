@@ -15,7 +15,7 @@
   @foreach($rows as $budgetrow)
     <tr{{ ((++$rowcounter==1)?' title2=1':'') }} id="rw{{ $budgetrow->id }}" class="cellrow">
       <td class="text-right" nowrap="nowrap">{{ \Carbon\Carbon::parse($budgetrow->date)->format('D j M') }}</td>
-      <td>{{ \Carbon\Carbon::parse(date('Y-m-d'))->diff( \Carbon\Carbon::parse($budgetrow->date) )->days }}</td>
+      <td class="text-right">{{ \Carbon\Carbon::parse(date('Y-m-d'))->diff( \Carbon\Carbon::parse($budgetrow->date) )->days }}</td>
       <td>{{ $budgetrow->description }}</td>
       <td class="text-right">{{ ( ($budgetrow->incoming==0) ? '' : number_format($budgetrow->incoming,2) ) }}</td>
       <td class="text-right">{{ ( ($budgetrow->outgoing==0) ? '' : number_format($budgetrow->outgoing,2) ) }}</td>
