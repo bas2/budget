@@ -1,5 +1,5 @@
 <table class="table">
-  <thead>
+  <!-- <thead>
   <tr>
     <th class="text-right">Date</th>
     <th></th>
@@ -7,10 +7,10 @@
     <th class="text-right">IN</th>
     <th class="text-right">OUT</th>
     <th class="text-right">Balance</th>
-    <!-- <th class="text-right">Total</th> -->
+    <th class="text-right">Total</th>
     <th>Notes</th>
   </tr>
-  </thead>
+  </thead> -->
   <tbody>
   @foreach($rows as $budgetrow)
     <tr{{ ((++$rowcounter==1)?' title2=1':'') }} id="rw{{ $budgetrow->id }}" class="cellrow">
