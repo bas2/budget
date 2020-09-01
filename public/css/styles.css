@@ -153,6 +153,23 @@ table.table tbody tr:hover {
 
 .hl2 {
   background-color: orange;
+  color: #000;
+  font-weight: bold;
+}
+
+.hl3 {
+  background-color: rgb(17, 117, 17);
+  font-weight: black;
+}
+
+.hl4 {
+  background-color: orangered;
+  font-weight:bold;
+}
+
+.hl5 {
+  background-color: navy;
+  font-weight: bold;
 }
 
 form * {
