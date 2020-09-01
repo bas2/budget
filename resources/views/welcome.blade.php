@@ -16,7 +16,7 @@
 <body>
 @include('projectmenu')
 <div class="container-fluid">
-
+<!--
   <div class="row equal">
 
 
@@ -69,7 +69,7 @@
     </div>
 
   </div>
-
+-->
     <!-- This div is used to indicate the original position of the scrollable fixed div. -->
     <div class="scroller_anchor"></div>
 
