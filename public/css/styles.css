@@ -1,5 +1,5 @@
 body {
-  background-color: #fff;
+  background-color: rgb(0, 0, 0);
   margin: 5px;
 }
 
@@ -140,14 +140,14 @@ table.table thead tr th {
   font-variant: small-caps;
 }
 table.table tbody tr:hover {
-  background: rgba(0, 0, 255, 0.5);
+  background: rgba(136, 255, 0, 0.5);
 }
 
 .hl {
-  background-color: orange;
+  background-color: rgba(255, 0, 0, 0.5);
   font-weight: bold;
-  border-top: 2px solid yellow;
-  border-bottom: 2px solid yellow;
+  border-top: 2px solid orangered;
+  border-bottom: 2px solid orangered;
   padding: 0.4em 0;
 }
 
@@ -205,7 +205,7 @@ select, input[type=text] {
   vertical-align: top;
 }
 #accsdiv tr:hover {
-  background: rgba(0, 0, 255, 0.5);
+  background: rgba(0, 255, 13, 0.5);
 }
 #accsdiv th, #accsdiv td {
   padding: 0.3em;
